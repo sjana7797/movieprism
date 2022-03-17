@@ -45,3 +45,24 @@ export interface TV extends ContentOverview {
   status: string;
   tagline: string;
 }
+
+export interface TV_EPISODE {
+  air_date: string;
+  episode_number: number;
+  id: number;
+  name: string;
+  overview: string;
+  season_number: integer;
+  vote_count: integer;
+  still_path: string;
+}
+export interface Season {
+  _id: string;
+  air_date: string;
+  name: string;
+  overview: string;
+  id: integer;
+  poster_path: string | null;
+  season_number: integer;
+  episodes: TV_EPISODE[];
+}

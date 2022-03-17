@@ -30,6 +30,9 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.SIMILAR:
       config.url = `/movie/${config.params.movieId}/similar`;
       break;
+    case API_OPTION.SIMILAR_TV:
+      config.url = `/tv/${config.params.tvId}/similar`;
+      break;
     case API_OPTION.RECOMMENDATIONS:
       config.url = `/movie/${config.params.movieId}/recommendations`;
       break;
@@ -38,6 +41,14 @@ custAxios.interceptors.request.use((config) => {
       break;
     case API_OPTION.TV:
       config.url = `/tv/${config.params.tvId}`;
+      break;
+    case API_OPTION.ON_THE_AIR:
+      config.url = `/tv/on_the_air`;
+      break;
+    case API_OPTION.SEASON:
+      const tvId = config.params.tvId;
+      const seasonNumber = config.params.seasonNumber;
+      config.url = `/tv/${tvId}/season/${seasonNumber}`;
       break;
   }
   config.url += addingAPIKey();

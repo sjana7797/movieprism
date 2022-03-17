@@ -2,12 +2,14 @@ import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-import { TV } from "../../../typing";
-import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
-import { custAxios } from "../../../utils/custAxios";
+import Contents from "../../../../components/Home/Contents";
+import { ContentOverview, TV } from "../../../../typing";
+import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
+import { custAxios } from "../../../../utils/custAxios";
 
-function TVSeries({ tv }: { tv: TV }) {
+function TVSeries({ tv, similarTV }: { tv: TV; similarTV: ContentOverview[] }) {
   const img = `${BASE_URL_IMAGE}${tv.backdrop_path}`;
   const name = tv.title || tv.original_title || tv.name;
   return (
@@ -60,21 +62,30 @@ function TVSeries({ tv }: { tv: TV }) {
           {tv.seasons.map((season) => {
             const name = season.name || season.season_number;
             return (
-              <div key={season.id} className="transform cursor-pointer">
-                <div className="relative h-72 w-52 rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
-                  <Image
-                    src={`${BASE_URL_IMAGE}${season.poster_path}`}
-                    alt={name}
-                    layout="fill"
-                    className="rounded-md"
-                    placeholder="blur"
-                    blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
-                  />
+              <Link
+                key={season.id}
+                href={`/content/tv/${tv.id}/${season.season_number}`}
+                passHref
+              >
+                <div className="transform cursor-pointer">
+                  <div className="relative h-72 w-52 rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
+                    <Image
+                      src={`${BASE_URL_IMAGE}${season.poster_path}`}
+                      alt={name}
+                      layout="fill"
+                      className="rounded-md bg-black"
+                      placeholder="blur"
+                      blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
+                    />
+                  </div>
+                  <p className="my-5">{name}</p>
                 </div>
-                <p className="my-5">{name}</p>
-              </div>
+              </Link>
             );
           })}
+        </div>
+        <div>
+          <Contents title="Similar TV Shows" contents={similarTV} />
         </div>
       </aside>
     </>
@@ -88,5 +99,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const tv: TV = await custAxios
     .get(API_OPTION.TV, { params: { tvId } })
     .then((res) => res.data);
-  return { props: { tv } };
+
+  const tvSimilarData = await custAxios
+    .get(API_OPTION.SIMILAR_TV, { params: { tvId } })
+    .then((res) => res.data);
+
+  const similarTV = tvSimilarData.results.map((tv: any) => {
+    return {
+      backdrop_path: tv.backdrop_path,
+      id: tv.id,
+      overview: tv.overview,
+      original_title: tv.original_title || null,
+      title: tv.title || null,
+      name: tv.name || null,
+      poster_path: tv.poster_path || null,
+      media_type: "tv",
+      first_air_date: tv.first_air_date || null,
+      release_date: tv.release_date || null,
+      vote_count: tv.vote_count,
+      genres: tv.genre_ids,
+    };
+  });
+  return { props: { tv, similarTV } };
 };
