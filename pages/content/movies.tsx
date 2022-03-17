@@ -19,10 +19,24 @@ function Movies({
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const data = await custAxios
-      .get("trending", { params: { page: page + 1 } })
+      .get(API_OPTION.LATEST, { params: { page: page + 1 } })
       .then((res) => res.data);
-    console.log(data.page);
-    setMovies((prevData) => [...prevData, ...data.results]);
+    const contents = data.results.map((movie: any) => {
+      return {
+        backdrop_path: movie.backdrop_path,
+        id: movie.id,
+        overview: movie.overview,
+        original_title: movie.original_title || null,
+        title: movie.title || null,
+        name: movie.name || null,
+        poster_path: movie.poster_path || null,
+        media_type: "movie",
+        first_air_date: movie.first_air_date || null,
+        release_date: movie.release_date || null,
+        vote_count: movie.vote_count,
+      };
+    });
+    setMovies((prevData) => [...prevData, ...contents]);
     setPage(data.page);
     setIsLoading(false);
   };

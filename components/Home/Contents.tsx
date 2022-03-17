@@ -15,6 +15,7 @@ function Contents({
         {contents.map((content) => (
           <Content content={content} key={content.id} />
         ))}
+        {contents.length === 0 && <h2 className="text-xl">No {title}</h2>}
       </div>
     </section>
   );

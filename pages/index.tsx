@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Carousel from "../components/Home/Carousel";
 import Contents from "../components/Home/Contents";
+import Slider from "../components/ui/Slider";
 import { ContentOverview } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
@@ -10,11 +11,17 @@ const Home = ({
   topRatedData,
   popularData,
   tvData,
+  topRatedDataIN,
+  popularDataIN,
+  onAirIndia,
 }: {
   trendingData: ContentOverview[];
   topRatedData: ContentOverview[];
   popularData: ContentOverview[];
   tvData: ContentOverview[];
+  topRatedDataIN: ContentOverview[];
+  popularDataIN: ContentOverview[];
+  onAirIndia: ContentOverview[];
 }) => {
   return (
     <>
@@ -23,6 +30,10 @@ const Home = ({
       <Contents contents={topRatedData} title="Top Rated" />
       <Contents contents={popularData} title="Popular" />
       <Contents contents={tvData} title="TV Series" />
+      <Slider />
+      <Contents contents={topRatedDataIN} title="Top Rated in India" />
+      <Contents contents={popularDataIN} title="Popular in India" />
+      <Contents contents={onAirIndia} title="Playing in India" />
     </>
   );
 };
@@ -66,8 +77,42 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
       })
     );
+  const topRatedDataIN: ContentOverview[] = await custAxios
+    .get(API_OPTION.TOP_RATED, { params: { region: "IN" } })
+    .then((res) =>
+      res.data.results.map((movie: any) => {
+        return {
+          backdrop_path: movie.backdrop_path,
+          id: movie.id,
+          overview: movie.overview,
+          original_title: movie.original_title || null,
+          title: movie.title || null,
+          poster_path: movie.poster_path || null,
+          release_date: movie.release_date || null,
+          vote_count: movie.vote_count,
+          media_type: "movie",
+        };
+      })
+    );
   const popularData: ContentOverview[] = await custAxios
     .get(API_OPTION.POPULAR)
+    .then((res) =>
+      res.data.results.map((movie: any) => {
+        return {
+          backdrop_path: movie.backdrop_path,
+          id: movie.id,
+          overview: movie.overview,
+          original_title: movie.original_title || null,
+          title: movie.title || null,
+          poster_path: movie.poster_path || null,
+          release_date: movie.release_date || null,
+          vote_count: movie.vote_count,
+          media_type: "movie",
+        };
+      })
+    );
+  const popularDataIN: ContentOverview[] = await custAxios
+    .get(API_OPTION.POPULAR, { params: { region: "IN" } })
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {
@@ -102,7 +147,40 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
       })
     );
+
+  const onAirIndiaData = await custAxios
+    .get(API_OPTION.LATEST, {
+      params: { region: "IN", language: "hi" },
+    })
+    .then((res) => res.data);
+
+  const onAirIndia: ContentOverview[] = onAirIndiaData.results.map(
+    (movie: any) => {
+      return {
+        backdrop_path: movie.backdrop_path,
+        id: movie.id,
+        overview: movie.overview,
+        title: movie.title || null,
+        original_title: movie.original_title || null,
+        name: movie.name || null,
+        poster_path: movie.poster_path || null,
+        media_type: "movie",
+        first_air_date: movie.first_air_date || null,
+        release_date: movie.release_date || null,
+        vote_count: movie.vote_count,
+      };
+    }
+  );
+
   return {
-    props: { trendingData, topRatedData, popularData, tvData },
+    props: {
+      trendingData,
+      topRatedData,
+      popularData,
+      tvData,
+      topRatedDataIN,
+      popularDataIN,
+      onAirIndia,
+    },
   };
 };

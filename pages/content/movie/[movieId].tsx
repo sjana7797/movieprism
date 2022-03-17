@@ -76,7 +76,7 @@ function Movie(props: {
                         src={imgSrc}
                         width={1920}
                         height={1080}
-                        layout="intrinsic"
+                        layout="responsive"
                         alt={production.name}
                         className="rounded-md"
                       />

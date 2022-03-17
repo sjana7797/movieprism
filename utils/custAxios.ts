@@ -23,6 +23,9 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.MOVIE:
       config.url = `${url}/${config.params.movieId}`;
       break;
+    case API_OPTION.UPCOMMING_MOVIES:
+      config.url = `/movie/upcoming`;
+      break;
     case API_OPTION.MOVIE_CAST:
       config.url = `movie/${config.params.movieId}/credits`;
       break;

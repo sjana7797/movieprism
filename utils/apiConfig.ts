@@ -1,5 +1,6 @@
 export const API_OPTION = {
   TRENDING: "trending",
+  UPCOMMING_MOVIES: "upcomming_movies",
   LATEST: "latest",
   MOVIE: "movie",
   TOP_RATED: "top_rated",

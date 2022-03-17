@@ -20,10 +20,30 @@ function TVSeries({
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const data = await custAxios
-      .get("trending", { params: { page: page + 1 } })
+      .get(API_OPTION.ON_THE_AIR, {
+        params: {
+          page: page + 1,
+        },
+      })
       .then((res) => res.data);
-    console.log(data.page);
-    setTVSeries((prevData) => [...prevData, ...data.results]);
+
+    const contents = data.results.map((tv: any) => {
+      return {
+        backdrop_path: tv.backdrop_path,
+        id: tv.id,
+        overview: tv.overview,
+        original_title: tv.original_title || null,
+        title: tv.title || null,
+        name: tv.name || null,
+        poster_path: tv.poster_path || null,
+        media_type: "tv",
+        first_air_date: tv.first_air_date || null,
+        release_date: tv.release_date || null,
+        vote_count: tv.vote_count,
+        genres: tv.genre_ids,
+      };
+    });
+    setTVSeries((prevData) => [...prevData, ...contents]);
     setPage(data.page);
     setIsLoading(false);
   };
