@@ -4,6 +4,7 @@ import {
   FilmIcon,
   DesktopComputerIcon,
   ViewBoardsIcon,
+  NewspaperIcon,
 } from "@heroicons/react/outline";
 
 const headerItemsObj = {
@@ -27,10 +28,10 @@ const headerItemsObj = {
     Icon: DesktopComputerIcon,
     link: "/content/tvseries",
   },
-  providers: {
-    title: "providers",
-    Icon: ViewBoardsIcon,
-    link: "/content/providers",
+  news: {
+    title: "news",
+    Icon: NewspaperIcon,
+    link: "/news",
   },
 };
 

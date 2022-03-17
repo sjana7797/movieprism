@@ -37,7 +37,36 @@ export interface Provider {
   provider_id: integer;
 }
 
-export interface Movie extends ContentOverview {}
+enum Gender {
+  male = 2,
+  female = 1,
+  default = 0,
+}
+export interface MovieCast {
+  adult: boolean;
+  gender: Gender;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface MovieProductionCompany {
+  name: string;
+  id: integer;
+  logo_path: string | null;
+  origin_country: string;
+}
+
+export interface Movie extends ContentOverview {
+  production_companies: MovieProductionCompany[];
+}
 export interface TV extends ContentOverview {
   number_of_episodes: number;
   number_of_seasons: number;
@@ -65,4 +94,18 @@ export interface Season {
   poster_path: string | null;
   season_number: integer;
   episodes: TV_EPISODE[];
+}
+
+export interface Article {
+  title: string;
+  description: string;
+  content: string;
+  url: string;
+  image: string;
+  publishedAt;
+  source: { name: string; url: string };
+}
+export interface News {
+  totalArticles: number;
+  articles: Article[];
 }

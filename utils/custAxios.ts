@@ -9,6 +9,11 @@ const custAxios = axios.create({
   baseURL: "https://api.themoviedb.org/3",
 });
 
+const newsAxios = axios.create({
+  baseURL: "https://gnews.io/api/v4",
+  params: { q: "movies", token: process.env.NEXT_PUBLIC_NEWS_API_KEY },
+});
+
 custAxios.interceptors.request.use((config) => {
   const { url } = config;
   switch (url) {
@@ -17,6 +22,9 @@ custAxios.interceptors.request.use((config) => {
       break;
     case API_OPTION.MOVIE:
       config.url = `${url}/${config.params.movieId}`;
+      break;
+    case API_OPTION.MOVIE_CAST:
+      config.url = `movie/${config.params.movieId}/credits`;
       break;
     case API_OPTION.TOP_RATED:
       config.url = `/movie/top_rated`;
@@ -55,4 +63,4 @@ custAxios.interceptors.request.use((config) => {
   return config;
 });
 
-export { custAxios };
+export { custAxios, newsAxios };
