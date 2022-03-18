@@ -118,3 +118,34 @@ export interface Poster {
   title: string;
   media_type: string;
 }
+
+export interface AnimePoster {
+  id: number;
+  title: {
+    english: string;
+    native: string;
+    userPreferred: string;
+  };
+  coverImage: {
+    extraLarge: string;
+    large: string;
+    medium: string;
+    color: string;
+  };
+  bannerImage: string;
+}
+
+export interface Page {
+  pageInfo: {
+    total: number;
+    perPage: number;
+    currentPage: number;
+    lastPage: number;
+    hasNextPage: boolean;
+  };
+}
+
+export interface AnimeList {
+  pageInfo: Page;
+  media: [AnimePoster];
+}

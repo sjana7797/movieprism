@@ -6,6 +6,8 @@ import {
   BiNews,
 } from "react-icons/bi";
 
+import { AiOutlineAliwangwang } from "react-icons/ai";
+
 const headerItemsObj = {
   home: {
     title: "Home",
@@ -26,6 +28,11 @@ const headerItemsObj = {
     title: "tv series",
     Icon: BiTv,
     link: "/content/tvseries",
+  },
+  anime: {
+    title: "anime",
+    Icon: AiOutlineAliwangwang,
+    link: "/content/anime",
   },
   news: {
     title: "news",
