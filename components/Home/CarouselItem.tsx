@@ -6,7 +6,7 @@ import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 function CarouselItem({ content }: { content: ContentOverview }) {
   const name = content.name || content.original_title || content.title;
   return (
-    <Link passHref href={`/${content.id}`}>
+    <Link passHref href={`/content/${content.media_type}/${content.id}`}>
       <div className="group relative h-52 w-full bg-black opacity-100 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:h-96">
         <Image
           layout="fill"

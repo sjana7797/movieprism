@@ -1,10 +1,12 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Provider } from "../../../typing";
 import { BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 
 function Providers(props: { providers: Provider[] }) {
+  const router = useRouter();
   return (
     <section className="grid grid-cols-1 gap-4 px-5  md:grid-cols-2 lg:grid-cols-3">
       {props.providers.map((provider) => {
@@ -13,6 +15,9 @@ function Providers(props: { providers: Provider[] }) {
           <div
             key={provider.provider_id}
             className="group flex cursor-pointer flex-col items-center justify-center rounded-md border-2 border-slate-900 bg-slate-700 p-2 transition-colors duration-300 hover:bg-slate-900"
+            onClick={() => {
+              router.push(`/content/provider/${provider.provider_id}`);
+            }}
           >
             <Image
               src={logo}

@@ -1,36 +1,35 @@
 import {
-  HomeIcon,
-  LightningBoltIcon,
-  FilmIcon,
-  DesktopComputerIcon,
-  ViewBoardsIcon,
-  NewspaperIcon,
-} from "@heroicons/react/outline";
+  BiTv,
+  BiCameraMovie,
+  BiTrendingUp,
+  BiHomeSmile,
+  BiNews,
+} from "react-icons/bi";
 
 const headerItemsObj = {
   home: {
     title: "Home",
-    Icon: HomeIcon,
+    Icon: BiHomeSmile,
     link: "/",
   },
   trending: {
     title: "trending",
-    Icon: LightningBoltIcon,
+    Icon: BiTrendingUp,
     link: "/content/trending",
   },
   movies: {
     title: "movies",
-    Icon: FilmIcon,
+    Icon: BiCameraMovie,
     link: "/content/movies",
   },
   tv: {
     title: "tv series",
-    Icon: DesktopComputerIcon,
+    Icon: BiTv,
     link: "/content/tvseries",
   },
   news: {
     title: "news",
-    Icon: NewspaperIcon,
+    Icon: BiNews,
     link: "/news",
   },
 };

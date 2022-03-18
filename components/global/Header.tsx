@@ -12,7 +12,7 @@ function Header() {
         {headerItems.map((icon, index) => (
           <Link href={icon.link} key={index} passHref>
             <div className="group flex w-12 cursor-pointer flex-col items-center transition-colors duration-300 hover:text-emerald-400 sm:w-20">
-              <icon.Icon className="mb-1 w-8 group-hover:animate-bounce" />
+              <icon.Icon className="mb-1 h-8 w-8 group-hover:animate-bounce" />
               <p className="whitespace-nowrap text-lg font-medium uppercase tracking-wider opacity-0 group-hover:opacity-100">
                 {icon.title}
               </p>

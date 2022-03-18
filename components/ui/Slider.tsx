@@ -55,7 +55,7 @@ function UpcommingMovie({ movie }: { movie: UpcommingMovie }) {
         </h2>
       </div>
       <p className="my-2 text-center text-sm">
-        Expected Date &#9679; {movie.release_date}{" "}
+        Expected Date &#9679; {movie.release_date}
       </p>
     </div>
   );

@@ -61,6 +61,9 @@ custAxios.interceptors.request.use((config) => {
       const seasonNumber = config.params.seasonNumber;
       config.url = `/tv/${tvId}/season/${seasonNumber}`;
       break;
+    case API_OPTION.PROVIDER:
+      config.url = `/discover/movie`;
+      break;
   }
   config.url += addingAPIKey();
   return config;

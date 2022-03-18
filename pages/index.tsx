@@ -1,8 +1,8 @@
 import type { GetServerSideProps } from "next";
+import Providers from "../components/Home/Providers";
 import Carousel from "../components/Home/Carousel";
 import Contents from "../components/Home/Contents";
-import Slider from "../components/ui/Slider";
-import { ContentOverview } from "../typing";
+import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
 
@@ -14,6 +14,7 @@ const Home = ({
   topRatedDataIN,
   popularDataIN,
   onAirIndia,
+  upcommingMovies,
 }: {
   trendingData: ContentOverview[];
   topRatedData: ContentOverview[];
@@ -22,6 +23,7 @@ const Home = ({
   topRatedDataIN: ContentOverview[];
   popularDataIN: ContentOverview[];
   onAirIndia: ContentOverview[];
+  upcommingMovies: ContentOverview[];
 }) => {
   return (
     <>
@@ -29,8 +31,9 @@ const Home = ({
       <Contents contents={trendingData} title="Trending" />
       <Contents contents={topRatedData} title="Top Rated" />
       <Contents contents={popularData} title="Popular" />
+      <Providers />
       <Contents contents={tvData} title="TV Series" />
-      <Slider />
+      <Contents contents={upcommingMovies} title="Upcomming Movies" />
       <Contents contents={topRatedDataIN} title="Top Rated in India" />
       <Contents contents={popularDataIN} title="Popular in India" />
       <Contents contents={onAirIndia} title="Playing in India" />
@@ -172,6 +175,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   );
 
+  const upcommingMovies: Poster[] = await custAxios
+    .get(API_OPTION.UPCOMMING_MOVIES)
+    .then((res) => {
+      const movies: Poster[] = res.data.results.map((movie: Poster) => {
+        return { ...movie, media_type: "movie" };
+      });
+      return movies;
+    });
+
   return {
     props: {
       trendingData,
@@ -181,6 +193,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       topRatedDataIN,
       popularDataIN,
       onAirIndia,
+      upcommingMovies,
     },
   };
 };

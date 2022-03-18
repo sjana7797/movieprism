@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import { News } from "../../typing";
+import { One_HOUR } from "../../utils/appConfig";
 import { newsAxios } from "../../utils/custAxios";
 
 function News(props: { news: News }) {
@@ -42,5 +43,5 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const news: News = await newsAxios
     .get("search", { params: { page: 1 } })
     .then((res) => res.data);
-  return { props: { news }, revalidate: 3600 * 24 };
+  return { props: { news }, revalidate: One_HOUR * 0.5 };
 };

@@ -109,3 +109,12 @@ export interface News {
   totalArticles: number;
   articles: Article[];
 }
+
+export interface Poster {
+  poster_path: string;
+  release_date: string;
+  id: string;
+  original_title: string;
+  title: string;
+  media_type: string;
+}

@@ -6,6 +6,7 @@ export const API_OPTION = {
   TOP_RATED: "top_rated",
   POPULAR: "popular",
   POPULAR_TV: "popular_tv",
+  PROVIDER: "provider",
   TV: "tv",
   SIMILAR: "similar",
   SIMILAR_TV: "similar_tv",
