@@ -5,41 +5,31 @@ import Contents from "../components/Home/Contents";
 import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
-import BollywoodDrama from "../components/Home/BollywoodDrama";
 
 const Home = ({
   trendingData,
   topRatedData,
   popularData,
   tvData,
-  topRatedDataIN,
-  popularDataIN,
-  onAirIndia,
-  upcommingMovies,
+  onAir,
 }: // popularDataBollywood,
 {
   trendingData: ContentOverview[];
   topRatedData: ContentOverview[];
   popularData: ContentOverview[];
   tvData: ContentOverview[];
-  topRatedDataIN: ContentOverview[];
-  popularDataIN: ContentOverview[];
-  onAirIndia: ContentOverview[];
   upcommingMovies: ContentOverview[];
-  popularDataBollywood: ContentOverview[];
+  onAir: ContentOverview[];
 }) => {
   return (
     <>
       <Carousel trendingData={trendingData.slice(0, 5)} />
       <Contents contents={trendingData} title="Trending" />
       <Contents contents={topRatedData} title="Top Rated" />
-      <Contents contents={popularData} title="Popular" />
       <Providers />
+      <Contents contents={popularData} title="Popular" />
+      <Contents contents={onAir} title="On The Air" />
       <Contents contents={tvData} title="TV Series" />
-      <Contents contents={upcommingMovies} title="Upcomming Movies" />
-      <Contents contents={topRatedDataIN} title="Top Rated in India" />
-      <Contents contents={popularDataIN} title="Popular in India" />
-      <Contents contents={onAirIndia} title="Playing in India" />
       {/* <BollywoodDrama contents={popularDataBollywood} /> */}
     </>
   );
@@ -48,10 +38,9 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const country = context.query.country as string;
-  console.log(country);
+  const { country } = context.query;
   const trendingData: ContentOverview[] = await custAxios
-    .get(API_OPTION.TRENDING, { params: { region: country } })
+    .get(API_OPTION.TRENDING)
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {
@@ -70,24 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
   const topRatedData: ContentOverview[] = await custAxios
-    .get(API_OPTION.TOP_RATED)
-    .then((res) =>
-      res.data.results.map((movie: any) => {
-        return {
-          backdrop_path: movie.backdrop_path,
-          id: movie.id,
-          overview: movie.overview,
-          original_title: movie.original_title || null,
-          title: movie.title || null,
-          poster_path: movie.poster_path || null,
-          release_date: movie.release_date || null,
-          vote_count: movie.vote_count,
-          media_type: "movie",
-        };
-      })
-    );
-  const topRatedDataIN: ContentOverview[] = await custAxios
-    .get(API_OPTION.TOP_RATED, { params: { region: "IN" } })
+    .get(API_OPTION.TOP_RATED, { params: { region: country } })
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {
@@ -104,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
   const popularData: ContentOverview[] = await custAxios
-    .get(API_OPTION.POPULAR)
+    .get(API_OPTION.POPULAR, { params: { region: country } })
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {
@@ -120,25 +92,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
       })
     );
-  const popularDataIN: ContentOverview[] = await custAxios
-    .get(API_OPTION.POPULAR, { params: { region: "IN" } })
-    .then((res) =>
-      res.data.results.map((movie: any) => {
-        return {
-          backdrop_path: movie.backdrop_path,
-          id: movie.id,
-          overview: movie.overview,
-          original_title: movie.original_title || null,
-          title: movie.title || null,
-          poster_path: movie.poster_path || null,
-          release_date: movie.release_date || null,
-          vote_count: movie.vote_count,
-          media_type: "movie",
-        };
-      })
-    );
+
   const tvData: ContentOverview[] = await custAxios
-    .get(API_OPTION.POPULAR_TV)
+    .get(API_OPTION.POPULAR_TV, { params: { region: country } })
     .then((res) =>
       res.data.results.map((tv: any) => {
         return {
@@ -157,29 +113,27 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
 
-  const onAirIndiaData = await custAxios
+  const onAirData = await custAxios
     .get(API_OPTION.LATEST, {
-      params: { region: "IN" },
+      params: { region: country },
     })
     .then((res) => res.data);
 
-  const onAirIndia: ContentOverview[] = onAirIndiaData.results.map(
-    (movie: any) => {
-      return {
-        backdrop_path: movie.backdrop_path,
-        id: movie.id,
-        overview: movie.overview,
-        title: movie.title || null,
-        original_title: movie.original_title || null,
-        name: movie.name || null,
-        poster_path: movie.poster_path || null,
-        media_type: "movie",
-        first_air_date: movie.first_air_date || null,
-        release_date: movie.release_date || null,
-        vote_count: movie.vote_count,
-      };
-    }
-  );
+  const onAir: ContentOverview[] = onAirData.results.map((movie: any) => {
+    return {
+      backdrop_path: movie.backdrop_path,
+      id: movie.id,
+      overview: movie.overview,
+      title: movie.title || null,
+      original_title: movie.original_title || null,
+      name: movie.name || null,
+      poster_path: movie.poster_path || null,
+      media_type: "movie",
+      first_air_date: movie.first_air_date || null,
+      release_date: movie.release_date || null,
+      vote_count: movie.vote_count,
+    };
+  });
 
   const upcommingMovies: Poster[] = await custAxios
     .get(API_OPTION.UPCOMMING_MOVIES)
@@ -190,35 +144,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return movies;
     });
 
-  // const popularDataBollywood: ContentOverview[] = await custAxios
-  //   .get(API_OPTION.POPULAR, { params: { region: "IN" } })
-  //   .then((res) =>
-  //     res.data.results.map((movie: any) => {
-  //       return {
-  //         backdrop_path: movie.backdrop_path,
-  //         id: movie.id,
-  //         overview: movie.overview,
-  //         original_title: movie.original_title || null,
-  //         title: movie.title || null,
-  //         poster_path: movie.poster_path || null,
-  //         release_date: movie.release_date || null,
-  //         vote_count: movie.vote_count,
-  //         media_type: "movie",
-  //       };
-  //     })
-  //   );
-
   return {
     props: {
       trendingData,
       topRatedData,
       popularData,
       tvData,
-      topRatedDataIN,
-      popularDataIN,
-      onAirIndia,
       upcommingMovies,
-      // popularDataBollywood,
+      onAir,
     },
   };
 };
