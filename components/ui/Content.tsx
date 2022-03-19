@@ -17,7 +17,7 @@ function Content({ content }: { content: ContentOverview }) {
             layout="fill"
             className="rounded-md bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
             placeholder="blur"
-            blurDataURL={poster}
+            blurDataURL="http://via.placeholder.com/208x288"
           />
           <h2 className="absolute top-5 left-5 hidden group-hover:block">
             {content_name}
