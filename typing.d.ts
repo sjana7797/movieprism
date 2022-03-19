@@ -149,6 +149,56 @@ export interface AnimeList {
   media: [AnimePoster];
 }
 
+export interface AnimeDate {
+  year: number | null;
+  month: number | null;
+  day: number | null;
+}
+
+export interface AnimeCharacter {
+  edges: [
+    {
+      node: {
+        id: number;
+        name: {
+          first: string;
+          middle: string;
+          last: string;
+          full: string;
+          native: string;
+          userPreferred: string;
+        };
+        image: {
+          large: string;
+          medium: string;
+        };
+      };
+    }
+  ];
+}
+export interface Anime extends AnimePoster {
+  status: string;
+  startDate: AnimeDate;
+  endDate: AnimeDate;
+  season: string;
+  seasonYear: number;
+  seasonInt: number;
+  episodes: number;
+  averageScore: number;
+  genres: [string];
+  isAdult: boolean;
+  characters: AnimeCharacter;
+  recommendations: {
+    edges: [
+      {
+        node: {
+          mediaRecommendation: AnimePoster;
+        };
+      }
+    ];
+  };
+}
+
 export interface MovieVideos {
   name: string;
   key: string;

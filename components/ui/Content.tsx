@@ -9,7 +9,7 @@ function Content({ content }: { content: ContentOverview }) {
   const content_name = `${title || original_title || name}`;
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
-      <div className="group transform cursor-pointer rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
+      <div className="group transform cursor-pointer snap-start rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
         <div className="relative h-72 w-52">
           <Image
             src={poster}

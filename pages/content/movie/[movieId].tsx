@@ -121,33 +121,35 @@ function Movie(props: {
                 })}
               </div>
             </div>
-            <h2 className="ml-5 text-2xl">Casts</h2>
-            <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
-              {cast.map((people) => {
-                let imgSrc = "/favicon.ico";
-                if (people.profile_path)
-                  imgSrc = `${BASE_URL_IMAGE}${people.profile_path.slice(1)}`;
-                return (
-                  <div key={people.id}>
-                    <div className="">
-                      <Image
-                        src={imgSrc}
-                        width={238}
-                        height={357}
-                        layout="fixed"
-                        alt={people.name}
-                        className="rounded-md"
-                      />
+            <div>
+              <h2 className="ml-5 text-2xl">Casts</h2>
+              <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
+                {cast.map((people) => {
+                  let imgSrc = "/favicon.ico";
+                  if (people.profile_path)
+                    imgSrc = `${BASE_URL_IMAGE}${people.profile_path.slice(1)}`;
+                  return (
+                    <div key={people.id}>
+                      <div className="">
+                        <Image
+                          src={imgSrc}
+                          width={238}
+                          height={357}
+                          layout="fixed"
+                          alt={people.name}
+                          className="rounded-md"
+                        />
+                      </div>
+                      <div className="my-2">
+                        <h3>{people.name}</h3>
+                        <h3 className="text-sm italic text-slate-400">
+                          {people.character}
+                        </h3>
+                      </div>
                     </div>
-                    <div className="my-2">
-                      <h3>{people.name}</h3>
-                      <h3 className="text-sm italic text-slate-400">
-                        {people.character}
-                      </h3>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>

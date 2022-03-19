@@ -15,11 +15,11 @@ function CarouselItem({ content }: { content: ContentOverview }) {
           alt={""}
           objectFit="cover"
         />
-        <div className="absolute top-1/2 left-10 z-20 -translate-y-1/2 md:w-1/2">
+        <div className="absolute top-10 left-10 z-20 md:top-1/2 md:w-1/2 md:-translate-y-1/2">
           <h3 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
             {name}
           </h3>
-          <p className="my-1 mr-10 text-left text-sm text-slate-400 sm:text-base">
+          <p className="my-1 mr-10 text-left text-sm text-slate-400 line-clamp-3 sm:text-base">
             {content.overview}
           </p>
         </div>
@@ -32,7 +32,7 @@ function CarouselItem({ content }: { content: ContentOverview }) {
             objectPosition="center"
           />
         </div>
-        <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-r from-black via-slate-900 to-transparent" />
+        <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-br from-black via-slate-900 to-transparent md:bg-gradient-to-r" />
       </div>
     </Link>
   );
