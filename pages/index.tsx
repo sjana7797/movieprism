@@ -48,8 +48,10 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const country = context.query.country as string;
+  console.log(country);
   const trendingData: ContentOverview[] = await custAxios
-    .get(API_OPTION.TRENDING)
+    .get(API_OPTION.TRENDING, { params: { region: country } })
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {
