@@ -5,6 +5,7 @@ import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 
 function CarouselItem({ content }: { content: ContentOverview }) {
   const name = content.name || content.original_title || content.title;
+  const poster = `${BASE_URL_IMAGE}${content.poster_path}`;
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
       <div className="group relative h-52 w-full bg-black opacity-100 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:h-96">
@@ -13,9 +14,8 @@ function CarouselItem({ content }: { content: ContentOverview }) {
           src={`${BASE_URL_IMAGE}${content.backdrop_path}`}
           alt={""}
           objectFit="cover"
-          className="opacity-40 blur-sm"
         />
-        <div className="absolute top-1/2 left-10 -translate-y-1/2">
+        <div className="absolute top-1/2 left-10 z-20 -translate-y-1/2 md:w-1/2">
           <h3 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
             {name}
           </h3>
@@ -23,6 +23,16 @@ function CarouselItem({ content }: { content: ContentOverview }) {
             {content.overview}
           </p>
         </div>
+        <div className="absolute top-0 right-0 hidden h-full w-1/2  md:block">
+          <Image
+            src={poster}
+            layout="fill"
+            objectFit="cover"
+            alt={name}
+            objectPosition="center"
+          />
+        </div>
+        <div className="absolute top-0 left-0 z-10 h-full w-full bg-gradient-to-r from-black via-slate-900 to-transparent" />
       </div>
     </Link>
   );

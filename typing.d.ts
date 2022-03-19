@@ -133,19 +133,29 @@ export interface AnimePoster {
     color: string;
   };
   bannerImage: string;
+  description: string;
 }
 
 export interface Page {
-  pageInfo: {
-    total: number;
-    perPage: number;
-    currentPage: number;
-    lastPage: number;
-    hasNextPage: boolean;
-  };
+  total: number;
+  perPage: number;
+  currentPage: number;
+  lastPage: number;
+  hasNextPage: boolean;
 }
 
 export interface AnimeList {
   pageInfo: Page;
   media: [AnimePoster];
+}
+
+export interface MovieVideos {
+  name: string;
+  key: string;
+  site: string;
+  size: integer;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
 }

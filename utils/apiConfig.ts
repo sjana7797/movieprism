@@ -14,6 +14,7 @@ export const API_OPTION = {
   ON_THE_AIR: "on_the_air",
   SEASON: "season",
   MOVIE_CAST: "movie_cast",
+  VIDEO_URL: "videos",
 };
 
 export const BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original/";

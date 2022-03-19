@@ -5,6 +5,7 @@ import Contents from "../components/Home/Contents";
 import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
+import BollywoodDrama from "../components/Home/BollywoodDrama";
 
 const Home = ({
   trendingData,
@@ -15,7 +16,8 @@ const Home = ({
   popularDataIN,
   onAirIndia,
   upcommingMovies,
-}: {
+}: // popularDataBollywood,
+{
   trendingData: ContentOverview[];
   topRatedData: ContentOverview[];
   popularData: ContentOverview[];
@@ -24,6 +26,7 @@ const Home = ({
   popularDataIN: ContentOverview[];
   onAirIndia: ContentOverview[];
   upcommingMovies: ContentOverview[];
+  popularDataBollywood: ContentOverview[];
 }) => {
   return (
     <>
@@ -37,6 +40,7 @@ const Home = ({
       <Contents contents={topRatedDataIN} title="Top Rated in India" />
       <Contents contents={popularDataIN} title="Popular in India" />
       <Contents contents={onAirIndia} title="Playing in India" />
+      {/* <BollywoodDrama contents={popularDataBollywood} /> */}
     </>
   );
 };
@@ -153,7 +157,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const onAirIndiaData = await custAxios
     .get(API_OPTION.LATEST, {
-      params: { region: "IN", language: "hi" },
+      params: { region: "IN" },
     })
     .then((res) => res.data);
 
@@ -184,6 +188,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return movies;
     });
 
+  // const popularDataBollywood: ContentOverview[] = await custAxios
+  //   .get(API_OPTION.POPULAR, { params: { region: "IN" } })
+  //   .then((res) =>
+  //     res.data.results.map((movie: any) => {
+  //       return {
+  //         backdrop_path: movie.backdrop_path,
+  //         id: movie.id,
+  //         overview: movie.overview,
+  //         original_title: movie.original_title || null,
+  //         title: movie.title || null,
+  //         poster_path: movie.poster_path || null,
+  //         release_date: movie.release_date || null,
+  //         vote_count: movie.vote_count,
+  //         media_type: "movie",
+  //       };
+  //     })
+  //   );
+
   return {
     props: {
       trendingData,
@@ -194,6 +216,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       popularDataIN,
       onAirIndia,
       upcommingMovies,
+      // popularDataBollywood,
     },
   };
 };

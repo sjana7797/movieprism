@@ -3,7 +3,12 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Contents from "../../../components/Home/Contents";
-import { ContentOverview, Movie, MovieCast } from "../../../typing";
+import {
+  ContentOverview,
+  Movie,
+  MovieCast,
+  MovieVideos,
+} from "../../../typing";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 
@@ -12,8 +17,9 @@ function Movie(props: {
   similarMovie: ContentOverview[];
   recommendations: ContentOverview[];
   cast: MovieCast[];
+  videos: MovieVideos[];
 }) {
-  const { movie, cast, similarMovie, recommendations } = props;
+  const { movie, cast, similarMovie, recommendations, videos } = props;
   const img = `${BASE_URL_IMAGE}${movie.backdrop_path}`;
   const name = movie.title || movie.original_title || movie.name;
   return (
@@ -32,6 +38,7 @@ function Movie(props: {
             alt={name}
             priority
           />
+          <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
           <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
             <h2>{name}</h2>
             <p>{movie.overview}</p>
@@ -93,6 +100,27 @@ function Movie(props: {
             </div>
           </div>
           <div className="my-5">
+            <div>
+              <h2 className="ml-5 text-2xl">Videos</h2>
+              <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
+                {videos.map((video) => {
+                  return (
+                    <div key={video.id} className="max-w-[640px]">
+                      <iframe
+                        width="640"
+                        height="360"
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        className="rounded-md"
+                      ></iframe>
+                      <div className="my-2 flex flex-col space-y-2">
+                        <p>{video.name}</p>
+                        <p>{video.type}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
             <h2 className="ml-5 text-2xl">Casts</h2>
             <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
               {cast.map((people) => {
@@ -183,7 +211,13 @@ export const getServerSideProps: GetServerSideProps = async (content) => {
     })
   );
 
+  const videos: MovieVideos[] = await custAxios
+    .get(API_OPTION.VIDEO_URL, {
+      params: { movieId },
+    })
+    .then((res) => res.data.results);
+
   return {
-    props: { movie, similarMovie, recommendations, cast },
+    props: { movie, similarMovie, recommendations, cast, videos },
   };
 };

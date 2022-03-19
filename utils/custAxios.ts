@@ -64,6 +64,9 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.PROVIDER:
       config.url = `/discover/movie`;
       break;
+    case API_OPTION.VIDEO_URL:
+      config.url = `/movie/${config.params.movieId}/videos`;
+      break;
   }
   config.url += addingAPIKey();
   return config;

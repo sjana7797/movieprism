@@ -27,6 +27,7 @@ function TVSeries({ tv, similarTV }: { tv: TV; similarTV: ContentOverview[] }) {
           alt={name}
           priority
         />
+        <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
         <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
           <h2>{name}</h2>
           <p>{tv.overview}</p>

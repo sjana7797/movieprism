@@ -7,7 +7,7 @@ import { headerItems } from "../../utils/headerItems";
 function Header() {
   const router = useRouter();
   return (
-    <header className="my-5 flex h-auto flex-col items-center justify-between px-10 sm:flex-row">
+    <header className="my-5 flex h-auto flex-col items-center justify-between px-10 md:flex-row">
       <div className="mb-1 flex max-w-2xl grow justify-evenly">
         {headerItems.map((icon, index) => (
           <Link href={icon.link} key={index} passHref>
