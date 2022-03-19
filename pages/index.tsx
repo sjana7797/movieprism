@@ -28,8 +28,8 @@ const Home = ({
       <Contents contents={topRatedData} title="Top Rated" />
       <Providers />
       <Contents contents={popularData} title="Popular" />
-      <Contents contents={onAir} title="On The Air" />
-      <Contents contents={tvData} title="TV Series" />
+      <Contents contents={onAir} title="Now Playing" />
+      <Contents contents={tvData} title="TV Series On the Air" />
       {/* <BollywoodDrama contents={popularDataBollywood} /> */}
     </>
   );
@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     );
 
   const tvData: ContentOverview[] = await custAxios
-    .get(API_OPTION.POPULAR_TV, { params: { region: country } })
+    .get(API_OPTION.ON_THE_AIR, { params: { region: country } })
     .then((res) =>
       res.data.results.map((tv: any) => {
         return {

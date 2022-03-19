@@ -93,8 +93,9 @@ function TVSeries({
 export default TVSeries;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { country } = context.query;
   const tvData = await custAxios
-    .get(API_OPTION.ON_THE_AIR)
+    .get(API_OPTION.ON_THE_AIR, { params: { region: country } })
     .then((res) => res.data);
 
   const tvContents = tvData.results.map((tv: any) => {

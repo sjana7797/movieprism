@@ -86,8 +86,9 @@ function Movies({
 export default Movies;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { country } = context.query;
   const moviesData = await custAxios
-    .get(API_OPTION.LATEST)
+    .get(API_OPTION.LATEST, { params: { region: country } })
     .then((res) => res.data);
 
   const moviesContents = moviesData.results.map((movie: any) => {
