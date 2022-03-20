@@ -20,7 +20,6 @@ function Content({ content }: { content: ContentOverview }) {
             placeholder="blur"
             blurDataURL="https://dummyimage.com/208x288/fff/aaa"
             sizes="208px"
-            priority
           />
           <h2 className="absolute top-5 left-5 hidden group-hover:block">
             {content_name}
