@@ -1,16 +1,18 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-import ContentContainer from "../../components/ui/ContentContainer";
-import { ContentOverview } from "../../typing";
-import { API_OPTION } from "../../utils/apiConfig";
-import { custAxios } from "../../utils/custAxios";
+import ContentContainer from "../../../components/ui/ContentContainer";
+import { ContentOverview } from "../../../typing";
+import { API_OPTION } from "../../../utils/apiConfig";
+import { custAxios } from "../../../utils/custAxios";
 
 function Movies({
   moviesContents,
   totalPages,
+  country,
 }: {
   moviesContents: ContentOverview[];
   totalPages: number;
+  country: string;
 }) {
   const [movies, setMovies] = useState(moviesContents);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +21,7 @@ function Movies({
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const data = await custAxios
-      .get(API_OPTION.LATEST, { params: { page: page + 1 } })
+      .get(API_OPTION.LATEST, { params: { page: page + 1, region: country } })
       .then((res) => res.data);
     const contents = data.results.map((movie: any) => {
       return {
@@ -108,6 +110,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   return {
-    props: { moviesContents, totalPages: moviesData.total_pages },
+    props: { moviesContents, totalPages: moviesData.total_pages, country },
   };
 };

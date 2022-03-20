@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
-import { ContentOverview, Poster } from "../../../typing";
+import { ContentOverview } from "../../../typing";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { providers } from "../../../utils/providersItems";
@@ -10,10 +10,12 @@ function Provider({
   providerContent,
   totalPages,
   porviderId,
+  country,
 }: {
   providerContent: ContentOverview[];
   totalPages: number;
   porviderId: string;
+  country: string;
 }) {
   const title = providers.filter(
     (provider) => provider.id === parseInt(porviderId)
@@ -29,7 +31,7 @@ function Provider({
         params: {
           page: page + 1,
           with_watch_providers: parseInt(porviderId),
-          watch_region: "IN",
+          watch_region: country,
         },
       })
       .then((res) => res.data);
@@ -102,12 +104,12 @@ export default Provider;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const porviderId = context.params?.providerId as string;
-
+  const { country } = context.query;
   const providerData = await custAxios
     .get(API_OPTION.PROVIDER, {
       params: {
         with_watch_providers: parseInt(porviderId),
-        watch_region: "IN",
+        watch_region: country,
       },
     })
     .then((res) => res.data);
@@ -134,6 +136,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       providerContent,
       totalPages: providerData.total_pages,
       porviderId,
+      country,
     },
   };
 };

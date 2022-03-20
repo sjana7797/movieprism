@@ -1,16 +1,15 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
-import ContentContainer from "../../components/ui/ContentContainer";
-import { ContentOverview } from "../../typing";
-import { API_OPTION } from "../../utils/apiConfig";
-import { custAxios } from "../../utils/custAxios";
+import ContentContainer from "../../../components/ui/ContentContainer";
+import { ContentOverview } from "../../../typing";
+import { API_OPTION } from "../../../utils/apiConfig";
+import { custAxios } from "../../../utils/custAxios";
 
 function TVSeries({
   tvContents,
   totalPages,
 }: {
   tvContents: ContentOverview[];
-
   totalPages: number;
 }) {
   const [tvseries, setTVSeries] = useState(tvContents);
@@ -93,9 +92,8 @@ function TVSeries({
 export default TVSeries;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { country } = context.query;
   const tvData = await custAxios
-    .get(API_OPTION.ON_THE_AIR, { params: { region: country } })
+    .get(API_OPTION.ON_THE_AIR)
     .then((res) => res.data);
 
   const tvContents = tvData.results.map((tv: any) => {

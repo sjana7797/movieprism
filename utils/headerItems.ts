@@ -22,12 +22,12 @@ const headerItemsObj = {
   movies: {
     title: "movies",
     Icon: BiCameraMovie,
-    link: "/content/movies",
+    link: "/content/movie",
   },
   tv: {
     title: "tv series",
     Icon: BiTv,
-    link: "/content/tvseries",
+    link: "/content/tv",
   },
   anime: {
     title: "anime",

@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <meta name="robots" content="index, follow" />
         <meta charSet="UTF-8" />
-        <link rel="preconnect" href="http://via.placeholder.com" />
+        <link rel="preconnect" href="https://dummyimage.com" />
         <link rel="preconnect" href="https://image.tmdb.org" />
         <link rel="preconnect" href="https://s4.anilist.co" />
       </Head>
