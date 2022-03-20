@@ -5,6 +5,7 @@ import Contents from "../components/Home/Contents";
 import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
+import LatestMovie from "../components/Home/DiscoverMovie.server";
 
 const Home = ({
   trendingData,
@@ -12,6 +13,7 @@ const Home = ({
   popularData,
   tvData,
   onAir,
+  country,
 }: // popularDataBollywood,
 {
   trendingData: ContentOverview[];
@@ -20,6 +22,7 @@ const Home = ({
   tvData: ContentOverview[];
   upcommingMovies: ContentOverview[];
   onAir: ContentOverview[];
+  country: string;
 }) => {
   return (
     <>
@@ -29,8 +32,8 @@ const Home = ({
       <Providers />
       <Contents contents={popularData} title="Popular" />
       <Contents contents={onAir} title="Now Playing" />
+      <LatestMovie country={country} />
       <Contents contents={tvData} title="TV Series On the Air" />
-      {/* <BollywoodDrama contents={popularDataBollywood} /> */}
     </>
   );
 };
@@ -114,7 +117,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     );
 
   const onAirData = await custAxios
-    .get(API_OPTION.LATEST, {
+    .get(API_OPTION.NOW_PLAYING, {
       params: { region: country },
     })
     .then((res) => res.data);
@@ -152,6 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       tvData,
       upcommingMovies,
       onAir,
+      country,
     },
   };
 };

@@ -35,7 +35,7 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.TOP_RATED:
       config.url = `/movie/top_rated`;
       break;
-    case API_OPTION.LATEST:
+    case API_OPTION.NOW_PLAYING:
       config.url = `/movie/now_playing`;
       break;
     case API_OPTION.POPULAR:
@@ -77,7 +77,9 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.CREDITS:
       const personId = config.params.personId;
       config.url = `/person/${personId}/combined_credits`;
-      console.log(config.url);
+      break;
+    case API_OPTION.DISCOVER_SINGLE:
+      config.url = "/discover/movie";
       break;
   }
   config.url += addingAPIKey();

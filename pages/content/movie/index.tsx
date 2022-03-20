@@ -22,7 +22,9 @@ function Movies({
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const data = await custAxios
-      .get(API_OPTION.LATEST, { params: { page: page + 1, region: country } })
+      .get(API_OPTION.NOW_PLAYING, {
+        params: { page: page + 1, region: country },
+      })
       .then((res) => res.data);
     const contents = data.results.map((movie: any) => {
       return {
@@ -58,7 +60,7 @@ export default Movies;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { country } = context.query;
   const moviesData = await custAxios
-    .get(API_OPTION.LATEST, { params: { region: country } })
+    .get(API_OPTION.NOW_PLAYING, { params: { region: country } })
     .then((res) => res.data);
 
   const moviesContents = moviesData.results.map((movie: any) => {

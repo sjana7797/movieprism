@@ -1,7 +1,7 @@
 export const API_OPTION = {
   TRENDING: "trending",
   UPCOMMING_MOVIES: "upcomming_movies",
-  LATEST: "latest",
+  NOW_PLAYING: "now_playing",
   MOVIE: "movie",
   TOP_RATED: "top_rated",
   POPULAR: "popular",
@@ -18,6 +18,7 @@ export const API_OPTION = {
   VIDEO_URL: "videos",
   PEOPLE: "people",
   CREDITS: "credits",
+  DISCOVER_SINGLE: "single",
 };
 
 export const BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original/";
