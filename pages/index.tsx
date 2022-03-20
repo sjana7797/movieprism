@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Providers from "../components/Home/Providers";
 import Carousel from "../components/Home/Carousel";
-import Contents from "../components/Home/Contents";
+import Contents from "../components/Home/Contents.server";
 import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";

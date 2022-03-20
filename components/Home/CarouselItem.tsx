@@ -12,21 +12,20 @@ function CarouselItem({ content }: { content: ContentOverview }) {
         <Image
           layout="fill"
           src={`${BASE_URL_IMAGE}${content.backdrop_path}`}
-          alt={""}
+          alt={name}
           objectFit="cover"
           sizes="100%"
-          priority
         />
         <div className="absolute top-10 left-10 z-20 md:top-1/2 md:w-1/2 md:-translate-y-1/2">
-          <h3 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
+          <h2 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
             {name}
-          </h3>
+          </h2>
           <p className="my-1 mr-10 text-left text-sm text-slate-400 line-clamp-3 sm:text-base">
             {content.overview}
           </p>
         </div>
-        <div className="absolute top-0 right-0 hidden md:block">
-          <div className="relative  h-full w-1/2">
+        <div className="absolute top-0 right-0 hidden h-full w-1/2 md:block">
+          <div className="relative h-full w-full">
             <Image
               src={poster}
               layout="fill"
@@ -34,7 +33,6 @@ function CarouselItem({ content }: { content: ContentOverview }) {
               alt={name}
               objectPosition="center"
               sizes="50%"
-              priority
             />
           </div>
         </div>
