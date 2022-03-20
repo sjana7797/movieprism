@@ -7,6 +7,7 @@ import {
 } from "react-icons/bi";
 
 import { AiOutlineAliwangwang } from "react-icons/ai";
+import { HeaderItem } from "../typing";
 
 const headerItemsObj = {
   home: {
@@ -41,4 +42,4 @@ const headerItemsObj = {
   },
 };
 
-export const headerItems = Object.values(headerItemsObj);
+export const headerItems: HeaderItem[] = Object.values(headerItemsObj);

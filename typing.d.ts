@@ -1,3 +1,4 @@
+import { IconType } from "react-icons";
 export interface Genre {
   id: number;
   name: string;
@@ -25,9 +26,11 @@ export interface ContentOverview {
   first_air_date?: string;
   release_date?: string;
   vote_count?: number;
+  vote_average?: number;
   adult?: boolean;
   popularity?: number;
   genres?: Genre[];
+  status?: string;
 }
 
 export interface Provider {
@@ -208,4 +211,43 @@ export interface MovieVideos {
   official: boolean;
   published_at: string;
   id: string;
+}
+
+export type HeaderItem = {
+  title: string;
+  Icon: IconType;
+  link: string;
+};
+
+export interface Person {
+  birthday: string | null;
+  known_for_department: string;
+  deathday: null | string;
+  id: integer;
+  name: string;
+  also_known_as: [string];
+  gender: 0 | 1 | 2 | 3;
+  biography: string;
+  popularity: number;
+  place_of_birth: string | null;
+  profile_path: string | null;
+  adult: boolean;
+  imdb_id: string;
+  homepage: null | string;
+  original_title: string | null;
+  name: string | null;
+}
+
+export interface TVCast {
+  adult: boolean;
+  gender: Gender;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  character: string;
+  credit_id: string;
+  order: number;
 }

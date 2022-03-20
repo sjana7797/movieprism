@@ -29,6 +29,9 @@ custAxios.interceptors.request.use((config) => {
     case API_OPTION.MOVIE_CAST:
       config.url = `movie/${config.params.movieId}/credits`;
       break;
+    case API_OPTION.TV_CAST:
+      config.url = `tv/${config.params.tvId}/credits`;
+      break;
     case API_OPTION.TOP_RATED:
       config.url = `/movie/top_rated`;
       break;
@@ -66,6 +69,15 @@ custAxios.interceptors.request.use((config) => {
       break;
     case API_OPTION.VIDEO_URL:
       config.url = `/movie/${config.params.movieId}/videos`;
+      break;
+    case API_OPTION.PEOPLE:
+      const person_id = config.params.personId;
+      config.url = `/person/${person_id}`;
+      break;
+    case API_OPTION.CREDITS:
+      const personId = config.params.personId;
+      config.url = `/person/${personId}/combined_credits`;
+      console.log(config.url);
       break;
   }
   config.url += addingAPIKey();

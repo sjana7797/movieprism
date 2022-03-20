@@ -9,6 +9,7 @@ export default function Document() {
         <link rel="preconnect" href="https://dummyimage.com" />
         <link rel="preconnect" href="https://image.tmdb.org" />
         <link rel="preconnect" href="https://s4.anilist.co" />
+        <link rel="preconnect" href="https://www.youtube.com" />
       </Head>
       <body>
         <Main />

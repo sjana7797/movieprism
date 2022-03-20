@@ -7,6 +7,7 @@ function Content({ content }: { content: ContentOverview }) {
   const { poster_path, title, original_title, name } = content;
   const poster = `${BASE_URL_IMAGE}${poster_path}`;
   const content_name = `${title || original_title || name}`;
+
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
       <div className="group transform cursor-pointer rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
@@ -19,6 +20,7 @@ function Content({ content }: { content: ContentOverview }) {
             placeholder="blur"
             blurDataURL="https://dummyimage.com/208x288/fff/aaa"
             sizes="208px"
+            priority
           />
           <h2 className="absolute top-5 left-5 hidden group-hover:block">
             {content_name}

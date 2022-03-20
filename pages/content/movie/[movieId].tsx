@@ -2,6 +2,7 @@ import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import Contents from "../../../components/Home/Contents";
 import {
   ContentOverview,
@@ -36,12 +37,19 @@ function Movie(props: {
             objectPosition="center"
             className="sticky top-0 opacity-40"
             alt={name}
+            blurDataURL="https://dummyimage.com/1920x1080/fff/aaa"
+            placeholder="blur"
             priority
           />
           <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
           <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
             <h2>{name}</h2>
             <p>{movie.overview}</p>
+            <p>
+              Score :{" "}
+              {movie.vote_average ? `${movie.vote_average * 10}%` : "NA"}
+            </p>
+            <p>Status : {movie.status}</p>
             <p className="flex items-center">
               {movie.release_date || movie.first_air_date} &#9679;{" "}
               <ThumbUpIcon className="mx-2 h-5" />
@@ -125,28 +133,42 @@ function Movie(props: {
               <h2 className="ml-5 text-2xl">Casts</h2>
               <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
                 {cast.map((people) => {
-                  let imgSrc = "/favicon.ico";
+                  const blurData =
+                    people.gender === 2
+                      ? "/img/user-picture-placeholder.png"
+                      : "/img/female-user-icon.jpg";
+                  let imgSrc = blurData;
                   if (people.profile_path)
                     imgSrc = `${BASE_URL_IMAGE}${people.profile_path.slice(1)}`;
                   return (
-                    <div key={people.id}>
-                      <div className="">
-                        <Image
-                          src={imgSrc}
-                          width={238}
-                          height={357}
-                          layout="fixed"
-                          alt={people.name}
-                          className="rounded-md"
-                        />
+                    <Link
+                      key={people.id}
+                      passHref
+                      href={`/person/${people.id}`}
+                    >
+                      <div className="group cursor-pointer">
+                        <div className="overflow-hidden rounded-md">
+                          <Image
+                            src={imgSrc}
+                            width={238}
+                            height={357}
+                            layout="fixed"
+                            alt={people.name}
+                            className="rounded-md bg-white transition-transform duration-300 hover:scale-105"
+                            blurDataURL={blurData}
+                            placeholder="blur"
+                            objectFit="cover"
+                            objectPosition="center"
+                          />
+                        </div>
+                        <div className="my-2">
+                          <h3>{people.name}</h3>
+                          <h3 className="text-sm italic text-slate-400">
+                            {people.character}
+                          </h3>
+                        </div>
                       </div>
-                      <div className="my-2">
-                        <h3>{people.name}</h3>
-                        <h3 className="text-sm italic text-slate-400">
-                          {people.character}
-                        </h3>
-                      </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
