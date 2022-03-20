@@ -1,6 +1,6 @@
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest, ev: NextFetchEvent) {
+export function middleware(req: NextRequest) {
   const { nextUrl: url, geo } = req;
   const country = geo?.country || "IN";
   url.searchParams.set("country", country);

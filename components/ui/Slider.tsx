@@ -14,7 +14,7 @@ type UpcommingMovie = {
 function Slider() {
   const [upcommingMovies, setUpcommingMovies] = useState<UpcommingMovie[]>([]);
   useEffect(() => {
-    const getUpcommingMovies: any = async () => {
+    const getUpcommingMovies = async () => {
       const movies = await custAxios
         .get(API_OPTION.UPCOMMING_MOVIES)
         .then((res) => {

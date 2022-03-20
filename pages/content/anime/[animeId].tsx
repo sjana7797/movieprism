@@ -4,7 +4,6 @@ import { client } from "../../../utils/apolloClient";
 import { Anime } from "../../../typing";
 import Head from "next/head";
 import Image from "next/image";
-import { ThumbUpIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
 function Anime(props: { anime: Anime }) {
@@ -92,7 +91,7 @@ function Anime(props: { anime: Anime }) {
         <aside className="my-5 mx-5 rounded-md border-2 border-slate-300 p-5">
           <h2 className="text-xl">Recommendations</h2>
           <div className="flex w-full space-x-5 overflow-x-scroll p-5 scrollbar-hide">
-            {anime.recommendations.edges.map((recommended, index) => {
+            {anime.recommendations.edges.map((recommended) => {
               const anime = recommended.node.mediaRecommendation;
               const poster = anime.coverImage.extraLarge;
               const content_name =

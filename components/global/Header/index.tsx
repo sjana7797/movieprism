@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import React from "react";
 import { APP_NAME } from "../../../utils/appConfig";
 import { headerItems } from "../../../utils/headerItems";
 import HeaderItem from "./HeaderItem";

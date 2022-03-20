@@ -39,7 +39,7 @@ function News(props: { news: News }) {
 
 export default News;
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
   const news: News = await newsAxios
     .get("search", { params: { page: 1 } })
     .then((res) => res.data);
