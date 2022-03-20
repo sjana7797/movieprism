@@ -9,5 +9,44 @@
 @layer base {
   body {
     @apply bg-slate-800 font-montserrat text-slate-200;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
   }
 }
+
+/* Styling scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #0f172a;
+  border-radius: 14px;
+  background: #334155;
+  margin-block: 0.5rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #0f172a;
+  border-radius: 14px;
+  border: 2px solid #334155;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1e293b;
+}
+
+/* Other Browser */
+@supports (scrollbar-color: #334155 #334155) {
+  * {
+    scrollbar-color: #334155 #334155;
+    scrollbar-width: auto;
+  }
+}
+/* Other Browser */
+/* Styling scrollbar */
