@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import Contents from "../../../components/Home/Contents.server";
+import Contents from "../../../components/Home/Contents";
 import {
   ContentOverview,
   Movie,

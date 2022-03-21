@@ -1,11 +1,11 @@
 import type { GetServerSideProps } from "next";
 import Providers from "../components/Home/Providers";
 import Carousel from "../components/Home/Carousel";
-import Contents from "../components/Home/Contents.server";
+import Contents from "../components/Home/Contents";
 import { ContentOverview, Poster } from "../typing";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
-import LatestMovie from "../components/Home/DiscoverMovie.server";
+import LatestMovie from "../components/Home/DiscoverMovie";
 
 const Home = ({
   trendingData,
@@ -43,7 +43,7 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { country } = context.query;
   const trendingData: ContentOverview[] = await custAxios
-    .get(API_OPTION.TRENDING)
+    .get(API_OPTION.TRENDING, { params: { media: "all" } })
     .then((res) =>
       res.data.results.map((movie: any) => {
         return {

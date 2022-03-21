@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Contents from "../../../../components/Home/Contents.server";
+import Contents from "../../../../components/Home/Contents";
 import {
   ContentOverview,
   Season as SeasonInterface,

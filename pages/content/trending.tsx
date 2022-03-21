@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import ContentContainer from "../../components/ui/ContentContainer";
+import Nav from "../../components/ui/Nav";
 import { ContentOverview } from "../../typing";
 import { API_OPTION } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
@@ -19,7 +20,7 @@ function Trending({
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const data = await custAxios
-      .get("trending", { params: { page: page + 1 } })
+      .get("trending", { params: { page: page + 1, media: "all" } })
       .then((res) => res.data);
     console.log(data.page);
     setTrending((prevData) => [...prevData, ...data.results]);
@@ -28,6 +29,7 @@ function Trending({
   };
   return (
     <>
+      <Nav />
       <ContentContainer contents={trending} title="Trending this week" />
       {!(page === totalPages) && (
         <div
@@ -71,9 +73,9 @@ function Trending({
 
 export default Trending;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const trendingData = await custAxios
-    .get(API_OPTION.TRENDING)
+    .get(API_OPTION.TRENDING, { params: { media: "all" } })
     .then((res) => res.data);
 
   const trendingContents = trendingData.results.map((movie: any) => {

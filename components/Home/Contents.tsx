@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { ContentOverview } from "../../typing";
-import Content from "../ui/Content.sever";
+import Content from "../ui/Content";
 
 function Contents({
   contents,

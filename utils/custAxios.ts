@@ -24,7 +24,8 @@ custAxios.interceptors.request.use((config) => {
   const { url } = config;
   switch (url) {
     case API_OPTION.TRENDING:
-      config.url = `${url}/all/week`;
+      const media = config.params.media;
+      config.url = `${url}/${media}/week`;
       break;
     case API_OPTION.MOVIE:
       config.url = `${url}/${config.params.movieId}`;

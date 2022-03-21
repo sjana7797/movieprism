@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Contents from "../../../../components/Home/Contents.server";
+import Contents from "../../../../components/Home/Contents";
 import { ContentOverview, TV, TVCast } from "../../../../typing";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { custAxios } from "../../../../utils/custAxios";
