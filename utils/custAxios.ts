@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import axios from "axios";
 import { API_OPTION } from "./apiConfig";
 
@@ -12,6 +13,11 @@ const custAxios = axios.create({
 const newsAxios = axios.create({
   baseURL: "https://gnews.io/api/v4",
   params: { q: "movies", token: process.env.NEXT_PUBLIC_NEWS_API_KEY },
+});
+
+const bloggerAxios = axios.create({
+  baseURL: `https://www.googleapis.com/blogger/v3/blogs/${process.env.BLOGGER_ID}`,
+  params: { key: `${process.env.BLOGGER_API_KEY}` },
 });
 
 custAxios.interceptors.request.use((config) => {
@@ -86,4 +92,4 @@ custAxios.interceptors.request.use((config) => {
   return config;
 });
 
-export { custAxios, newsAxios };
+export { custAxios, newsAxios, bloggerAxios };
