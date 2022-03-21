@@ -120,6 +120,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   return {
-    props: { moviesContents, totalPages: moviesData.total_pages, country, key },
+    props: { moviesContents, totalPages: moviesData.total_pages, country },
   };
 };
