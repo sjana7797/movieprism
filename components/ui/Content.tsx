@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ContentOverview } from "../../typing";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
+import { item } from "../../animation/variants";
 
 function Content({ content }: { content: ContentOverview }) {
   const { poster_path, title, original_title, name } = content;
@@ -11,8 +12,14 @@ function Content({ content }: { content: ContentOverview }) {
 
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
-      <m.div className="group transform cursor-pointer rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
-        <div className="relative h-[300px] w-[200px]">
+      <m.div
+        className="group transform cursor-pointer rounded-md border-2 border-black transition duration-300 hover:scale-105 hover:border-slate-200"
+        variants={item}
+      >
+        <m.div
+          className="relative h-[300px] w-[200px]"
+          whileTap={{ scale: 0.85 }}
+        >
           <Image
             src={poster}
             alt={content_name}
@@ -25,7 +32,7 @@ function Content({ content }: { content: ContentOverview }) {
           <h2 className="absolute top-5 left-5 hidden group-hover:block">
             {content_name}
           </h2>
-        </div>
+        </m.div>
       </m.div>
     </Link>
   );

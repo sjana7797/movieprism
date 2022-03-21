@@ -1,10 +1,12 @@
 import { GetServerSideProps } from "next";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import ContentContainer from "../../components/ui/ContentContainer";
 import Nav from "../../components/ui/Nav";
 import { ContentOverview } from "../../typing";
 import { API_OPTION } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
+import { trendingNav } from "../../utils/nav";
 
 function Trending({
   trendingContents,
@@ -13,23 +15,28 @@ function Trending({
   trendingContents: ContentOverview[];
   totalPages: number;
 }) {
-  const [trending, setTrending] = useState(trendingContents);
+  const router = useRouter();
+  const [trending, setTrending] = useState<ContentOverview[]>(trendingContents);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const handleClick = async () => {
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
+    const media = (router.query.media as string) || "all";
     const data = await custAxios
-      .get("trending", { params: { page: page + 1, media: "all" } })
+      .get("trending", { params: { page: page + 1, media } })
       .then((res) => res.data);
     console.log(data.page);
     setTrending((prevData) => [...prevData, ...data.results]);
     setPage(data.page);
     setIsLoading(false);
   };
+  useEffect(() => {
+    setTrending(trendingContents);
+  }, [trendingContents]);
   return (
     <>
-      <Nav />
+      <Nav navs={trendingNav} />
       <ContentContainer contents={trending} title="Trending this week" />
       {!(page === totalPages) && (
         <div
@@ -73,9 +80,10 @@ function Trending({
 
 export default Trending;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const media = (context.query.media as string) || "all";
   const trendingData = await custAxios
-    .get(API_OPTION.TRENDING, { params: { media: "all" } })
+    .get(API_OPTION.TRENDING, { params: { media } })
     .then((res) => res.data);
 
   const trendingContents = trendingData.results.map((movie: any) => {
@@ -93,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       vote_count: movie.vote_count,
     };
   });
-
+  console.log(trendingContents);
   return {
     props: { trendingContents, totalPages: trendingData.total_pages },
   };

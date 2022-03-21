@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContentOverview } from "../../typing";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
+import { m } from "framer-motion";
 
 function Thumbnail(props: { content: ContentOverview }) {
   const {
@@ -24,7 +25,7 @@ function Thumbnail(props: { content: ContentOverview }) {
   const content_name = name || title || original_title;
   return (
     <Link href={`/content/${media_type}/${id}`} passHref>
-      <div className="group transform cursor-pointer p-2 transition duration-200 ease-in hover:z-50 sm:hover:scale-105">
+      <m.div className="group transform cursor-pointer p-2 transition duration-200 ease-in hover:z-50 sm:hover:scale-105">
         <Image
           src={poster}
           width={1920}
@@ -45,7 +46,7 @@ function Thumbnail(props: { content: ContentOverview }) {
             {vote_count}
           </p>
         </div>
-      </div>
+      </m.div>
     </Link>
   );
 }
