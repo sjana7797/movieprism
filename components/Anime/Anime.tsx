@@ -53,7 +53,10 @@ function Anime({ anime }: { anime: AnimePoster }) {
             anime.title.native ||
             anime.title.userPreferred}
         </h2>
-        <p className="truncate">{anime.description}</p>
+        <p
+          className="truncate line-clamp-1"
+          dangerouslySetInnerHTML={{ __html: anime.description }}
+        ></p>
       </div>
     </Link>
   );

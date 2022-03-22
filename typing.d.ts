@@ -251,3 +251,18 @@ export interface TVCast {
   credit_id: string;
   order: number;
 }
+
+interface Image {
+  aspect_ratio: number;
+  file_path: string;
+  height: integer;
+  iso_639_1: null | string;
+  vote_average: integer;
+  vote_count: integer;
+  width: integer;
+}
+export interface ContentImages {
+  id: number;
+  backdrops: [Image];
+  posters: [Image];
+}

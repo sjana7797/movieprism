@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Contents from "../../../components/Home/Contents";
 import {
+  ContentImages,
   ContentOverview,
   Movie,
   MovieCast,
@@ -12,6 +13,8 @@ import {
 } from "../../../typing";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 function Movie(props: {
   movie: Movie;
@@ -19,10 +22,27 @@ function Movie(props: {
   recommendations: ContentOverview[];
   cast: MovieCast[];
   videos: MovieVideos[];
+  images: ContentImages;
 }) {
-  const { movie, cast, similarMovie, recommendations, videos } = props;
+  const { movie, cast, similarMovie, recommendations, videos, images } = props;
   const img = `${BASE_URL_IMAGE}${movie.backdrop_path}`;
-  const name = movie.title || movie.original_title || movie.name;
+  const name = movie.title || movie.original_title || movie.name || "";
+
+  const [backdropWidth, setBackdropWidth] = useState(0);
+  const backdropCarousel = useRef<HTMLDivElement>(null);
+  const [posterWidth, setPosterWidth] = useState(0);
+  const posterCarousel = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const widthBackdrop =
+      (backdropCarousel.current?.scrollWidth || 0) -
+      (backdropCarousel.current?.offsetWidth || 0);
+    const widthPoster =
+      (posterCarousel.current?.scrollWidth || 0) -
+      (posterCarousel.current?.offsetWidth || 0);
+    setBackdropWidth(widthBackdrop);
+    setPosterWidth(widthPoster);
+  }, []);
   return (
     <>
       <Head>
@@ -74,6 +94,76 @@ function Movie(props: {
                 </div>
               </div>
             )}
+          </div>
+        </section>
+        <section className="my-10">
+          <div className="my-5">
+            <h2 className="ml-5 text-2xl">Backdrops</h2>
+            <motion.div
+              className="cursor-grab overflow-hidden"
+              ref={backdropCarousel}
+            >
+              <motion.div
+                className="flex items-center space-x-5 px-5 py-5"
+                drag="x"
+                dragConstraints={{ right: 0, left: -backdropWidth }}
+                transition={{ type: "spring", bounce: 0.25 }}
+              >
+                {images.backdrops.map((backdrop, index) => {
+                  return (
+                    <motion.div
+                      key={index}
+                      className="relative min-h-[400px] min-w-[500px]"
+                    >
+                      <Image
+                        src={`${BASE_URL_IMAGE}${backdrop.file_path}`}
+                        layout="responsive"
+                        width={backdrop.width}
+                        height={backdrop.height}
+                        alt={name}
+                        className="pointer-events-none rounded-lg"
+                        priority
+                        sizes="500px"
+                      />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </motion.div>
+          </div>
+          <div className="my-5">
+            <h2 className="ml-5 text-2xl">Posters</h2>
+            <motion.div
+              className="cursor-grab overflow-hidden"
+              ref={posterCarousel}
+            >
+              <motion.div
+                className="flex items-center space-x-5 px-5 py-5"
+                drag="x"
+                dragConstraints={{ right: 0, left: -posterWidth }}
+                transition={{ type: "spring", bounce: 0.25 }}
+              >
+                {images.posters.map((poster, index) => {
+                  return (
+                    <motion.div
+                      key={index}
+                      className="relative min-h-[400px] min-w-[200px]"
+                    >
+                      <Image
+                        src={`${BASE_URL_IMAGE}${poster.file_path}`}
+                        layout="responsive"
+                        width={poster.width}
+                        height={poster.height}
+                        alt={name}
+                        className="pointer-events-none rounded-lg"
+                        priority
+                        sizes="200px"
+                      />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </motion.div>
           </div>
         </section>
         <section className="my-10">
@@ -241,7 +331,19 @@ export const getServerSideProps: GetServerSideProps = async (content) => {
     })
     .then((res) => res.data.results);
 
+  const images: ContentImages = await custAxios
+    .get(API_OPTION.IMAGES, {
+      params: { id: movieId, media: "movie" },
+    })
+    .then((res) => {
+      const data = res.data;
+      return {
+        id: data.id,
+        backdrops: data.backdrops.slice(0, 5),
+        posters: data.posters.slice(0, 5),
+      };
+    });
   return {
-    props: { movie, similarMovie, recommendations, cast, videos },
+    props: { movie, similarMovie, recommendations, cast, videos, images },
   };
 };

@@ -22,9 +22,9 @@ const bloggerAxios = axios.create({
 
 custAxios.interceptors.request.use((config) => {
   const { url } = config;
+  const media = config.params?.media || "";
   switch (url) {
     case API_OPTION.TRENDING:
-      const media = config.params.media;
       config.url = `${url}/${media}/week`;
       break;
     case API_OPTION.MOVIE:
@@ -90,6 +90,10 @@ custAxios.interceptors.request.use((config) => {
       break;
     case API_OPTION.DISCOVER_TV:
       config.url = "/discover/tv";
+      break;
+    case API_OPTION.IMAGES:
+      const id = config.params.id;
+      config.url = `/${media}/${id}/images`;
       break;
   }
   config.url += addingAPIKey();
