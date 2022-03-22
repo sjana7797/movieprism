@@ -26,7 +26,6 @@ function Trending({
     const data = await custAxios
       .get("trending", { params: { page: page + 1, media } })
       .then((res) => res.data);
-    console.log(data.page);
     setTrending((prevData) => [...prevData, ...data.results]);
     setPage(data.page);
     setIsLoading(false);
@@ -101,7 +100,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       vote_count: movie.vote_count,
     };
   });
-  console.log(trendingContents);
   return {
     props: { trendingContents, totalPages: trendingData.total_pages },
   };

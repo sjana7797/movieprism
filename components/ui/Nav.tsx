@@ -10,7 +10,7 @@ function Nav({ navs }: { navs: { title: string; link: string }[] }) {
           <h2
             key={index}
             onClick={() => router.push(nav.link)}
-            className={`transform cursor-pointer font-medium uppercase tracking-wide transition-transform duration-100 last:pr-24 hover:scale-[1.3] hover:text-green-400 active:text-green-500 ${
+            className={`transform cursor-pointer font-medium uppercase tracking-wide transition-transform duration-100 last:pr-24 hover:scale-105 hover:text-green-400 active:text-green-500 sm:hover:scale-[1.3] ${
               (router.query.media ||
                 router.query.key?.toString().replaceAll("_", " ")) ===
                 nav.title && "text-green-400"
