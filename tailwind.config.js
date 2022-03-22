@@ -10,6 +10,9 @@ module.exports = {
         montserrat: ["Montserrat", "sans-serif"],
       },
       screens: { "3xl": "2000px" },
+      colors: {
+        dark: "#05202a",
+      },
     },
   },
   plugins: [

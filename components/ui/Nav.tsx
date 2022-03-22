@@ -10,20 +10,23 @@ function Nav({ navs }: { navs: { title: string; link: string }[] }) {
           <h2
             key={index}
             onClick={() => router.push(nav.link)}
-            className={`transform cursor-pointer font-medium uppercase italic tracking-wider transition-transform duration-100 last:pr-24 hover:scale-125 hover:text-green-400 active:text-green-500 ${
+            className={`transform cursor-pointer font-medium uppercase tracking-wide transition-transform duration-100 last:pr-24 hover:scale-[1.3] hover:text-green-400 active:text-green-500 ${
               (router.query.media ||
                 router.query.key?.toString().replaceAll("_", " ")) ===
                 nav.title && "text-green-400"
             } ${
               !(router.query.media || router.query.key) &&
               "first:text-green-400"
+            } ${
+              router.query.genreName === nav.title.toLowerCase() &&
+              "text-green-400"
             }`}
           >
             {nav.title}
           </h2>
         ))}
       </div>
-      <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-slate-800" />
+      <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-dark" />
     </nav>
   );
 }

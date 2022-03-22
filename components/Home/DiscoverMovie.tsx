@@ -26,11 +26,10 @@ function LatestMovie({ country }: { country: string }) {
     setTimeout(() => {
       if (data) {
         const num = Math.floor(Math.random() * data.length - 1);
-        console.log("change", num);
         const movie = data[num];
         setMovie(movie);
       }
-    }, 1000 * 10);
+    }, 1000 * 60 * 5); //msec * sec * min
   });
 
   const name = movie?.original_title || movie?.name || movie?.title;

@@ -1,5 +1,10 @@
 import { API_OPTION } from "./apiConfig";
 
+export interface Nav {
+  title: string;
+  link: string;
+}
+
 const trendingNavObj = {
   all: {
     title: "all",
@@ -15,8 +20,7 @@ const trendingNavObj = {
   },
 };
 
-export const trendingNav: { title: string; link: string }[] =
-  Object.values(trendingNavObj);
+export const trendingNav: Nav[] = Object.values(trendingNavObj);
 
 //Movies nav
 const moviesNavObj = {
@@ -42,5 +46,21 @@ const moviesNavObj = {
   },
 };
 
-export const moviesNav: { title: string; link: string }[] =
-  Object.values(moviesNavObj);
+export const moviesNav: Nav[] = Object.values(moviesNavObj);
+
+const genresNavObj = {
+  action: {
+    title: "action",
+    link: "/content/genres?genre=28",
+  },
+  movie: {
+    title: "movie",
+    link: "/content/genres?genre=28",
+  },
+  tv: {
+    title: "tv",
+    link: "/content/genres?genre=28",
+  },
+};
+
+export const genresNav: Nav[] = Object.values(genresNavObj);

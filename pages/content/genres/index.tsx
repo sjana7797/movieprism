@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
@@ -7,13 +7,12 @@ import Nav from "../../../components/ui/Nav";
 import { ContentOverview } from "../../../typing";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
-import { moviesNav } from "../../../utils/nav";
+import { genresNav } from "../../../utils/nav";
 
 const getMovies = async (
   key: string,
   country: string,
-  page: number | undefined,
-  genre: string | undefined
+  page: number | undefined
 ) => {
   switch (key) {
     case API_OPTION.NOW_PLAYING:
@@ -36,12 +35,6 @@ const getMovies = async (
       return await custAxios
         .get(API_OPTION.UPCOMMING_MOVIES, { params: { region: country, page } })
         .then((res) => res.data);
-    case API_OPTION.PROVIDER:
-      return await custAxios
-        .get(API_OPTION.PROVIDER, {
-          params: { region: country, page, with_genres: genre || "28" },
-        })
-        .then((res) => res.data);
     default:
       return await custAxios
         .get(API_OPTION.NOW_PLAYING, { params: { region: country, page } })
@@ -49,32 +42,24 @@ const getMovies = async (
   }
 };
 
-function Movies({
+function Genres({
   moviesContents,
   totalPages,
   country,
-  genre,
 }: {
   moviesContents: ContentOverview[];
   totalPages: number;
   country: string;
-  genre: string | undefined;
 }) {
   const router = useRouter();
   const [movies, setMovies] = useState(moviesContents);
-  const [genres, setGenres] = useState(moviesNav);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const handleClick = async () => {
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
     const key = router.query.key as string;
-    const data = await getMovies(
-      key as string,
-      country as string,
-      page + 1,
-      genre
-    );
+    const data = await getMovies(key as string, country as string, page + 1);
     const contents = data.results.map((movie: any) => {
       return {
         backdrop_path: movie.backdrop_path,
@@ -97,25 +82,9 @@ function Movies({
   useEffect(() => {
     setMovies(moviesContents);
   }, [moviesContents]);
-  useEffect(() => {
-    const getGenres = async () => {
-      const genres = await custAxios.get("genre/movie/list").then((res) => {
-        return res.data.genres.map((genre: { name: string; id: number }) => {
-          return {
-            title: genre.name,
-            link: `/content/movie?key=${API_OPTION.PROVIDER}&genre=${
-              genre.id
-            }&genreName=${genre.name.toLowerCase()}`,
-          };
-        });
-      });
-      setGenres((prevGenres) => [...prevGenres, ...genres]);
-    };
-    getGenres();
-  }, []);
   return (
     <>
-      <Nav navs={genres} />
+      <Nav navs={genresNav} />
       <ContentContainer contents={movies} title="Playing this week" />
       {!(page === totalPages) && (
         <LoadMore handleClick={handleClick} isLoading={isLoading} />
@@ -124,16 +93,15 @@ function Movies({
   );
 }
 
-export default Movies;
+export default Genres;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { country, key, genre } = context.query;
-  const moviesData = await getMovies(
-    key as string,
-    country as string,
-    undefined,
-    genre as string | undefined
-  );
+  const { country, genre } = context.query;
+  const moviesData = await custAxios
+    .get(API_OPTION.PROVIDER, {
+      params: { region: country, with_genres: genre || "28" },
+    })
+    .then((res) => res.data);
 
   const moviesContents = moviesData.results.map((movie: any) => {
     return {

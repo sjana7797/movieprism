@@ -4,6 +4,7 @@ import {
   BiTrendingUp,
   BiHomeSmile,
   BiNews,
+  BiHash,
 } from "react-icons/bi";
 
 import { AiOutlineAliwangwang } from "react-icons/ai";
@@ -30,11 +31,17 @@ const headerItemsObj = {
     Icon: BiTv,
     link: "/content/tv",
   },
+  genres: {
+    title: "genres",
+    Icon: BiHash,
+    link: "/content/genres",
+  },
   anime: {
     title: "anime",
     Icon: AiOutlineAliwangwang,
     link: "/content/anime",
   },
+
   news: {
     title: "news",
     Icon: BiNews,

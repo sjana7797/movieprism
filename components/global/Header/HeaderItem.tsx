@@ -8,7 +8,7 @@ function HeaderItem({ icon }: { icon: HeaderItem }) {
   return (
     <Link href={icon.link} passHref>
       <div
-        className={`group flex w-12 cursor-pointer flex-col items-center transition-colors duration-300 hover:text-emerald-400 sm:w-20 ${
+        className={`group flex w-12 cursor-pointer flex-col items-center font-bold text-slate-100 transition-colors duration-300 hover:text-emerald-400 sm:w-20 ${
           isRoute && "text-emerald-400"
         }`}
       >
