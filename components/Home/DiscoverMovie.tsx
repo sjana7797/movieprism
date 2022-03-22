@@ -24,13 +24,24 @@ function LatestMovie({ country }: { country: string }) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (data) {
+      if (movie && data) {
         const num = Math.floor(Math.random() * data.length - 1);
         const movie = data[num];
         setMovie(movie);
       }
     }, 1000 * 60 * 5); //msec * sec * min
   });
+
+  useEffect(() => {
+    const firstMovie = () => {
+      if (data) {
+        const num = Math.floor(Math.random() * data.length - 1);
+        const movie = data[num];
+        setMovie(movie);
+      }
+    };
+    firstMovie();
+  }, [data]);
 
   const name = movie?.original_title || movie?.name || movie?.title;
 
