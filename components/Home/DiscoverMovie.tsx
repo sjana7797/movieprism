@@ -10,7 +10,7 @@ function LatestMovie({ country }: { country: string }) {
   const router = useRouter();
   const fetcher = async () => {
     const movies: ContentOverview[] = await custAxios
-      .get(API_OPTION.DISCOVER_SINGLE, { params: { watch_region: country } })
+      .get(API_OPTION.DISCOVER_MOVIE, { params: { watch_region: country } })
       .then((res) => {
         const data = res.data;
         return data.results;
