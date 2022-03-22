@@ -41,6 +41,11 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
+
   const { country } = context.query;
   const trendingData: ContentOverview[] = await custAxios
     .get(API_OPTION.TRENDING, { params: { media: "all" } })

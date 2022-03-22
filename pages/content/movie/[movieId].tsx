@@ -146,7 +146,6 @@ function Movie(props: {
                 className="flex items-center space-x-5 px-5 py-5"
                 drag="x"
                 dragConstraints={{ right: 0, left: -posterWidth }}
-                transition={{ type: "spring", bounce: 0.25 }}
               >
                 {images.posters.map((poster, index) => {
                   return (
