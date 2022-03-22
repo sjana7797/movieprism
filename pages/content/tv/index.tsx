@@ -44,9 +44,12 @@ const getTvs = async (
 function TVSeries({
   tvContents,
   totalPages,
+  genre,
+  country,
 }: {
   tvContents: ContentOverview[];
-
+  genre: string | undefined;
+  country: string;
   totalPages: number;
 }) {
   const router = useRouter();
@@ -58,13 +61,12 @@ function TVSeries({
     const key = router.query.key as string;
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
-    const data = await custAxios
-      .get(API_OPTION.ON_THE_AIR, {
-        params: {
-          page: page + 1,
-        },
-      })
-      .then((res) => res.data);
+    const data = await getTvs(
+      key as string,
+      country as string,
+      page + 1,
+      genre as string | undefined
+    );
 
     const contents = data.results.map((tv: any) => {
       return {
@@ -160,6 +162,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   return {
-    props: { tvContents, totalPages: tvData.total_pages },
+    props: {
+      tvContents,
+      totalPages: tvData.total_pages,
+      country,
+      genre: genre || "",
+    },
   };
 };

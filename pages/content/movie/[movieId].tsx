@@ -83,12 +83,17 @@ function Movie(props: {
                 <div className="flex max-w-xl flex-wrap items-center space-x-5">
                   {movie.genres.map((genre) => {
                     return (
-                      <span
+                      <Link
                         key={genre.id}
-                        className="my-1 cursor-pointer rounded-md border-2 border-slate-300 py-1 px-2 transition-colors duration-200 hover:bg-slate-300 hover:text-slate-900"
+                        passHref
+                        href={`/content/genre?media=movie&genre=${
+                          genre.id
+                        }&genreName=${encodeURIComponent(genre.name)}`}
                       >
-                        {genre.name}
-                      </span>
+                        <span className="my-1 cursor-pointer rounded-md border-2 border-slate-300 py-1 px-2 transition-colors duration-200 hover:bg-slate-300 hover:text-slate-900">
+                          {genre.name}
+                        </span>
+                      </Link>
                     );
                   })}
                 </div>

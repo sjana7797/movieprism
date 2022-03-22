@@ -36,7 +36,7 @@ const getMovies = async (
       return await custAxios
         .get(API_OPTION.UPCOMMING_MOVIES, { params: { region: country, page } })
         .then((res) => res.data);
-    case API_OPTION.PROVIDER:
+    case API_OPTION.DISCOVER_MOVIE:
       return await custAxios
         .get(API_OPTION.DISCOVER_MOVIE, {
           params: { region: country, page, with_genres: genre || "28" },
@@ -105,7 +105,7 @@ function Movies({
         return res.data.genres.map((genre: { name: string; id: number }) => {
           return {
             title: genre.name,
-            link: `/content/movie?key=${API_OPTION.PROVIDER}&genre=${
+            link: `/content/movie?key=${API_OPTION.DISCOVER_MOVIE}&genre=${
               genre.id
             }&genreName=${encodeURIComponent(
               genre.name.toString().toLowerCase()
@@ -129,7 +129,7 @@ function Movies({
             .replaceAll("_", " ")
             .toLowerCase()
             .toLowerCase() ||
-          "On the airPlaying this week"
+          "Now playing"
         }
       />
       {!(page === totalPages) && (
@@ -167,6 +167,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   return {
-    props: { moviesContents, totalPages: moviesData.total_pages, country },
+    props: {
+      moviesContents,
+      totalPages: moviesData.total_pages,
+      country,
+      genre: genre || "",
+    },
   };
 };

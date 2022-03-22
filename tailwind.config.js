@@ -11,7 +11,7 @@ module.exports = {
       },
       screens: { "3xl": "2000px" },
       colors: {
-        dark: "#05202a",
+        dark: "#06202a",
       },
     },
   },
