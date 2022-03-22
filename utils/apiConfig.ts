@@ -18,7 +18,8 @@ export const API_OPTION = {
   VIDEO_URL: "videos",
   PEOPLE: "people",
   CREDITS: "credits",
-  DISCOVER_SINGLE: "single",
+  DISCOVER_MOVIE: "discover_movie",
+  DISCOVER_TV: "discover_tv",
 };
 
 export const BASE_URL_IMAGE = "https://image.tmdb.org/t/p/original/";

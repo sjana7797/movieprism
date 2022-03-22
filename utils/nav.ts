@@ -48,19 +48,19 @@ const moviesNavObj = {
 
 export const moviesNav: Nav[] = Object.values(moviesNavObj);
 
-const genresNavObj = {
-  action: {
-    title: "action",
-    link: "/content/genres?genre=28",
+const tvNavObj = {
+  air: {
+    title: "on the air",
+    link: `/content/tv?key=${API_OPTION.ON_THE_AIR}`,
   },
-  movie: {
-    title: "movie",
-    link: "/content/genres?genre=28",
+  trending: {
+    title: "trending",
+    link: `/content/tv?key=${API_OPTION.TRENDING}`,
   },
-  tv: {
-    title: "tv",
-    link: "/content/genres?genre=28",
+  popular: {
+    title: "popular tv",
+    link: `/content/tv?key=${API_OPTION.POPULAR_TV}`,
   },
 };
 
-export const genresNav: Nav[] = Object.values(genresNavObj);
+export const tvNav: Nav[] = Object.values(tvNavObj);

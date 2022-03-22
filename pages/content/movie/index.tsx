@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
@@ -38,7 +38,7 @@ const getMovies = async (
         .then((res) => res.data);
     case API_OPTION.PROVIDER:
       return await custAxios
-        .get(API_OPTION.PROVIDER, {
+        .get(API_OPTION.DISCOVER_MOVIE, {
           params: { region: country, page, with_genres: genre || "28" },
         })
         .then((res) => res.data);
@@ -94,9 +94,11 @@ function Movies({
     setPage(data.page);
     setIsLoading(false);
   };
+
   useEffect(() => {
     setMovies(moviesContents);
   }, [moviesContents]);
+
   useEffect(() => {
     const getGenres = async () => {
       const genres = await custAxios.get("genre/movie/list").then((res) => {
@@ -105,7 +107,9 @@ function Movies({
             title: genre.name,
             link: `/content/movie?key=${API_OPTION.PROVIDER}&genre=${
               genre.id
-            }&genreName=${genre.name.toLowerCase()}`,
+            }&genreName=${encodeURIComponent(
+              genre.name.toString().toLowerCase()
+            )}`,
           };
         });
       });
@@ -116,7 +120,18 @@ function Movies({
   return (
     <>
       <Nav navs={genres} />
-      <ContentContainer contents={movies} title="Playing this week" />
+      <ContentContainer
+        contents={movies}
+        title={
+          router.query.genreName?.toString() ||
+          router.query.key
+            ?.toString()
+            .replaceAll("_", " ")
+            .toLowerCase()
+            .toLowerCase() ||
+          "On the airPlaying this week"
+        }
+      />
       {!(page === totalPages) && (
         <LoadMore handleClick={handleClick} isLoading={isLoading} />
       )}

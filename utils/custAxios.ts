@@ -86,8 +86,11 @@ custAxios.interceptors.request.use((config) => {
       const personId = config.params.personId;
       config.url = `/person/${personId}/combined_credits`;
       break;
-    case API_OPTION.DISCOVER_SINGLE:
+    case API_OPTION.DISCOVER_MOVIE:
       config.url = "/discover/movie";
+      break;
+    case API_OPTION.DISCOVER_TV:
+      config.url = "/discover/tv";
       break;
   }
   config.url += addingAPIKey();
