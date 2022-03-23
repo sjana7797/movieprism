@@ -1,6 +1,7 @@
 import { ContentOverview } from "../../typing";
 import Thumbnail from "./Thumbnail";
 import { m } from "framer-motion";
+import { thumbNail, thumbNailContainer } from "../../animation/variants";
 
 function ContentContainer({
   contents,
@@ -9,26 +10,32 @@ function ContentContainer({
   contents: ContentOverview[];
   title: string;
 }) {
-  const MotionThumbnail = m(Thumbnail);
+  const MotionThumbnail = m(Thumbnail, { forwardMotionProps: true });
   return (
-    <section className="mx-5 my-10 rounded-md border border-slate-600 bg-slate-700 p-5 shadow-md">
-      <h1 className="text-2xl font-bold capitalize italic tracking-wider">
+    <section className="mx-5 my-10 p-5">
+      <m.h1
+        className="text-center text-4xl font-bold capitalize italic tracking-wider"
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 5, type: "spring", stiffness: 100 }}
+      >
         {title}
-      </h1>
+      </m.h1>
       <m.div
         className="my-10 flex-wrap justify-center sm:grid md:grid-cols-2 xl:grid-cols-3 3xl:flex"
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: 1,
-          transition: { duration: 0.5 },
-        }}
+        initial="hide"
+        animate="show"
+        variants={thumbNailContainer}
+        exit={{ opacity: 0 }}
       >
         {contents.map((content) => (
           <MotionThumbnail
             content={content}
             key={content.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            variants={thumbNail}
+            initial="hide"
+            animate="show"
+            exit={{ opacity: 0 }}
           />
         ))}
       </m.div>

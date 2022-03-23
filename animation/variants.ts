@@ -1,38 +1,57 @@
-export const variants = {
-  enter: (direction: number) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    };
-  },
-};
+import { Variants } from "framer-motion";
 
-export const container = {
-  hidden: { opacity: 0, x: 100 },
-  show: {
+export const cardContainerVariants: Variants = {
+  offscreen: {
+    opacity: 0,
+  },
+  onscreen: {
     opacity: 1,
-    x: 0,
     transition: {
-      staggerChildren: 0.5,
+      staggerChildren: 0.1,
       type: "spring",
       stiffness: 100,
+      duration: 0.5,
     },
   },
 };
 
-export const item = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1 },
+export const cardVariants: Variants = {
+  offscreen: {
+    opacity: 0,
+  },
+  onscreen: {
+    opacity: 1,
+  },
+};
+
+export const fadeInLeft: Variants = {
+  offscreen: { opacity: 0, x: -100 },
+  onscreen: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.3, type: "spring", stiffness: 100 },
+  },
+};
+export const thumbNailContainer: Variants = {
+  hide: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      type: "spring",
+      stiffness: 100,
+      duration: 0.5,
+    },
+  },
+};
+
+export const thumbNail: Variants = {
+  hide: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+  },
 };

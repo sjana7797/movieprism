@@ -5,6 +5,8 @@ import useSWR from "swr";
 import { ContentOverview } from "../../typing";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
+import { m } from "framer-motion";
+import { fadeInLeft } from "../../animation/variants";
 
 function LatestMovie({ country }: { country: string }) {
   const router = useRouter();
@@ -67,7 +69,12 @@ function LatestMovie({ country }: { country: string }) {
         </>
       ) : (
         <>
-          <div className="relative hidden h-96 w-full rounded-md bg-gradient-to-br from-slate-900 via-gray-900 to-neutral-900 opacity-100 transition-opacity duration-300 hover:opacity-30 md:block">
+          <m.div
+            className="relative hidden h-96 w-full rounded-md bg-gradient-to-br from-slate-900 via-gray-900 to-neutral-900 opacity-100 transition-opacity duration-300 hover:opacity-30 md:block"
+            initial="offscreen"
+            animate="onscreen"
+            variants={fadeInLeft}
+          >
             <Image
               src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
               alt={name}
@@ -89,8 +96,13 @@ function LatestMovie({ country }: { country: string }) {
                 </span>
               </p>
             </div>
-          </div>
-          <div className="my-5 flex flex-wrap items-center justify-center md:hidden">
+          </m.div>
+          <m.div
+            className="my-5 flex flex-wrap items-center justify-center md:hidden"
+            initial="offscreen"
+            animate="onscreen"
+            variants={fadeInLeft}
+          >
             <Image
               src={`${BASE_URL_IMAGE}${movie.poster_path}`}
               width={200}
@@ -113,7 +125,7 @@ function LatestMovie({ country }: { country: string }) {
                 </span>
               </p>
             </div>
-          </div>
+          </m.div>
         </>
       )}
     </section>

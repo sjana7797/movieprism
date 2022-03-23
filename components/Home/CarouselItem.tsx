@@ -8,7 +8,7 @@ function CarouselItem({ content }: { content: ContentOverview }) {
   const poster = `${BASE_URL_IMAGE}${content.poster_path}`;
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
-      <div className="group relative mx-2 min-h-[250px] overflow-hidden rounded-md bg-black opacity-100 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:min-h-[400px]">
+      <div className="group relative mx-2 min-h-[250px] overflow-hidden rounded-lg bg-black opacity-100 shadow-md shadow-emerald-400/20 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:min-h-[300px] md:min-h-[350px] xl:min-h-[400px]">
         <Image
           layout="fill"
           src={`${BASE_URL_IMAGE}${content.backdrop_path}`}

@@ -2,7 +2,13 @@ import { useRef } from "react";
 import { ContentOverview } from "../../typing";
 import Content from "../ui/Content";
 import { m } from "framer-motion";
-import { container } from "../../animation/variants";
+import {
+  cardContainerVariants,
+  cardVariants,
+  fadeInLeft,
+} from "../../animation/variants";
+
+const MotionContent = m(Content, { forwardMotionProps: true });
 
 function Contents({
   contents,
@@ -14,16 +20,28 @@ function Contents({
   const lazyRoot = useRef(null);
   return (
     <section className="my-8 mx-5">
-      <h2 className="text-xl">{title}</h2>
+      <m.h2
+        initial="offscreen"
+        animate="onscreen"
+        variants={fadeInLeft}
+        className="text-xl"
+      >
+        {title}
+      </m.h2>
       <m.div
         className="flex space-x-5 overflow-x-scroll p-5 scrollbar-hide"
         ref={lazyRoot}
-        initial="hidden"
-        animate="show"
-        variants={container}
+        initial="offscreen"
+        whileInView="onscreen"
+        variants={cardContainerVariants}
+        viewport={{ once: true, amount: 0.8 }}
       >
         {contents.map((content) => (
-          <Content content={content} key={content.id} />
+          <MotionContent
+            variants={cardVariants}
+            content={content}
+            key={content.id}
+          />
         ))}
         {contents.length === 0 && <h2 className="text-xl">No {title}</h2>}
       </m.div>

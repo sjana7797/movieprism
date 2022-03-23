@@ -46,7 +46,7 @@ function Layout(props: { children: ReactElement }) {
         </Head>
         <Header />
         <TopLoadingBar isAnimating={isAnimating} />
-        <LazyMotion features={domAnimation}>
+        <LazyMotion features={domAnimation} strict>
           <m.main
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
