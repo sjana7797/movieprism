@@ -8,7 +8,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 200, 256, 384],
+    imageSizes: [16, 32, 48, 64, 96, 128, 200, 256, 384, 500],
     domains: ["image.tmdb.org", "s4.anilist.co", "dummyimage.com"],
     formats: ["image/avif", "image/webp"],
   },

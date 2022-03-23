@@ -6,7 +6,7 @@ import Link from "next/link";
 import Contents from "../../../components/Home/Contents";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   Movie as MovieInterface,
@@ -17,6 +17,7 @@ import { ContentOverview, Poster } from "../../../typing/content";
 import { ContentImages } from "../../../typing";
 import { APP_NAME } from "../../../utils/appConfig";
 import { capitaliseString } from "../../../utils/capitaliseString";
+import ContentImage from "../../../components/ui/ContentImage";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -45,6 +46,7 @@ function Movie(props: {
     setBackdropWidth(widthBackdrop);
     setPosterWidth(widthPoster);
   }, []);
+
   return (
     <>
       <Head>
@@ -52,18 +54,7 @@ function Movie(props: {
       </Head>
       <article>
         <section className="relative h-screen w-full">
-          <Image
-            src={img}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-            className="sticky top-0 opacity-40"
-            alt={name}
-            blurDataURL="https://dummyimage.com/1920x1080/fff/aaa"
-            placeholder="blur"
-            priority
-          />
-          <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
+          <ContentImage img={img} name={name} />
           <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
             <h2>{name}</h2>
             <p>{movie.overview}</p>
@@ -106,11 +97,11 @@ function Movie(props: {
         <section className="my-10">
           <div className="my-5">
             <h2 className="ml-5 text-2xl">Backdrops</h2>
-            <motion.div
+            <m.div
               className="cursor-grab overflow-hidden"
               ref={backdropCarousel}
             >
-              <motion.div
+              <m.div
                 className="flex items-center space-x-5 px-5 py-5"
                 drag="x"
                 dragConstraints={{ right: 0, left: -backdropWidth }}
@@ -118,7 +109,7 @@ function Movie(props: {
               >
                 {images.backdrops.map((backdrop, index) => {
                   return (
-                    <motion.div
+                    <m.div
                       key={index}
                       className="relative min-h-[400px] min-w-[500px]"
                     >
@@ -132,26 +123,23 @@ function Movie(props: {
                         priority
                         sizes="500px"
                       />
-                    </motion.div>
+                    </m.div>
                   );
                 })}
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </div>
           <div className="my-5">
             <h2 className="ml-5 text-2xl">Posters</h2>
-            <motion.div
-              className="cursor-grab overflow-hidden"
-              ref={posterCarousel}
-            >
-              <motion.div
+            <m.div className="cursor-grab overflow-hidden" ref={posterCarousel}>
+              <m.div
                 className="flex items-center space-x-5 px-5 py-5"
                 drag="x"
                 dragConstraints={{ right: 0, left: -posterWidth }}
               >
                 {images.posters.map((poster, index) => {
                   return (
-                    <motion.div
+                    <m.div
                       key={index}
                       className="relative min-h-[400px] min-w-[200px]"
                     >
@@ -165,11 +153,11 @@ function Movie(props: {
                         priority
                         sizes="200px"
                       />
-                    </motion.div>
+                    </m.div>
                   );
                 })}
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </div>
         </section>
         <section className="my-10">
@@ -209,12 +197,13 @@ function Movie(props: {
               <div className="my-5 flex space-x-5 overflow-x-scroll px-5 scrollbar-hide">
                 {videos.map((video) => {
                   return (
-                    <div key={video.id} className="max-w-[640px]">
+                    <div key={video.id} className="max-w-[640px] rounded-md">
                       <iframe
                         width="640"
                         height="360"
-                        src={`https://www.youtube.com/embed/${video.key}`}
+                        src={`https://www.youtube.com/embed/${video.key}?rel=0&showinfo=0&color=red&modestbranding=1`}
                         className="rounded-md"
+                        allowFullScreen
                       ></iframe>
                       <div className="my-2 flex flex-col space-y-2">
                         <p>{video.name}</p>

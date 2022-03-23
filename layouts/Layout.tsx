@@ -4,7 +4,9 @@ import { ReactElement, useEffect, useState } from "react";
 import Header from "../components/global/Header";
 import TopLoadingBar from "../components/global/TopLoadingBar";
 import { APP_NAME } from "../utils/appConfig";
-import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
+import { AnimatePresence, LazyMotion, m } from "framer-motion";
+
+const loadFeatures = () => import("../utils/domMax").then((mod) => mod.DomMax);
 
 function Layout(props: { children: ReactElement }) {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -46,7 +48,7 @@ function Layout(props: { children: ReactElement }) {
         </Head>
         <Header />
         <TopLoadingBar isAnimating={isAnimating} />
-        <LazyMotion features={domAnimation} strict>
+        <LazyMotion features={loadFeatures} strict>
           <m.main
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}

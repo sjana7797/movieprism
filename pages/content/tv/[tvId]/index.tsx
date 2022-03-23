@@ -9,6 +9,7 @@ import { ContentOverview, Poster } from "../../../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { custAxios } from "../../../../utils/custAxios";
 import { APP_NAME } from "../../../../utils/appConfig";
+import ContentImage from "../../../../components/ui/ContentImage";
 
 function TVSeries({
   tv,
@@ -20,23 +21,14 @@ function TVSeries({
   tvCasts: TVCast[];
 }) {
   const img = `${BASE_URL_IMAGE}${tv.backdrop_path}`;
-  const name = tv.title || tv.original_title || tv.name;
+  const name = tv.title || tv.original_title || tv.name || "";
   return (
     <>
       <Head>
         <title>{`${name} | ${APP_NAME}`}</title>
       </Head>
       <section className="relative h-screen w-full">
-        <Image
-          src={img}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-          className="sticky top-0 opacity-40"
-          alt={name}
-          priority
-        />
-        <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
+        <ContentImage img={img} name={name} />
         <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
           <h2>{name}</h2>
           <p>{tv.overview}</p>

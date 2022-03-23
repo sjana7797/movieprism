@@ -12,7 +12,7 @@ function ContentContainer({
 }) {
   const MotionThumbnail = m(Thumbnail, { forwardMotionProps: true });
   return (
-    <section className="mx-5 my-10 p-5">
+    <section className="mx-1 my-10 p-2 sm:mx-5">
       <m.h1
         className="text-center text-4xl font-bold capitalize italic tracking-wider"
         initial={{ opacity: 0, x: -100 }}
