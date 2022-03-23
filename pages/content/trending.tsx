@@ -1,10 +1,13 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../components/ui/ContentContainer";
 import Nav from "../../components/ui/Nav";
 import { ContentOverview, Thumbnail } from "../../typing/content";
 import { API_OPTION } from "../../utils/apiConfig";
+import { APP_NAME } from "../../utils/appConfig";
+import { capitaliseString } from "../../utils/capitaliseString";
 import { custAxios } from "../../utils/custAxios";
 import { trendingNav } from "../../utils/nav";
 
@@ -19,10 +22,10 @@ function Trending({
   const [trending, setTrending] = useState<ContentOverview[]>(trendingContents);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const media = (router.query.media as string) || "all";
   const handleClick = async () => {
     setIsLoading(true);
     setPage((prevPage) => prevPage++);
-    const media = (router.query.media as string) || "all";
     const data = await custAxios
       .get("trending", { params: { page: page + 1, media } })
       .then((res) => res.data);
@@ -35,6 +38,9 @@ function Trending({
   }, [trendingContents]);
   return (
     <>
+      <Head>
+        <title>{`Trending | ${capitaliseString(media)} | ${APP_NAME}`}</title>
+      </Head>
       <Nav navs={trendingNav} />
       <ContentContainer contents={trending} title="Trending this week" />
       {!(page === totalPages) && (

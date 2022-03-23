@@ -5,6 +5,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import Anime from "../../../components/Anime/Anime";
 import { AnimeList } from "../../../typing/anime";
 import { animeBaseUrl } from "../../../utils/animeAPIConfig";
+import Head from "next/head";
+import { APP_NAME } from "../../../utils/appConfig";
 
 function Animes({ animes }: { animes: AnimeList }) {
   const router = useRouter();
@@ -13,6 +15,9 @@ function Animes({ animes }: { animes: AnimeList }) {
   };
   return (
     <div className="mx-5 my-10 rounded-md bg-slate-700 p-5">
+      <Head>
+        <title>{`Anime | ${APP_NAME}`}</title>
+      </Head>
       <h1 className="text-2xl font-bold italic tracking-wider">Anime</h1>
       <div className="my-10 flex-wrap justify-center gap-5 sm:grid md:grid-cols-2 xl:grid-cols-3 3xl:flex">
         {animes.media.map((anime) => {

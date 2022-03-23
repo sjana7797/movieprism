@@ -8,6 +8,7 @@ import { TV, TVCast } from "../../../../typing/tv";
 import { ContentOverview, Poster } from "../../../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { custAxios } from "../../../../utils/custAxios";
+import { APP_NAME } from "../../../../utils/appConfig";
 
 function TVSeries({
   tv,
@@ -23,7 +24,7 @@ function TVSeries({
   return (
     <>
       <Head>
-        <title>{name}</title>
+        <title>{`${name} | ${APP_NAME}`}</title>
       </Head>
       <section className="relative h-screen w-full">
         <Image

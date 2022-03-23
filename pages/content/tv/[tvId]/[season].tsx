@@ -1,11 +1,13 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Contents from "../../../../components/Home/Contents";
 import { ContentOverview, Poster } from "../../../../typing/content";
 import { Season as SeasonInterface, TV } from "../../../../typing/tv";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
+import { APP_NAME } from "../../../../utils/appConfig";
 import { custAxios } from "../../../../utils/custAxios";
 
 function Season(props: {
@@ -18,6 +20,9 @@ function Season(props: {
 
   return (
     <>
+      <Head>
+        <title>{`${name} | ${tv.name} | ${APP_NAME}`}</title>
+      </Head>
       <article className="">
         <div className="mx-auto flex max-w-xl flex-wrap justify-between">
           <div className="mx-auto">

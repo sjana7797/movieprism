@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
@@ -6,6 +7,8 @@ import LoadMore from "../../../components/ui/LoadMore";
 import Nav from "../../../components/ui/Nav";
 import { ContentOverview, Thumbnail } from "../../../typing/content";
 import { API_OPTION } from "../../../utils/apiConfig";
+import { APP_NAME } from "../../../utils/appConfig";
+import { capitaliseString } from "../../../utils/capitaliseString";
 import { custAxios } from "../../../utils/custAxios";
 import { moviesNav } from "../../../utils/nav";
 
@@ -117,21 +120,22 @@ function Movies({
     };
     getGenres();
   }, []);
+
+  const title =
+    router.query.genreName?.toString() ||
+    router.query.key
+      ?.toString()
+      .replaceAll("_", " ")
+      .toLowerCase()
+      .toLowerCase() ||
+    "Now playing";
   return (
     <>
+      <Head>
+        <title>{`Movie | ${capitaliseString(title)} | ${APP_NAME}`}</title>
+      </Head>
       <Nav navs={genres} />
-      <ContentContainer
-        contents={movies}
-        title={
-          router.query.genreName?.toString() ||
-          router.query.key
-            ?.toString()
-            .replaceAll("_", " ")
-            .toLowerCase()
-            .toLowerCase() ||
-          "Now playing"
-        }
-      />
+      <ContentContainer contents={movies} title={title} />
       {!(page === totalPages) && (
         <LoadMore handleClick={handleClick} isLoading={isLoading} />
       )}

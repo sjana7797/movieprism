@@ -15,6 +15,8 @@ import {
 } from "../../../typing/movie";
 import { ContentOverview, Poster } from "../../../typing/content";
 import { ContentImages } from "../../../typing";
+import { APP_NAME } from "../../../utils/appConfig";
+import { capitaliseString } from "../../../utils/capitaliseString";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -46,7 +48,7 @@ function Movie(props: {
   return (
     <>
       <Head>
-        <title>{name}</title>
+        <title>{`${capitaliseString(name)} | ${APP_NAME}`}</title>
       </Head>
       <article>
         <section className="relative h-screen w-full">

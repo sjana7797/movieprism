@@ -1,9 +1,11 @@
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Contents from "../../components/Home/Contents";
 import { Person } from "../../typing";
 import { ContentOverview } from "../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
+import { APP_NAME } from "../../utils/appConfig";
 import { custAxios } from "../../utils/custAxios";
 
 type Credit = {
@@ -42,6 +44,9 @@ function People({
   };
   return (
     <>
+      <Head>
+        <title>{`${person.name} | ${APP_NAME}`}</title>
+      </Head>
       <article className="p-5">
         <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center rounded-md border-2 border-slate-200 p-5">
           <Image
