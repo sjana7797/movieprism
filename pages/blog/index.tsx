@@ -1,5 +1,5 @@
 function index() {
-  return <>index</>;
+  return <>indexz</>;
 }
 
 export default index;
