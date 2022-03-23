@@ -35,7 +35,6 @@ function CarouselItem({ content }: { content: ContentOverview }) {
               alt={name}
               objectPosition="center"
               sizes="50%"
-              priority
             />
           </div>
         </div>

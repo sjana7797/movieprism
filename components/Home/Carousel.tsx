@@ -1,9 +1,12 @@
 import { ContentOverview } from "../../typing/content";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel as CarouselComponent } from "react-responsive-carousel";
-import CarouselItem from "./CarouselItem";
+// import CarouselItem from "./CarouselItem";
 import { CSSProperties } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import dynamic from "next/dynamic";
+
+const DynamicCarouselItem = dynamic(() => import("./CarouselItem"));
 
 function Carousel({ trendingData }: { trendingData: ContentOverview[] }) {
   const arrowStyles: CSSProperties = {
@@ -59,7 +62,7 @@ function Carousel({ trendingData }: { trendingData: ContentOverview[] }) {
       }
     >
       {trendingData.map((content) => (
-        <CarouselItem content={content} key={content.id} />
+        <DynamicCarouselItem content={content} key={content.id} />
       ))}
     </CarouselComponent>
   );
