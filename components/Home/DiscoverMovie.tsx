@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { ContentOverview } from "../../typing";
+import { ContentOverview } from "../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
 import { m } from "framer-motion";

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
 import LoadMore from "../../../components/ui/LoadMore";
 import Nav from "../../../components/ui/Nav";
-import { ContentOverview } from "../../../typing";
+import { ContentOverview, Thumbnail } from "../../../typing/content";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { tvNav } from "../../../utils/nav";
@@ -47,7 +47,7 @@ function TVSeries({
   genre,
   country,
 }: {
-  tvContents: ContentOverview[];
+  tvContents: Thumbnail[];
   genre: string | undefined;
   country: string;
   totalPages: number;
@@ -68,7 +68,7 @@ function TVSeries({
       genre as string | undefined
     );
 
-    const contents = data.results.map((tv: any) => {
+    const contents: Thumbnail[] = data.results.map((tv: ContentOverview) => {
       return {
         backdrop_path: tv.backdrop_path,
         id: tv.id,
@@ -144,7 +144,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     genre as string | undefined
   );
 
-  const tvContents = tvData.results.map((tv: any) => {
+  const tvContents: Thumbnail[] = tvData.results.map((tv: ContentOverview) => {
     return {
       backdrop_path: tv.backdrop_path,
       id: tv.id,

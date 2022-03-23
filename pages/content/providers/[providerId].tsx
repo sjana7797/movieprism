@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
-import { ContentOverview } from "../../../typing";
+import { Thumbnail, ContentOverview } from "../../../typing/content";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { providers } from "../../../utils/providersItems";
@@ -12,7 +12,7 @@ function Provider({
   porviderId,
   country,
 }: {
-  providerContent: ContentOverview[];
+  providerContent: Thumbnail[];
   totalPages: number;
   porviderId: string;
   country: string;
@@ -35,7 +35,7 @@ function Provider({
         },
       })
       .then((res) => res.data);
-    const contents = data.results.map((movie: any) => {
+    const contents = data.results.map((movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,
@@ -114,8 +114,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
     .then((res) => res.data);
 
-  const providerContent: ContentOverview[] = providerData.results.map(
-    (movie: any) => {
+  const providerContent: Thumbnail[] = providerData.results.map(
+    (movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,
@@ -134,7 +134,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       providerContent,
-      totalPages: providerData.total_pages,
+      totalPages: providerData.total_pages as number,
       porviderId,
       country,
     },

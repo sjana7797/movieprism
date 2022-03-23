@@ -1,10 +1,10 @@
 import { ApolloProvider, gql } from "@apollo/client";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { AnimeList } from "../../../typing";
 import { client } from "../../../utils/apolloClient";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import Anime from "../../../components/Anime/Anime";
+import { AnimeList } from "../../../typing/anime";
 
 function Animes({ animes }: { animes: AnimeList }) {
   const router = useRouter();

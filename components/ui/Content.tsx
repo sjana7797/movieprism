@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ContentOverview } from "../../typing";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
 import { cardVariants } from "../../animation/variants";
 import { forwardRef } from "react";
+import { Poster } from "../../typing/content";
 
 type Ref = HTMLDivElement;
-type Props = { content: ContentOverview };
+type Props = { content: Poster };
 
 const Content = forwardRef<Ref, Props>(
-  ({ content }: { content: ContentOverview }, ref) => {
+  ({ content }: { content: Poster }, ref) => {
     const { poster_path, title, original_title, name } = content;
     const dummyImage = "https://dummyimage.com/208x288/fff/aaa";
     const poster = poster_path ? `${BASE_URL_IMAGE}${poster_path}` : dummyImage;

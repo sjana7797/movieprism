@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ContentOverview } from "../../typing";
+import { ContentOverview } from "../../typing/content";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 
 function CarouselItem({ content }: { content: ContentOverview }) {
@@ -16,6 +16,7 @@ function CarouselItem({ content }: { content: ContentOverview }) {
           objectFit="cover"
           sizes="100%"
           className="rounded-md"
+          priority
         />
         <div className="absolute top-10 left-10 z-20 rounded-md md:top-1/2 md:w-1/2 md:-translate-y-1/2">
           <h2 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
@@ -34,6 +35,7 @@ function CarouselItem({ content }: { content: ContentOverview }) {
               alt={name}
               objectPosition="center"
               sizes="50%"
+              priority
             />
           </div>
         </div>

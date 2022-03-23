@@ -1,13 +1,13 @@
-import { ContentOverview } from "../../typing";
 import Thumbnail from "./Thumbnail";
 import { m } from "framer-motion";
 import { thumbNail, thumbNailContainer } from "../../animation/variants";
+import { Thumbnail as ThumbnailInterface } from "../../typing/content";
 
 function ContentContainer({
   contents,
   title,
 }: {
-  contents: ContentOverview[];
+  contents: ThumbnailInterface[];
   title: string;
 }) {
   const MotionThumbnail = m(Thumbnail, { forwardMotionProps: true });

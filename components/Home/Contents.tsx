@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { ContentOverview } from "../../typing";
 import Content from "../ui/Content";
 import { m } from "framer-motion";
 import {
@@ -7,16 +6,11 @@ import {
   cardVariants,
   fadeInLeft,
 } from "../../animation/variants";
+import { Poster } from "../../typing/content";
 
 const MotionContent = m(Content, { forwardMotionProps: true });
 
-function Contents({
-  contents,
-  title,
-}: {
-  contents: ContentOverview[];
-  title: string;
-}) {
+function Contents({ contents, title }: { contents: Poster[]; title: string }) {
   const lazyRoot = useRef(null);
   return (
     <section className="my-8 mx-5">

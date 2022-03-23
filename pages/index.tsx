@@ -2,7 +2,7 @@ import type { GetServerSideProps } from "next";
 import Providers from "../components/Home/Providers";
 import Carousel from "../components/Home/Carousel";
 import Contents from "../components/Home/Contents";
-import { ContentOverview, Poster } from "../typing";
+import { ContentOverview, Poster } from "../typing/content";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
 import LatestMovie from "../components/Home/DiscoverMovie";
@@ -47,10 +47,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   const { country } = context.query;
-  const trendingData: ContentOverview[] = await custAxios
+  const trendingData: Poster[] = await custAxios
     .get(API_OPTION.TRENDING, { params: { media: "all" } })
     .then((res) =>
-      res.data.results.map((movie: any) => {
+      res.data.results.map((movie: ContentOverview) => {
         return {
           backdrop_path: movie.backdrop_path,
           id: movie.id,
@@ -66,10 +66,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
       })
     );
-  const topRatedData: ContentOverview[] = await custAxios
+  const topRatedData: Poster[] = await custAxios
     .get(API_OPTION.TOP_RATED, { params: { region: country } })
     .then((res) =>
-      res.data.results.map((movie: any) => {
+      res.data.results.map((movie: ContentOverview) => {
         return {
           backdrop_path: movie.backdrop_path,
           id: movie.id,
@@ -83,10 +83,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
       })
     );
-  const popularData: ContentOverview[] = await custAxios
+  const popularData: Poster[] = await custAxios
     .get(API_OPTION.POPULAR, { params: { region: country } })
     .then((res) =>
-      res.data.results.map((movie: any) => {
+      res.data.results.map((movie: ContentOverview) => {
         return {
           backdrop_path: movie.backdrop_path,
           id: movie.id,
@@ -101,10 +101,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       })
     );
 
-  const tvData: ContentOverview[] = await custAxios
+  const tvData: Poster[] = await custAxios
     .get(API_OPTION.ON_THE_AIR, { params: { region: country } })
     .then((res) =>
-      res.data.results.map((tv: any) => {
+      res.data.results.map((tv: ContentOverview) => {
         return {
           backdrop_path: tv.backdrop_path,
           id: tv.id,
@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
     .then((res) => res.data);
 
-  const onAir: ContentOverview[] = onAirData.results.map((movie: any) => {
+  const onAir: Poster[] = onAirData.results.map((movie: ContentOverview) => {
     return {
       backdrop_path: movie.backdrop_path,
       id: movie.id,

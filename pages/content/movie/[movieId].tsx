@@ -4,22 +4,22 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Contents from "../../../components/Home/Contents";
-import {
-  ContentImages,
-  ContentOverview,
-  Movie,
-  MovieCast,
-  MovieVideos,
-} from "../../../typing";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import {
+  Movie as MovieInterface,
+  MovieCast,
+  MovieVideos,
+} from "../../../typing/movie";
+import { ContentOverview, Poster } from "../../../typing/content";
+import { ContentImages } from "../../../typing";
 
 function Movie(props: {
-  movie: Movie;
-  similarMovie: ContentOverview[];
-  recommendations: ContentOverview[];
+  movie: MovieInterface;
+  similarMovie: Poster[];
+  recommendations: Poster[];
   cast: MovieCast[];
   videos: MovieVideos[];
   images: ContentImages;
@@ -283,17 +283,17 @@ export default Movie;
 export const getServerSideProps: GetServerSideProps = async (content) => {
   const movieId = content.query.movieId;
 
-  const movie = await custAxios
+  const movie: MovieInterface = await custAxios
     .get(`movie`, { params: { movieId } })
     .then((res) => res.data);
   const cast: MovieCast[] = await custAxios
     .get(API_OPTION.MOVIE_CAST, { params: { movieId } })
     .then((res) => res.data.cast);
 
-  const similarMovie: ContentOverview[] = await custAxios(API_OPTION.SIMILAR, {
+  const similarMovie: Poster[] = await custAxios(API_OPTION.SIMILAR, {
     params: { movieId },
   }).then((res) =>
-    res.data.results.map((movie: any) => {
+    res.data.results.map((movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,
@@ -308,13 +308,13 @@ export const getServerSideProps: GetServerSideProps = async (content) => {
     })
   );
 
-  const recommendations: ContentOverview[] = await custAxios(
+  const recommendations: Poster[] = await custAxios(
     API_OPTION.RECOMMENDATIONS,
     {
       params: { movieId },
     }
   ).then((res) =>
-    res.data.results.map((movie: any) => {
+    res.data.results.map((movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,

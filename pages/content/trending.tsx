@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../components/ui/ContentContainer";
 import Nav from "../../components/ui/Nav";
-import { ContentOverview } from "../../typing";
+import { ContentOverview, Thumbnail } from "../../typing/content";
 import { API_OPTION } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
 import { trendingNav } from "../../utils/nav";
@@ -12,7 +12,7 @@ function Trending({
   trendingContents,
   totalPages,
 }: {
-  trendingContents: ContentOverview[];
+  trendingContents: Thumbnail[];
   totalPages: number;
 }) {
   const router = useRouter();
@@ -85,21 +85,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .get(API_OPTION.TRENDING, { params: { media } })
     .then((res) => res.data);
 
-  const trendingContents = trendingData.results.map((movie: any) => {
-    return {
-      backdrop_path: movie.backdrop_path,
-      id: movie.id,
-      overview: movie.overview,
-      original_title: movie.original_title || null,
-      title: movie.title || null,
-      name: movie.name || null,
-      poster_path: movie.poster_path || null,
-      media_type: movie.media_type,
-      first_air_date: movie.first_air_date || null,
-      release_date: movie.release_date || null,
-      vote_count: movie.vote_count,
-    };
-  });
+  const trendingContents: Thumbnail[] = trendingData.results.map(
+    (movie: ContentOverview) => {
+      return {
+        backdrop_path: movie.backdrop_path,
+        id: movie.id,
+        overview: movie.overview,
+        original_title: movie.original_title || null,
+        title: movie.title || null,
+        name: movie.name || null,
+        poster_path: movie.poster_path || null,
+        media_type: movie.media_type,
+        first_air_date: movie.first_air_date || null,
+        release_date: movie.release_date || null,
+        vote_count: movie.vote_count,
+      };
+    }
+  );
   return {
     props: { trendingContents, totalPages: trendingData.total_pages },
   };

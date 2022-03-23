@@ -1,16 +1,16 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
 import Image from "next/image";
 import Link from "next/link";
-import { ContentOverview } from "../../typing";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
 import { forwardRef } from "react";
+import { Thumbnail } from "../../typing/content";
 
 type Ref = HTMLDivElement;
-type Props = { content: ContentOverview };
+type Props = { content: Thumbnail };
 
 const Thumbnail = forwardRef<Ref, Props>(
-  (props: { content: ContentOverview }, ref) => {
+  (props: { content: Thumbnail }, ref) => {
     const {
       backdrop_path,
       id,

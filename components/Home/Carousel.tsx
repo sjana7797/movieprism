@@ -1,4 +1,4 @@
-import { ContentOverview } from "../../typing";
+import { ContentOverview } from "../../typing/content";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel as CarouselComponent } from "react-responsive-carousel";
 import CarouselItem from "./CarouselItem";

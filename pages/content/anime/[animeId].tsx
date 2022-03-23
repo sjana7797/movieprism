@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
 import { ApolloProvider, gql } from "@apollo/client";
 import { client } from "../../../utils/apolloClient";
-import { Anime } from "../../../typing";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { Anime } from "../../../typing/anime";
 
 function Anime(props: { anime: Anime }) {
   const { anime } = props;

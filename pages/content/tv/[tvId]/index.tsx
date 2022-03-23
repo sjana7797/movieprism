@@ -3,9 +3,9 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import Contents from "../../../../components/Home/Contents";
-import { ContentOverview, TV, TVCast } from "../../../../typing";
+import { TV, TVCast } from "../../../../typing/tv";
+import { ContentOverview, Poster } from "../../../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { custAxios } from "../../../../utils/custAxios";
 
@@ -15,7 +15,7 @@ function TVSeries({
   tvCasts,
 }: {
   tv: TV;
-  similarTV: ContentOverview[];
+  similarTV: Poster[];
   tvCasts: TVCast[];
 }) {
   const img = `${BASE_URL_IMAGE}${tv.backdrop_path}`;
@@ -165,21 +165,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .get(API_OPTION.SIMILAR_TV, { params: { tvId } })
     .then((res) => res.data);
 
-  const similarTV = tvSimilarData.results.map((tv: any) => {
-    return {
-      backdrop_path: tv.backdrop_path,
-      id: tv.id,
-      overview: tv.overview,
-      original_title: tv.original_title || null,
-      title: tv.title || null,
-      name: tv.name || null,
-      poster_path: tv.poster_path || null,
-      media_type: "tv",
-      first_air_date: tv.first_air_date || null,
-      release_date: tv.release_date || null,
-      vote_count: tv.vote_count,
-      genres: tv.genre_ids,
-    };
-  });
+  const similarTV: Poster[] = tvSimilarData.results.map(
+    (tv: ContentOverview) => {
+      return {
+        backdrop_path: tv.backdrop_path,
+        id: tv.id,
+        overview: tv.overview,
+        original_title: tv.original_title || null,
+        title: tv.title || null,
+        name: tv.name || null,
+        poster_path: tv.poster_path || null,
+        media_type: "tv",
+        first_air_date: tv.first_air_date || null,
+        release_date: tv.release_date || null,
+        vote_count: tv.vote_count,
+        genres: tv.genre_ids,
+      };
+    }
+  );
   return { props: { tv, similarTV, tvCasts } };
 };

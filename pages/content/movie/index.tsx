@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
 import LoadMore from "../../../components/ui/LoadMore";
 import Nav from "../../../components/ui/Nav";
-import { ContentOverview } from "../../../typing";
+import { ContentOverview, Thumbnail } from "../../../typing/content";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { moviesNav } from "../../../utils/nav";
@@ -55,7 +55,7 @@ function Movies({
   country,
   genre,
 }: {
-  moviesContents: ContentOverview[];
+  moviesContents: Thumbnail[];
   totalPages: number;
   country: string;
   genre: string | undefined;
@@ -75,7 +75,7 @@ function Movies({
       page + 1,
       genre
     );
-    const contents = data.results.map((movie: any) => {
+    const contents = data.results.map((movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,
@@ -150,26 +150,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     genre as string | undefined
   );
 
-  const moviesContents = moviesData.results.map((movie: any) => {
-    return {
-      backdrop_path: movie.backdrop_path,
-      id: movie.id,
-      overview: movie.overview,
-      original_title: movie.original_title || null,
-      title: movie.title || null,
-      name: movie.name || null,
-      poster_path: movie.poster_path || null,
-      media_type: "movie",
-      first_air_date: movie.first_air_date || null,
-      release_date: movie.release_date || null,
-      vote_count: movie.vote_count,
-    };
-  });
+  const moviesContents: Thumbnail[] = moviesData.results.map(
+    (movie: ContentOverview) => {
+      return {
+        backdrop_path: movie.backdrop_path,
+        id: movie.id,
+        overview: movie.overview,
+        original_title: movie.original_title || null,
+        title: movie.title || null,
+        name: movie.name || null,
+        poster_path: movie.poster_path || null,
+        media_type: "movie",
+        first_air_date: movie.first_air_date || null,
+        release_date: movie.release_date || null,
+        vote_count: movie.vote_count,
+      };
+    }
+  );
 
   return {
     props: {
       moviesContents,
-      totalPages: moviesData.total_pages,
+      totalPages: moviesData.total_pages as number,
       country,
       genre: genre || "",
     },

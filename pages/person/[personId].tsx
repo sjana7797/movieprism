@@ -1,7 +1,8 @@
 import { GetServerSideProps } from "next";
 import Image from "next/image";
 import Contents from "../../components/Home/Contents";
-import { ContentOverview, Person } from "../../typing";
+import { Person } from "../../typing";
+import { ContentOverview } from "../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
 

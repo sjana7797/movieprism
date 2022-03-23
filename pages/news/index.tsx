@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import { News } from "../../typing";
+import { News } from "../../typing/news";
 import { One_HOUR } from "../../utils/appConfig";
 import { newsAxios } from "../../utils/custAxios";
 

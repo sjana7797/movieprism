@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ContentContainer from "../../../components/ui/ContentContainer";
 import LoadMore from "../../../components/ui/LoadMore";
-import { ContentOverview } from "../../../typing";
+import { ContentOverview, Thumbnail } from "../../../typing/content";
 import { API_OPTION } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 
@@ -14,7 +14,7 @@ function Genres({
   genre,
   media,
 }: {
-  contentsData: ContentOverview[];
+  contentsData: Thumbnail[];
   totalPages: number;
   country: string;
   genre: string | undefined;
@@ -41,7 +41,7 @@ function Genres({
         }
       )
       .then((res) => res.data);
-    const contents = data.results.map((movie: any) => {
+    const contents = data.results.map((movie: ContentOverview) => {
       return {
         backdrop_path: movie.backdrop_path,
         id: movie.id,
@@ -97,21 +97,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     )
     .then((res) => res.data);
 
-  const contentsData = data.results.map((content: any) => {
-    return {
-      backdrop_path: content.backdrop_path,
-      id: content.id,
-      overview: content.overview,
-      original_title: content.original_title || null,
-      title: content.title || null,
-      name: content.name || null,
-      poster_path: content.poster_path || null,
-      media_type: media as string,
-      first_air_date: content.first_air_date || null,
-      release_date: content.release_date || null,
-      vote_count: content.vote_count,
-    };
-  });
+  const contentsData: Thumbnail[] = data.results.map(
+    (content: ContentOverview) => {
+      return {
+        backdrop_path: content.backdrop_path,
+        id: content.id,
+        overview: content.overview,
+        original_title: content.original_title || null,
+        title: content.title || null,
+        name: content.name || null,
+        poster_path: content.poster_path || null,
+        media_type: media as string,
+        first_air_date: content.first_air_date || null,
+        release_date: content.release_date || null,
+        vote_count: content.vote_count,
+      };
+    }
+  );
 
   return {
     props: { contentsData, genre, country, media },

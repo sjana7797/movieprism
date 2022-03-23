@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AnimePoster } from "../../typing";
+import { AnimePoster } from "../../typing/anime";
 
 function Anime({ anime }: { anime: AnimePoster }) {
   return (
