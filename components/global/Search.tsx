@@ -76,7 +76,9 @@ function Search() {
                             setIsOpen(false);
                             setContents([]);
                             router.push(
-                              `/content/${content.media_type}/${content.id}`
+                              content.media_type === "person"
+                                ? `/person/${content.id}`
+                                : `/content/${content.media_type}/${content.id}`
                             );
                           }}
                         >
