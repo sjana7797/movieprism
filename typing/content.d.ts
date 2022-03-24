@@ -7,6 +7,14 @@ export interface Poster {
   media_type?: string;
 }
 
+export interface Search {
+  id: number;
+  media_type: "movie" | "tv" | "person";
+  original_title?: string;
+  title?: string;
+  name?: string;
+}
+
 export interface Thumbnail extends Poster {
   backdrop_path: string;
   vote_count?: number;

@@ -7,6 +7,8 @@ import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
 import DicoverMovie from "../components/Home/DiscoverMovie.server";
 import axios from "axios";
+import Head from "next/head";
+import { APP_NAME } from "../utils/appConfig";
 
 const Home = ({
   trendingData,
@@ -26,6 +28,9 @@ const Home = ({
 }) => {
   return (
     <>
+      <Head>
+        <title>Home | {APP_NAME}</title>
+      </Head>
       <Carousel trendingData={trendingData.slice(0, 5)} />
       <Contents contents={trendingData} title="Trending" />
       <Contents contents={topRatedData} title="Top Rated" />
