@@ -18,6 +18,7 @@ import { ContentImages } from "../../../typing";
 import { APP_NAME } from "../../../utils/appConfig";
 import { capitaliseString } from "../../../utils/capitaliseString";
 import ContentImage from "../../../components/ui/ContentImage";
+import axios from "axios";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -274,70 +275,94 @@ export default Movie;
 export const getServerSideProps: GetServerSideProps = async (content) => {
   const movieId = content.query.movieId;
 
-  const movie: MovieInterface = await custAxios
-    .get(`movie`, { params: { movieId } })
-    .then((res) => res.data);
-  const cast: MovieCast[] = await custAxios
-    .get(API_OPTION.MOVIE_CAST, { params: { movieId } })
-    .then((res) => res.data.cast);
-
-  const similarMovie: Poster[] = await custAxios(API_OPTION.SIMILAR, {
+  const movieRequest = custAxios.get(`movie`, { params: { movieId } });
+  const castRequest = custAxios.get(API_OPTION.MOVIE_CAST, {
     params: { movieId },
-  }).then((res) =>
-    res.data.results.map((movie: ContentOverview) => {
-      return {
-        backdrop_path: movie.backdrop_path,
-        id: movie.id,
-        overview: movie.overview,
-        original_title: movie.original_title || null,
-        title: movie.title || null,
-        poster_path: movie.poster_path || null,
-        release_date: movie.release_date || null,
-        vote_count: movie.vote_count,
-        media_type: "movie",
-      };
-    })
-  );
+  });
+  const similarMovieRequest = custAxios(API_OPTION.SIMILAR, {
+    params: { movieId },
+  });
+  const recommendationsRequest = custAxios(API_OPTION.RECOMMENDATIONS, {
+    params: { movieId },
+  });
+  const videosRequest = custAxios.get(API_OPTION.VIDEO_URL, {
+    params: { movieId },
+  });
 
-  const recommendations: Poster[] = await custAxios(
-    API_OPTION.RECOMMENDATIONS,
-    {
-      params: { movieId },
-    }
-  ).then((res) =>
-    res.data.results.map((movie: ContentOverview) => {
-      return {
-        backdrop_path: movie.backdrop_path,
-        id: movie.id,
-        overview: movie.overview,
-        original_title: movie.original_title || null,
-        title: movie.title || null,
-        poster_path: movie.poster_path || null,
-        release_date: movie.release_date || null,
-        vote_count: movie.vote_count,
-        media_type: "movie",
-      };
-    })
-  );
+  const imagesRequest = custAxios.get(API_OPTION.IMAGES, {
+    params: { id: movieId, media: "movie" },
+  });
 
-  const videos: MovieVideos[] = await custAxios
-    .get(API_OPTION.VIDEO_URL, {
-      params: { movieId },
-    })
-    .then((res) => res.data.results);
+  const [movie, cast, similarMovie, recommendations, videos, images] =
+    await axios
+      .all([
+        movieRequest,
+        castRequest,
+        similarMovieRequest,
+        recommendationsRequest,
+        videosRequest,
+        imagesRequest,
+      ])
+      .then(
+        axios.spread(
+          (
+            movieResponse,
+            castResponse,
+            similarMovieResponse,
+            recommendationsResponse,
+            videosResponse,
+            imagesResponse
+          ) => {
+            const movie: MovieInterface = movieResponse.data;
 
-  const images: ContentImages = await custAxios
-    .get(API_OPTION.IMAGES, {
-      params: { id: movieId, media: "movie" },
-    })
-    .then((res) => {
-      const data = res.data;
-      return {
-        id: data.id,
-        backdrops: data.backdrops.slice(0, 5),
-        posters: data.posters.slice(0, 5),
-      };
-    });
+            const cast: MovieCast[] = castResponse.data.cast;
+
+            const similarMovie: Poster[] =
+              similarMovieResponse.data.results.map(
+                (movie: ContentOverview) => {
+                  return {
+                    backdrop_path: movie.backdrop_path,
+                    id: movie.id,
+                    overview: movie.overview,
+                    original_title: movie.original_title || null,
+                    title: movie.title || null,
+                    poster_path: movie.poster_path || null,
+                    release_date: movie.release_date || null,
+                    vote_count: movie.vote_count,
+                    media_type: "movie",
+                  };
+                }
+              );
+
+            const recommendations: Poster[] =
+              recommendationsResponse.data.results.map(
+                (movie: ContentOverview) => {
+                  return {
+                    backdrop_path: movie.backdrop_path,
+                    id: movie.id,
+                    overview: movie.overview,
+                    original_title: movie.original_title || null,
+                    title: movie.title || null,
+                    poster_path: movie.poster_path || null,
+                    release_date: movie.release_date || null,
+                    vote_count: movie.vote_count,
+                    media_type: "movie",
+                  };
+                }
+              );
+
+            const videos: MovieVideos[] = videosResponse.data.results;
+
+            const images: ContentImages = {
+              id: imagesResponse.data.id,
+              backdrops: imagesResponse.data.backdrops.slice(0, 5),
+              posters: imagesResponse.data.posters.slice(0, 5),
+            };
+
+            return [movie, cast, similarMovie, recommendations, videos, images];
+          }
+        )
+      );
   return {
     props: { movie, similarMovie, recommendations, cast, videos, images },
   };

@@ -1,4 +1,5 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
+import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { Season as SeasonInterface, TV } from "../../../../typing/tv";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { APP_NAME } from "../../../../utils/appConfig";
 import { custAxios } from "../../../../utils/custAxios";
+import { m } from "framer-motion";
 
 function Season(props: {
   season: SeasonInterface;
@@ -42,21 +44,23 @@ function Season(props: {
             <p>{season.overview}</p>
           </div>
         </div>
-        <div className="m-5 grid grid-cols-1 gap-5 rounded-md border-2 border-slate-300 px-5 md:grid-cols-2">
+        <div className="m-5 mx-auto grid max-w-[1920px] grid-cols-1 gap-5 rounded-md border-2 border-slate-300 px-5 py-10 md:grid-cols-2 xl:grid-cols-3">
           {season.episodes.map((episode) => {
             return (
               <div
                 key={episode.id}
-                className="my-5 flex max-w-xl grow flex-wrap items-center justify-between rounded-md border border-slate-300 p-2"
+                className="group my-5 flex grow flex-wrap items-center justify-between rounded-md border border-slate-300 p-2"
               >
-                <div className="relative mx-auto h-72 w-52 rounded-md border-2 border-black">
+                <div className="relative mx-auto h-72 w-11/12 overflow-hidden rounded-md border-2 border-black">
                   <Image
                     src={`${BASE_URL_IMAGE}${
                       episode.still_path || season.poster_path
                     }`}
                     alt={name}
                     layout="fill"
-                    className="rounded-md bg-black"
+                    objectFit="cover"
+                    objectPosition="center"
+                    className="rounded-md bg-black transition-transform duration-200 group-hover:scale-110"
                     placeholder="blur"
                     blurDataURL={`${BASE_URL_IMAGE}${
                       episode.still_path || season.poster_path
@@ -90,19 +94,22 @@ function Season(props: {
                 href={`/content/tv/${tv.id}/${season.season_number}`}
                 passHref
               >
-                <div className="transform cursor-pointer">
-                  <div className="relative h-72 w-52 rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
+                <m.div
+                  className="group cursor-pointer"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <div className="relative h-72 w-52 overflow-hidden rounded-md border-2 border-black transition-colors duration-300 hover:border-slate-200">
                     <Image
                       src={`${BASE_URL_IMAGE}${season.poster_path}`}
                       alt={name}
                       layout="fill"
-                      className="rounded-md bg-black"
+                      className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
                       placeholder="blur"
                       blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
                     />
                   </div>
                   <p className="my-5">{name}</p>
-                </div>
+                </m.div>
               </Link>
             );
           })}
@@ -120,32 +127,44 @@ export default Season;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const tvId = context.query.tvId as string;
   const seasonNumber = context.query.season as string;
-  const season: SeasonInterface = await custAxios
-    .get(API_OPTION.SEASON, { params: { tvId, seasonNumber } })
-    .then((res) => res.data);
-  const tv: TV = await custAxios
-    .get(API_OPTION.TV, { params: { tvId } })
-    .then((res) => res.data);
-  const tvSimilarData = await custAxios
-    .get(API_OPTION.SIMILAR_TV, { params: { tvId } })
-    .then((res) => res.data);
-  const similarTV: Poster[] = tvSimilarData.results.map(
-    (tv: ContentOverview) => {
-      return {
-        backdrop_path: tv.backdrop_path,
-        id: tv.id,
-        overview: tv.overview,
-        original_title: tv.original_title || null,
-        title: tv.title || null,
-        name: tv.name || null,
-        poster_path: tv.poster_path || null,
-        media_type: "tv",
-        first_air_date: tv.first_air_date || null,
-        release_date: tv.release_date || null,
-        vote_count: tv.vote_count,
-        genres: tv.genre_ids,
-      };
-    }
-  );
+
+  const seasonRequest = custAxios.get(API_OPTION.SEASON, {
+    params: { tvId, seasonNumber },
+  });
+  const similarTVRequest = custAxios.get(API_OPTION.SIMILAR_TV, {
+    params: { tvId },
+  });
+
+  const tvRequest = custAxios.get(API_OPTION.TV, { params: { tvId } });
+
+  const [season, similarTV, tv] = await axios
+    .all([seasonRequest, similarTVRequest, tvRequest])
+    .then(
+      axios.spread((seasonResponse, similarTVResponse, tvResponse) => {
+        const season: SeasonInterface = seasonResponse.data;
+        const tv: TV = tvResponse.data;
+        const similarTV: Poster[] = similarTVResponse.data.results.map(
+          (tv: ContentOverview) => {
+            return {
+              backdrop_path: tv.backdrop_path,
+              id: tv.id,
+              overview: tv.overview,
+              original_title: tv.original_title || null,
+              title: tv.title || null,
+              name: tv.name || null,
+              poster_path: tv.poster_path || null,
+              media_type: "tv",
+              first_air_date: tv.first_air_date || null,
+              release_date: tv.release_date || null,
+              vote_count: tv.vote_count,
+              genres: tv.genre_ids,
+            };
+          }
+        );
+
+        return [season, similarTV, tv];
+      })
+    );
+
   return { props: { season, tv, similarTV } };
 };

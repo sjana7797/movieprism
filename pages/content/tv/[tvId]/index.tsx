@@ -10,6 +10,8 @@ import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
 import { custAxios } from "../../../../utils/custAxios";
 import { APP_NAME } from "../../../../utils/appConfig";
 import ContentImage from "../../../../components/ui/ContentImage";
+import axios from "axios";
+import { m } from "framer-motion";
 
 function TVSeries({
   tv,
@@ -75,19 +77,22 @@ function TVSeries({
                   href={`/content/tv/${tv.id}/${season.season_number}`}
                   passHref
                 >
-                  <div className="transform cursor-pointer">
-                    <div className="relative h-72 w-52 rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
+                  <m.div
+                    className="group cursor-pointer"
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <div className="relative h-72 w-52 overflow-hidden rounded-md border-2 border-black transition-colors duration-300 hover:border-slate-200">
                       <Image
                         src={`${BASE_URL_IMAGE}${season.poster_path}`}
                         alt={name}
                         layout="fill"
-                        className="rounded-md bg-black"
+                        className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
                         placeholder="blur"
                         blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
                       />
                     </div>
                     <p className="my-5">{name}</p>
-                  </div>
+                  </m.div>
                 </Link>
               );
             })}
@@ -145,36 +150,46 @@ export default TVSeries;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const tvId = context.query.tvId;
-  const tv: TV = await custAxios
-    .get(API_OPTION.TV, { params: { tvId } })
-    .then((res) => res.data);
-  const tvCasts: TVCast[] = await custAxios
-    .get(API_OPTION.TV_CAST, { params: { tvId } })
-    .then((res) => {
-      return res.data.cast;
-    });
 
-  const tvSimilarData = await custAxios
-    .get(API_OPTION.SIMILAR_TV, { params: { tvId } })
-    .then((res) => res.data);
+  const tvRequest = custAxios.get(API_OPTION.TV, { params: { tvId } });
 
-  const similarTV: Poster[] = tvSimilarData.results.map(
-    (tv: ContentOverview) => {
-      return {
-        backdrop_path: tv.backdrop_path,
-        id: tv.id,
-        overview: tv.overview,
-        original_title: tv.original_title || null,
-        title: tv.title || null,
-        name: tv.name || null,
-        poster_path: tv.poster_path || null,
-        media_type: "tv",
-        first_air_date: tv.first_air_date || null,
-        release_date: tv.release_date || null,
-        vote_count: tv.vote_count,
-        genres: tv.genre_ids,
-      };
-    }
-  );
+  const tvSimilarRequest = custAxios.get(API_OPTION.SIMILAR_TV, {
+    params: { tvId },
+  });
+  const tvCastsRequest = custAxios.get(API_OPTION.TV_CAST, {
+    params: { tvId },
+  });
+
+  const [tv, similarTV, tvCasts] = await axios
+    .all([tvRequest, tvSimilarRequest, tvCastsRequest])
+    .then(
+      axios.spread((tvResponse, tvSimilarResponse, tvCastsResponse) => {
+        const tv: TV = tvResponse.data;
+
+        const tvCasts: TVCast[] = tvCastsResponse.data.cast;
+
+        const similarTV = tvSimilarResponse.data.results.map(
+          (tv: ContentOverview) => {
+            return {
+              backdrop_path: tv.backdrop_path,
+              id: tv.id,
+              overview: tv.overview,
+              original_title: tv.original_title || null,
+              title: tv.title || null,
+              name: tv.name || null,
+              poster_path: tv.poster_path || null,
+              media_type: "tv",
+              first_air_date: tv.first_air_date || null,
+              release_date: tv.release_date || null,
+              vote_count: tv.vote_count,
+              genres: tv.genre_ids,
+            };
+          }
+        );
+
+        return [tv, similarTV, tvCasts];
+      })
+    );
+
   return { props: { tv, similarTV, tvCasts } };
 };

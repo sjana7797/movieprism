@@ -25,7 +25,7 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
   return (
     <section className="mx-5 cursor-pointer rounded-md border-2 border-slate-300 p-5">
       <m.div
-        className="relative hidden h-96 w-full rounded-md bg-gradient-to-br from-slate-900 via-gray-900 to-neutral-900 opacity-100 transition-opacity duration-300 hover:opacity-30 md:block"
+        className="group relative hidden h-96 w-full rounded-md opacity-100 transition-opacity duration-300 hover:opacity-30 md:block"
         initial="offscreen"
         animate="onscreen"
         variants={fadeInLeft}
@@ -40,7 +40,7 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
           className="rounded-md"
           sizes="100%"
         />
-        <div className="absolute left-0 top-0 h-full w-full rounded-md bg-gradient-to-r from-black via-slate-900 to-transparent p-5">
+        <div className="absolute left-0 top-0 h-full w-full rounded-md bg-gradient-to-r from-black via-slate-900 to-transparent p-5 group-hover:to-emerald-900/40">
           <h4 className="text-2xl font-bold tracking-wider">{name}</h4>
           <p className="my-5 w-1/2">{movie.overview}</p>
           <p className="my-5 w-1/2">
@@ -54,7 +54,7 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
         </div>
       </m.div>
       <m.div
-        className="my-5 flex flex-wrap items-center justify-center md:hidden"
+        className="my-5 flex flex-wrap items-center justify-center overflow-hidden md:hidden"
         initial="offscreen"
         animate="onscreen"
         variants={fadeInLeft}
@@ -64,7 +64,7 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
           width={200}
           height={288}
           layout="fixed"
-          className="mx-2 rounded-md bg-slate-900"
+          className="mx-2 rounded-md bg-slate-900 transition-transform duration-300 group-hover:scale-110"
           alt={name}
         />
         <div className="prose prose-invert mx-2 my-1">
