@@ -20,7 +20,7 @@ const bloggerAxios = axios.create({
   params: { key: `${process.env.BLOGGER_API_KEY}` },
 });
 
-axios.interceptors.request.use((config) => {
+custAxios.interceptors.request.use((config) => {
   const { url } = config;
   const media = config.params?.media || "";
   switch (url) {

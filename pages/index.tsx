@@ -43,118 +43,157 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { country } = context.query;
 
-  await axios.all;
-  const trendingData: Poster[] = await custAxios
-    .get(API_OPTION.TRENDING, { params: { media: "all" } })
-    .then((res) =>
-      res.data.results.map((movie: ContentOverview) => {
-        return {
-          backdrop_path: movie.backdrop_path,
-          id: movie.id,
-          overview: movie.overview,
-          original_title: movie.original_title || null,
-          title: movie.title || null,
-          name: movie.name || null,
-          poster_path: movie.poster_path || null,
-          media_type: movie.media_type,
-          first_air_date: movie.first_air_date || null,
-          release_date: movie.release_date || null,
-          vote_count: movie.vote_count,
-        };
-      })
-    );
-  const topRatedData: Poster[] = await custAxios
-    .get(API_OPTION.TOP_RATED, { params: { region: country } })
-    .then((res) =>
-      res.data.results.map((movie: ContentOverview) => {
-        return {
-          backdrop_path: movie.backdrop_path,
-          id: movie.id,
-          overview: movie.overview,
-          original_title: movie.original_title || null,
-          title: movie.title || null,
-          poster_path: movie.poster_path || null,
-          release_date: movie.release_date || null,
-          vote_count: movie.vote_count,
-          media_type: "movie",
-        };
-      })
-    );
-  const popularData: Poster[] = await custAxios
-    .get(API_OPTION.POPULAR, { params: { region: country } })
-    .then((res) =>
-      res.data.results.map((movie: ContentOverview) => {
-        return {
-          backdrop_path: movie.backdrop_path,
-          id: movie.id,
-          overview: movie.overview,
-          original_title: movie.original_title || null,
-          title: movie.title || null,
-          poster_path: movie.poster_path || null,
-          release_date: movie.release_date || null,
-          vote_count: movie.vote_count,
-          media_type: "movie",
-        };
-      })
-    );
-
-  const tvData: Poster[] = await custAxios
-    .get(API_OPTION.ON_THE_AIR, { params: { region: country } })
-    .then((res) =>
-      res.data.results.map((tv: ContentOverview) => {
-        return {
-          backdrop_path: tv.backdrop_path,
-          id: tv.id,
-          overview: tv.overview,
-          original_title: tv.original_title || null,
-          name: tv.original_name || null,
-          title: tv.title || null,
-          poster_path: tv.poster_path || null,
-          release_date: tv.release_date || null,
-          vote_count: tv.vote_count,
-          media_type: "tv",
-          genres: tv.genre_ids,
-        };
-      })
-    );
-
-  const onAirData = await custAxios
-    .get(API_OPTION.NOW_PLAYING, {
-      params: { region: country },
-    })
-    .then((res) => res.data);
-
-  const onAir: Poster[] = onAirData.results.map((movie: ContentOverview) => {
-    return {
-      backdrop_path: movie.backdrop_path,
-      id: movie.id,
-      overview: movie.overview,
-      title: movie.title || null,
-      original_title: movie.original_title || null,
-      name: movie.name || null,
-      poster_path: movie.poster_path || null,
-      media_type: "movie",
-      first_air_date: movie.first_air_date || null,
-      release_date: movie.release_date || null,
-      vote_count: movie.vote_count,
-    };
+  const trendingRequest = custAxios.get(API_OPTION.TRENDING, {
+    params: { media: "all" },
+  });
+  const topRatedRequest = custAxios.get(API_OPTION.TOP_RATED, {
+    params: { region: country },
+  });
+  const popularRequest = custAxios.get(API_OPTION.POPULAR, {
+    params: { region: country },
+  });
+  const tvRequest = custAxios.get(API_OPTION.ON_THE_AIR, {
+    params: { region: country },
+  });
+  const onTheAirRequest = custAxios.get(API_OPTION.NOW_PLAYING, {
+    params: { region: country },
+  });
+  const upcommingMoviesRequest = custAxios.get(API_OPTION.UPCOMMING_MOVIES);
+  const dicoverRequest = custAxios.get(API_OPTION.DISCOVER_MOVIE, {
+    params: { watch_region: country },
   });
 
-  const upcommingMovies: Poster[] = await custAxios
-    .get(API_OPTION.UPCOMMING_MOVIES)
-    .then((res) => {
-      const movies: Poster[] = res.data.results.map((movie: Poster) => {
-        return { ...movie, media_type: "movie" };
-      });
-      return movies;
-    });
+  const [
+    trendingData,
+    topRatedData,
+    popularData,
+    tvData,
+    onAir,
+    upcommingMovies,
+    discoverMovies,
+  ] = await axios
+    .all([
+      trendingRequest,
+      topRatedRequest,
+      popularRequest,
+      tvRequest,
+      onTheAirRequest,
+      upcommingMoviesRequest,
+      dicoverRequest,
+    ])
+    .then(
+      axios.spread(
+        (
+          trendingResponse,
+          topRatedResponse,
+          popularResponse,
+          tvResponse,
+          onTheAirResponse,
+          upcommingMoviesResponse,
+          dicoverResponse
+        ) => {
+          const trendingData: Poster[] = trendingResponse.data.results.map(
+            (movie: ContentOverview) => {
+              return {
+                backdrop_path: movie.backdrop_path,
+                id: movie.id,
+                overview: movie.overview,
+                original_title: movie.original_title || null,
+                title: movie.title || null,
+                name: movie.name || null,
+                poster_path: movie.poster_path || null,
+                media_type: movie.media_type,
+                first_air_date: movie.first_air_date || null,
+                release_date: movie.release_date || null,
+                vote_count: movie.vote_count,
+              };
+            }
+          );
+          const topRatedData: Poster[] = topRatedResponse.data.results.map(
+            (movie: ContentOverview) => {
+              return {
+                backdrop_path: movie.backdrop_path,
+                id: movie.id,
+                overview: movie.overview,
+                original_title: movie.original_title || null,
+                title: movie.title || null,
+                poster_path: movie.poster_path || null,
+                release_date: movie.release_date || null,
+                vote_count: movie.vote_count,
+                media_type: "movie",
+              };
+            }
+          );
+          const popularData: Poster[] = popularResponse.data.results.map(
+            (movie: ContentOverview) => {
+              return {
+                backdrop_path: movie.backdrop_path,
+                id: movie.id,
+                overview: movie.overview,
+                original_title: movie.original_title || null,
+                title: movie.title || null,
+                poster_path: movie.poster_path || null,
+                release_date: movie.release_date || null,
+                vote_count: movie.vote_count,
+                media_type: "movie",
+              };
+            }
+          );
+          const tvData: Poster[] = tvResponse.data.results.map(
+            (tv: ContentOverview) => {
+              return {
+                backdrop_path: tv.backdrop_path,
+                id: tv.id,
+                overview: tv.overview,
+                original_title: tv.original_title || null,
+                name: tv.original_name || null,
+                title: tv.title || null,
+                poster_path: tv.poster_path || null,
+                release_date: tv.release_date || null,
+                vote_count: tv.vote_count,
+                media_type: "tv",
+                genres: tv.genre_ids,
+              };
+            }
+          );
+          const onAir: Poster[] = onTheAirResponse.data.results.map(
+            (movie: ContentOverview) => {
+              return {
+                backdrop_path: movie.backdrop_path,
+                id: movie.id,
+                overview: movie.overview,
+                title: movie.title || null,
+                original_title: movie.original_title || null,
+                name: movie.name || null,
+                poster_path: movie.poster_path || null,
+                media_type: "movie",
+                first_air_date: movie.first_air_date || null,
+                release_date: movie.release_date || null,
+                vote_count: movie.vote_count,
+              };
+            }
+          );
 
-  const discoverMovies: ContentOverview[] = await custAxios
-    .get(API_OPTION.DISCOVER_MOVIE, { params: { watch_region: country } })
-    .then((res) => {
-      const data = res.data;
-      return data.results;
-    });
+          const upcommingMovies: Poster[] =
+            upcommingMoviesResponse.data.results.map((movie: Poster) => {
+              return { ...movie, media_type: "movie" };
+            });
+
+          const discoverMovies: ContentOverview[] =
+            dicoverResponse.data.results;
+
+          return [
+            trendingData,
+            topRatedData,
+            popularData,
+            tvData,
+            onAir,
+            upcommingMovies,
+            discoverMovies,
+          ];
+        }
+      )
+    );
 
   return {
     props: {
