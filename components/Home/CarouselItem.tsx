@@ -8,15 +8,16 @@ function CarouselItem({ content }: { content: ContentOverview }) {
   const poster = `${BASE_URL_IMAGE}${content.poster_path}`;
   return (
     <Link passHref href={`/content/${content.media_type}/${content.id}`}>
-      <div
-        className="group relative mx-2 min-h-[250px] overflow-hidden rounded-lg bg-black opacity-100 shadow-md shadow-emerald-400/20 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:min-h-[300px] md:min-h-[350px] xl:min-h-[400px]"
-        style={{
-          backgroundImage: `url(${BASE_URL_IMAGE}${content.backdrop_path})`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center center",
-          backgroundSize: "cover",
-        }}
-      >
+      <div className="group relative mx-2 min-h-[250px] overflow-hidden rounded-lg bg-black opacity-100 shadow-md shadow-emerald-400/20 transition-opacity duration-200 hover:cursor-pointer hover:opacity-50 sm:min-h-[300px] md:min-h-[350px] xl:min-h-[400px]">
+        <Image
+          layout="fill"
+          src={`${BASE_URL_IMAGE}${content.backdrop_path}`}
+          alt={name}
+          objectFit="cover"
+          sizes="100%"
+          className="rounded-md"
+          priority
+        />
         <div className="absolute top-10 left-10 z-20 rounded-md md:top-1/2 md:w-1/2 md:-translate-y-1/2">
           <h2 className="text-left text-lg font-medium tracking-wide group-hover:text-emerald-400 sm:left-20 sm:text-2xl lg:text-4xl">
             {name}

@@ -6,6 +6,7 @@ import { ContentOverview, Poster } from "../typing/content";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
 import DicoverMovie from "../components/Home/DiscoverMovie.server";
+import axios from "axios";
 
 const Home = ({
   trendingData,
@@ -40,12 +41,9 @@ const Home = ({
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
-
   const { country } = context.query;
+
+  await axios.all;
   const trendingData: Poster[] = await custAxios
     .get(API_OPTION.TRENDING, { params: { media: "all" } })
     .then((res) =>

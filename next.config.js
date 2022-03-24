@@ -11,6 +11,7 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 200, 256, 384, 500],
     domains: ["image.tmdb.org", "s4.anilist.co", "dummyimage.com"],
     formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 300,
   },
   swcMinify: true,
   experimental: {
