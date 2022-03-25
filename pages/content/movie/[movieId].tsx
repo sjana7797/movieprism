@@ -19,7 +19,6 @@ import { APP_NAME } from "../../../utils/appConfig";
 import { capitaliseString } from "../../../utils/capitaliseString";
 import ContentImage from "../../../components/ui/ContentImage";
 import axios from "axios";
-import Cookies from "cookies";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -276,15 +275,6 @@ export default Movie;
 export const getServerSideProps: GetServerSideProps = async (content) => {
   const movieId = content.query.movieId;
 
-  if (process.env.NODE_ENV === "production") {
-    const { req, res } = content;
-    const cookies = new Cookies(req, res);
-    cookies.set("youtube", "secure", {
-      httpOnly: true, // true by default
-      sameSite: "none",
-      secure: true,
-    });
-  }
   const movieRequest = custAxios.get(`movie`, { params: { movieId } });
   const castRequest = custAxios.get(API_OPTION.MOVIE_CAST, {
     params: { movieId },
