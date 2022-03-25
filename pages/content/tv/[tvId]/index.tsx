@@ -89,6 +89,7 @@ function TVSeries({
                         className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
                         placeholder="blur"
                         blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
+                        // loader={uploadcareLoader}
                       />
                     </div>
                     <p className="my-5">{name}</p>
@@ -124,6 +125,7 @@ function TVSeries({
                         placeholder="blur"
                         objectFit="cover"
                         objectPosition="center"
+                        // loader={uploadcareLoader}
                       />
                     </div>
                     <div className="my-2">

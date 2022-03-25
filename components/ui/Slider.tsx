@@ -49,6 +49,7 @@ function UpcommingMovie({ movie }: { movie: UpcommingMovie }) {
           className="bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
           placeholder="blur"
           blurDataURL={poster}
+          // loader={uploadcareLoader}
         />
         <h2 className="absolute top-5 left-5 hidden group-hover:block">
           {content_name}

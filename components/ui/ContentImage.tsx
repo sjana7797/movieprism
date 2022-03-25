@@ -39,6 +39,7 @@ function ContentImage({ img, name }: { img: string; name: string }) {
         blurDataURL="https://dummyimage.com/1920x1080/fff/aaa"
         placeholder="blur"
         priority
+        // loader={uploadcareLoader}
       />
       <div
         className={`absolute top-0 left-0 h-full w-full bg-gradient-to-b ${randomColor[color]} via-slate-900 to-black opacity-[0.85]`}

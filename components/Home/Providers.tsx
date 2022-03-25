@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { providers } from "../../utils/providersItems";
 import { m } from "framer-motion";
+
 function Providers() {
   return (
     <div className="mx-5">
@@ -20,6 +21,7 @@ function Providers() {
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
+                //// loader={uploadcareLoader}
               />
             </m.div>
           </Link>

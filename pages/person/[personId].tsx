@@ -65,6 +65,7 @@ function People({
             placeholder="blur"
             objectFit="cover"
             objectPosition="center"
+            // loader={uploadcareLoader}
           />
           <div className="p-2 text-center">
             <h1 className="text-2xl">{person.name}</h1>

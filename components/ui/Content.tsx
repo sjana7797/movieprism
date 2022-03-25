@@ -34,6 +34,7 @@ const Content = forwardRef<Ref, Props>(
               className="transform rounded-md bg-black opacity-100 transition duration-200 group-hover:scale-110 group-hover:opacity-20"
               placeholder="blur"
               blurDataURL={dummyImage}
+              // loader={uploadcareLoader}
             />
             <h2 className="absolute top-5 left-5 hidden group-hover:block">
               {content_name}

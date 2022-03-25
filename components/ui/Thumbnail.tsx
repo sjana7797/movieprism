@@ -41,6 +41,7 @@ const Thumbnail = forwardRef<Ref, Props>(
             layout="responsive"
             alt={content_name}
             className="rounded-md bg-slate-900"
+            // loader={uploadcareLoader}
           />
           <div className="p-2">
             <p className="max-w-md truncate">{overview}</p>

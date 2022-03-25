@@ -36,6 +36,7 @@ function Season(props: {
                 className="rounded-md bg-black"
                 placeholder="blur"
                 blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
+                // loader={uploadcareLoader}
               />
             </div>
             <p className="my-5 text-center">{name}</p>
@@ -65,6 +66,7 @@ function Season(props: {
                     blurDataURL={`${BASE_URL_IMAGE}${
                       episode.still_path || season.poster_path
                     }`}
+                    // loader={uploadcareLoader}
                   />
                 </div>
                 <div className="prose prose-invert my-5 h-auto">
@@ -106,6 +108,7 @@ function Season(props: {
                       className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
                       placeholder="blur"
                       blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
+                      // loader={uploadcareLoader}
                     />
                   </div>
                   <p className="my-5">{name}</p>

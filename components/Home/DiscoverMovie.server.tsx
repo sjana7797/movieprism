@@ -29,6 +29,7 @@ function DicoverMovie({ data }: { data: ContentOverview }) {
             objectFit="cover"
             objectPosition="center"
             sizes="50%"
+            // loader={uploadcareLoader}
           />
         </div>
 
@@ -58,6 +59,7 @@ function DicoverMovie({ data }: { data: ContentOverview }) {
           layout="fixed"
           className="mx-2 rounded-md bg-slate-900 transition-transform duration-300 group-hover:scale-110"
           alt={name}
+          // loader={uploadcareLoader}
         />
         <div className="prose prose-invert mx-2 my-1">
           <h3 className="">

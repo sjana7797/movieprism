@@ -23,6 +23,7 @@ function Anime({ anime }: { anime: AnimePoster }) {
             width={1920}
             height={1080}
             layout="responsive"
+            // loader={uploadcareLoader}
           />
           <div
             className={`absolute top-0 left-0 h-full w-full p-1 opacity-0 backdrop-blur transition-opacity delay-200 duration-300 group-hover:opacity-100`}

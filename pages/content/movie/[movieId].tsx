@@ -123,6 +123,7 @@ function Movie(props: {
                         className="pointer-events-none rounded-lg"
                         priority
                         sizes="500px"
+                        // loader={uploadcareLoader}
                       />
                     </m.div>
                   );
@@ -153,6 +154,7 @@ function Movie(props: {
                         className="pointer-events-none rounded-lg"
                         priority
                         sizes="200px"
+                        // loader={uploadcareLoader}
                       />
                     </m.div>
                   );
@@ -179,6 +181,7 @@ function Movie(props: {
                         layout="responsive"
                         alt={production.name}
                         className="rounded-md"
+                        // loader={uploadcareLoader}
                       />
                     </div>
                     <div className="my-2">
@@ -245,6 +248,7 @@ function Movie(props: {
                             placeholder="blur"
                             objectFit="cover"
                             objectPosition="center"
+                            // loader={uploadcareLoader}
                           />
                         </div>
                         <div className="my-2">

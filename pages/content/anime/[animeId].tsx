@@ -28,6 +28,7 @@ function Anime(props: { anime: Anime }) {
               className="sticky top-0 opacity-40"
               alt={name}
               priority
+              // loader={uploadcareLoader}
             />
           )}
           <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
@@ -75,6 +76,7 @@ function Anime(props: { anime: Anime }) {
                         layout="fixed"
                         alt={people.node.name.full}
                         className="rounded-md"
+                        // loader={uploadcareLoader}
                       />
                     </div>
                     <div className="my-2">
@@ -109,6 +111,7 @@ function Anime(props: { anime: Anime }) {
                       className="rounded-md bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
                       placeholder="blur"
                       blurDataURL={poster}
+                      // loader={uploadcareLoader}
                     />
                     <h2 className="absolute top-5 left-5 hidden group-hover:block">
                       {content_name}
