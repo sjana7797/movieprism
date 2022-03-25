@@ -15,7 +15,7 @@ const trendingNavObj = {
     link: "/content/trending?media=movie",
   },
   tv: {
-    title: "tv",
+    title: "tv series",
     link: "/content/trending?media=tv",
   },
 };

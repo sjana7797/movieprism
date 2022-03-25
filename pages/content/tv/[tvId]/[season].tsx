@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import Contents from "../../../../components/Home/Contents";
+import Contents from "../../../../components/Home/Contents.server";
 import { ContentOverview, Poster } from "../../../../typing/content";
 import { Season as SeasonInterface, TV } from "../../../../typing/tv";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";

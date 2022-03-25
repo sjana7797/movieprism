@@ -1,4 +1,3 @@
-// import { ApolloProvider } from "@apollo/client";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
@@ -14,7 +13,7 @@ function Animes({ animes }: { animes: AnimeList }) {
     router.push(`/content/anime?page=${page}`);
   };
   return (
-    <div className="mx-5 my-10 rounded-md bg-slate-700 p-5">
+    <div className="mx-5 my-10 p-5">
       <Head>
         <title>{`Anime | ${APP_NAME}`}</title>
       </Head>
@@ -79,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             color
           }
           bannerImage
-          description(asHtml: false)
+          description(asHtml: true)
         }
       }
     }

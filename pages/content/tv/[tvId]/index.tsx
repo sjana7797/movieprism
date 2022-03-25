@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import Contents from "../../../../components/Home/Contents";
+import Contents from "../../../../components/Home/Contents.server";
 import { TV, TVCast } from "../../../../typing/tv";
 import { ContentOverview, Poster } from "../../../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";
@@ -29,7 +29,7 @@ function TVSeries({
       <Head>
         <title>{`${name} | ${APP_NAME}`}</title>
       </Head>
-      <section className="relative h-screen w-full">
+      <m.article className="relative h-screen w-full" exit={{ opacity: 0 }}>
         <ContentImage img={img} name={name} />
         <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
           <h2>{name}</h2>
@@ -63,7 +63,7 @@ function TVSeries({
             </div>
           )}
         </div>
-      </section>
+      </m.article>
       <aside className="my-5 mx-5 rounded-md border-2 border-slate-300">
         <div>
           <h2 className="mt-5 ml-5 text-2xl">Seasons</h2>

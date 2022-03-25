@@ -1,7 +1,6 @@
 import { ContentOverview } from "../../typing/content";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel as CarouselComponent } from "react-responsive-carousel";
-// import CarouselItem from "./CarouselItem";
 import { CSSProperties } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 import dynamic from "next/dynamic";

@@ -31,7 +31,7 @@ function Search() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-gray-500/80 p-1" />
+          <Dialog.Overlay className="fixed inset-0 bg-emerald-400/[0.12] p-1 backdrop-blur-sm" />
         </Transition.Child>
         <Transition.Child
           enter="duration-300 ease-out"
@@ -47,16 +47,16 @@ function Search() {
             onChange={() => {
               null;
             }}
-            className="relative mx-auto max-w-4xl divide-y divide-slate-700 rounded-xl bg-slate-900 shadow-2xl shadow-black ring-1 ring-white/5"
+            className="relative mx-auto max-w-4xl divide-y divide-slate-700 rounded-xl bg-slate-900 shadow-2xl shadow-black ring-1 ring-white/20"
           >
-            <div className="flex items-center px-4">
-              <SearchIcon className="h-6 w-6 text-slate-200" />
+            <div className="flex h-16 items-center px-4">
+              <SearchIcon className="h-8 w-8 text-slate-200" />
               <Combobox.Input
                 onChange={(event) => {
                   setSearchQuery(event.target.value);
                 }}
                 value={searchQuery}
-                className="w-full border-0 bg-transparent text-lg text-slate-200 placeholder:text-slate-400 focus:ring-0"
+                className="w-full border-0 bg-transparent text-xl text-slate-200 placeholder:text-slate-400 focus:ring-0"
                 placeholder="Search Content..."
               />
             </div>
@@ -69,7 +69,7 @@ function Search() {
                         content.name || content.original_title || content.title;
                       return (
                         <div
-                          className={`cursor-pointer space-x-1 px-4 py-2 ${
+                          className={`cursor-pointer space-x-3 px-4 py-2 ${
                             active ? "bg-emerald-400/50" : "bg-transparent"
                           }`}
                           onClick={() => {
@@ -85,7 +85,7 @@ function Search() {
                           <span className="font-medium text-slate-100">
                             {name}
                           </span>
-                          <span className="text-slate-400">
+                          <span className="italic text-slate-400">
                             {content.media_type}
                           </span>
                         </div>

@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import Contents from "../../../components/Home/Contents";
+import Contents from "../../../components/Home/Contents.server";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { m } from "framer-motion";
@@ -19,6 +19,7 @@ import { APP_NAME } from "../../../utils/appConfig";
 import { capitaliseString } from "../../../utils/capitaliseString";
 import ContentImage from "../../../components/ui/ContentImage";
 import axios from "axios";
+import Cookies from "cookies";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -53,7 +54,7 @@ function Movie(props: {
       <Head>
         <title>{`${capitaliseString(name)} | ${APP_NAME}`}</title>
       </Head>
-      <article>
+      <m.article exit={{ opacity: 0 }}>
         <section className="relative h-screen w-full">
           <ContentImage img={img} name={name} />
           <div className="prose prose-sm prose-invert absolute top-1/3 left-10 h-3/5 overflow-y-scroll scrollbar-hide prose-h2:text-5xl prose-p:text-lg prose-p:opacity-80 md:prose-base lg:prose-xl">
@@ -261,7 +262,7 @@ function Movie(props: {
             </div>
           </div>
         </section>
-      </article>
+      </m.article>
       <aside className="my-5 mx-5 rounded-md border-2 border-slate-300">
         <Contents title="Similar Movies" contents={similarMovie} />
         <Contents title="Recommendations" contents={recommendations} />
@@ -275,6 +276,15 @@ export default Movie;
 export const getServerSideProps: GetServerSideProps = async (content) => {
   const movieId = content.query.movieId;
 
+  if (process.env.NODE_ENV === "production") {
+    const { req, res } = content;
+    const cookies = new Cookies(req, res);
+    cookies.set("youtube", "secure", {
+      httpOnly: true, // true by default
+      sameSite: "none",
+      secure: true,
+    });
+  }
   const movieRequest = custAxios.get(`movie`, { params: { movieId } });
   const castRequest = custAxios.get(API_OPTION.MOVIE_CAST, {
     params: { movieId },

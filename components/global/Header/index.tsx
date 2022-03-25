@@ -11,7 +11,7 @@ function Header() {
 
   return (
     <>
-      <header className="my-5 flex h-auto flex-col items-center justify-between px-10 md:flex-row">
+      <header className="my-5 flex h-auto flex-col items-center justify-between px-10 lg:flex-row">
         <div className="mb-1 flex max-w-2xl grow justify-evenly">
           {headerItems.map((icon, index) => (
             <HeaderItem key={index} icon={icon} />
@@ -29,7 +29,7 @@ function Header() {
           </div>
         </div>
         <h1
-          className="cursor-pointer text-2xl font-bold uppercase tracking-wider"
+          className="mx-auto cursor-pointer self-start text-3xl font-bold uppercase tracking-wider lg:mx-0"
           onClick={() => {
             router.push("/");
           }}

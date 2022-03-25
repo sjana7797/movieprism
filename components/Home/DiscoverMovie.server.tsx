@@ -1,48 +1,40 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { ContentOverview } from "../../typing/content";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
 import { fadeInLeft } from "../../animation/variants";
+import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
 
-function DicoverMovie({ data }: { data: ContentOverview[] }) {
-  const num = Math.floor(Math.random() * data.length - 1);
-  const [movie, setMovie] = useState<ContentOverview>(data[num]);
+function DicoverMovie({ data }: { data: ContentOverview }) {
+  const movie = data;
   const router = useRouter();
-  useEffect(() => {
-    setTimeout(() => {
-      if (movie) {
-        const num = Math.floor(Math.random() * data.length - 1);
-        const movie = data[num];
-        setMovie(movie);
-      }
-    }, 1000 * 60 * 5); //msec * sec * min
-  });
 
   const name = movie?.original_title || movie?.name || movie?.title;
 
   return (
-    <section className="mx-5 cursor-pointer rounded-md border-2 border-slate-300 p-5">
+    <section className="mx-5 p-5">
       <m.div
-        className="group relative hidden h-96 w-full rounded-md opacity-100 transition-opacity duration-300 hover:opacity-30 md:block"
+        className="group relative hidden h-96 w-full cursor-pointer overflow-hidden rounded-lg opacity-100 shadow-sm shadow-slate-700 transition-opacity duration-300 hover:opacity-30 md:block"
         initial="offscreen"
         animate="onscreen"
         variants={fadeInLeft}
         onClick={() => router.push(`/content/movie/${movie?.id}`)}
       >
-        <Image
-          src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
-          alt={name}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="15% 20%"
-          className="rounded-md"
-          sizes="100%"
-        />
+        <div className="absolute right-0 top-0 h-full w-1/2">
+          <Image
+            src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
+            alt={name}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+            sizes="50%"
+          />
+        </div>
+
         <div className="absolute left-0 top-0 h-full w-full rounded-md bg-gradient-to-r from-black via-slate-900 to-transparent p-5 group-hover:to-emerald-900/40">
           <h4 className="text-2xl font-bold tracking-wider">{name}</h4>
-          <p className="my-5 w-1/2">{movie.overview}</p>
+          <p className="my-5 w-1/2 line-clamp-4">{movie.overview}</p>
           <p className="my-5 w-1/2">
             <span className="block">
               Popularity:<em>{movie.popularity}</em>
@@ -71,7 +63,7 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
           <h3 className="">
             {movie.original_title || movie.name || movie.title}
           </h3>
-          <p>{movie.overview}</p>
+          <p className="line-clamp-3">{movie.overview}</p>
           <p>
             <span className="block">
               Popularity:<em>{movie.popularity}</em>
@@ -80,6 +72,17 @@ function DicoverMovie({ data }: { data: ContentOverview[] }) {
               Adult:<em>{movie.adult ? "Yes" : "No"}</em>
             </span>
           </p>
+          <div
+            className="group flex items-center space-x-2 italic tracking-wider"
+            onClick={() => router.push(`/content/movie/${movie?.id}`)}
+          >
+            <span className="transition-transform duration-300 group-hover:scale-x-105">
+              Read More
+            </span>
+            <span className="transition-transform duration-300 group-hover:scale-x-150">
+              <ChevronDoubleRightIcon className="h-5 w-5" />
+            </span>
+          </div>
         </div>
       </m.div>
     </section>

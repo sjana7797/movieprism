@@ -6,10 +6,10 @@ export default function Document() {
       <Head>
         <meta name="robots" content="index, follow" />
         <meta charSet="UTF-8" />
-        <link rel="preconnect" href="https://dummyimage.com" />
-        <link rel="preconnect" href="https://image.tmdb.org" />
-        <link rel="preconnect" href="https://s4.anilist.co" />
-        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="dns-prefetch" href="https://dummyimage.com" />
+        <link rel="dns-prefetch" href="https://image.tmdb.org" />
+        <link rel="dns-prefetch" href="https://s4.anilist.co" />
+        <link rel="dns-prefetch" href="https://www.youtube.com" />
         <link
           rel="prefetch"
           as="font"

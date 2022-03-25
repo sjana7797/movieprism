@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Providers from "../components/Home/Providers";
-import Carousel from "../components/Home/Carousel";
-import Contents from "../components/Home/Contents";
+import Carousel from "../components/Home/Carousel.server";
+import Contents from "../components/Home/Contents.server";
 import { ContentOverview, Poster } from "../typing/content";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
@@ -16,7 +16,7 @@ const Home = ({
   popularData,
   tvData,
   onAir,
-  discoverMovies,
+  discoverMovie,
 }: {
   trendingData: ContentOverview[];
   topRatedData: Poster[];
@@ -24,7 +24,7 @@ const Home = ({
   tvData: Poster[];
   upcommingMovies: Poster[];
   onAir: Poster[];
-  discoverMovies: ContentOverview[];
+  discoverMovie: ContentOverview;
 }) => {
   return (
     <>
@@ -37,7 +37,7 @@ const Home = ({
       <Providers />
       <Contents contents={popularData} title="Popular" />
       <Contents contents={onAir} title="Now Playing" />
-      <DicoverMovie data={discoverMovies} />
+      <DicoverMovie data={discoverMovie} />
       <Contents contents={tvData} title="TV Series On the Air" />
     </>
   );
@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     tvData,
     onAir,
     upcommingMovies,
-    discoverMovies,
+    discoverMovie,
   ] = await axios
     .all([
       trendingRequest,
@@ -187,6 +187,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           const discoverMovies: ContentOverview[] =
             dicoverResponse.data.results;
 
+          const num = Math.floor(Math.random() * discoverMovies.length - 1);
+
+          const discoverMovie = discoverMovies[num];
+
           return [
             trendingData,
             topRatedData,
@@ -194,7 +198,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             tvData,
             onAir,
             upcommingMovies,
-            discoverMovies,
+            discoverMovie,
           ];
         }
       )
@@ -208,7 +212,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       tvData,
       upcommingMovies,
       onAir,
-      discoverMovies,
+      discoverMovie,
     },
   };
 };

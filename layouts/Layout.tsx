@@ -2,7 +2,6 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
 import Header from "../components/global/Header";
-import TopLoadingBar from "../components/global/TopLoadingBar";
 import { APP_NAME } from "../utils/appConfig";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
 import { SearchProvider } from "../context/search";
@@ -10,6 +9,9 @@ import dynamic from "next/dynamic";
 
 const loadFeatures = () => import("../utils/domMax").then((mod) => mod.DomMax);
 const DynamicSearch = dynamic(() => import("../components/global/Search"));
+const DynamicTopLoadingBar = dynamic(
+  () => import("../components/global/TopLoadingBar")
+);
 
 function Layout(props: { children: ReactElement }) {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -52,7 +54,7 @@ function Layout(props: { children: ReactElement }) {
           </Head>
           <DynamicSearch />
           <Header />
-          <TopLoadingBar isAnimating={isAnimating} />
+          {isAnimating && <DynamicTopLoadingBar isAnimating={isAnimating} />}
           <LazyMotion features={loadFeatures} strict>
             <m.main
               exit={{ opacity: 0 }}
