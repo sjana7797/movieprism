@@ -176,7 +176,7 @@ function Movie(props: {
                       <img
                         data-src={imgSrc}
                         alt={production.name}
-                        className="height-[1080px] aspect-video w-[1920px] rounded-md"
+                        className="height-[1080px] aspect-video w-[1920px] rounded-md lazyload"
                       />
                     </div>
                     <div className="my-2">

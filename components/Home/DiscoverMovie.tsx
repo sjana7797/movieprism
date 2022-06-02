@@ -23,7 +23,7 @@ function DicoverMovie({ data }: { data: ContentOverview }) {
         <div className="absolute right-0 top-0 h-full w-1/2">
           <img
             data-src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
-            className="objec h-full w-full"
+            className="object lazyload h-full w-full"
             alt={name}
           />
         </div>
