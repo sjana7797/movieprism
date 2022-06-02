@@ -1,6 +1,5 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Contents from "../../components/Home/Contents.server";
 import { Person } from "../../typing";
 import { ContentOverview } from "../../typing/content";
@@ -8,6 +7,7 @@ import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { APP_NAME } from "../../utils/appConfig";
 import { custAxios } from "../../utils/custAxios";
 import { m } from "framer-motion";
+import "lazysizes/plugins/blur-up/ls.blur-up";
 
 type Credit = {
   character: string;
@@ -50,22 +50,17 @@ function People({
       </Head>
       <m.article className="p-5" exit={{ opacity: 0 }}>
         <div className="mx-auto flex max-w-2xl flex-wrap items-center justify-center rounded-md border-2 border-slate-200 p-5">
-          <Image
-            src={
+          <img
+            data-src={
               person.profile_path
                 ? `${BASE_URL_IMAGE}${person.profile_path}`
                 : blurData
             }
             width={234}
             height={352}
-            layout="fixed"
-            className="rounded-lg bg-slate-100"
+            className="bg-slate-100px lazyload min-h-[234px] min-w-[352px] rounded-lg object-cover object-center"
             alt={person.name}
-            blurDataURL={blurData}
-            placeholder="blur"
-            objectFit="cover"
-            objectPosition="center"
-            // loader={uploadcareLoader}
+            src={blurData}
           />
           <div className="p-2 text-center">
             <h1 className="text-2xl">{person.name}</h1>

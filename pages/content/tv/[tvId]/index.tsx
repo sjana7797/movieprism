@@ -1,7 +1,6 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import Contents from "../../../../components/Home/Contents.server";
 import { TV, TVCast } from "../../../../typing/tv";
@@ -12,6 +11,8 @@ import { APP_NAME } from "../../../../utils/appConfig";
 import ContentImage from "../../../../components/ui/ContentImage";
 import axios from "axios";
 import { m } from "framer-motion";
+import "lazysizes";
+import "lazysizes/plugins/blur-up/ls.blur-up";
 
 function TVSeries({
   tv,
@@ -82,14 +83,13 @@ function TVSeries({
                     whileTap={{ scale: 0.9 }}
                   >
                     <div className="relative h-72 w-52 overflow-hidden rounded-md border-2 border-black transition-colors duration-300 hover:border-slate-200">
-                      <Image
-                        src={`${BASE_URL_IMAGE}${season.poster_path}`}
+                      <img
+                        data-src={`${BASE_URL_IMAGE.replace(
+                          "original",
+                          "w300"
+                        )}${season.poster_path}`}
                         alt={name}
-                        layout="fill"
-                        className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
-                        placeholder="blur"
-                        blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
-                        // loader={uploadcareLoader}
+                        className="lazyload rounded-md bg-black object-cover object-center transition-transform duration-300 group-hover:scale-125"
                       />
                     </div>
                     <p className="my-5">{name}</p>
@@ -109,23 +109,21 @@ function TVSeries({
                   : "/img/female-user-icon.jpg";
               let imgSrc = blurData;
               if (people.profile_path)
-                imgSrc = `${BASE_URL_IMAGE}${people.profile_path.slice(1)}`;
+                imgSrc = `${BASE_URL_IMAGE.replace(
+                  "original",
+                  "w300"
+                )}${people.profile_path.slice(1)}`;
               return (
                 <Link key={people.id} passHref href={`/person/${people.id}`}>
                   <div className="group cursor-pointer">
                     <div className="overflow-hidden rounded-md">
-                      <Image
-                        src={imgSrc}
+                      <img
+                        data-srcset={imgSrc}
                         width={238}
                         height={357}
-                        layout="fixed"
                         alt={people.name}
-                        className="rounded-md bg-white transition-transform duration-300 hover:scale-105"
-                        blurDataURL={blurData}
-                        placeholder="blur"
-                        objectFit="cover"
-                        objectPosition="center"
-                        // loader={uploadcareLoader}
+                        className="lazyload blur--img min-h-[357px] min-w-[238px] rounded-md bg-white object-cover object-center transition-transform duration-300 hover:scale-105"
+                        data-src={blurData}
                       />
                     </div>
                     <div className="my-2">

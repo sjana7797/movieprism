@@ -1,10 +1,10 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
-import Image from "next/image";
 import Link from "next/link";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
 import { forwardRef } from "react";
 import { Thumbnail } from "../../typing/content";
+import "lazysizes";
 
 type Ref = HTMLDivElement;
 type Props = { content: Thumbnail };
@@ -25,8 +25,9 @@ const Thumbnail = forwardRef<Ref, Props>(
       vote_count,
     } = props.content;
     const poster =
-      `${BASE_URL_IMAGE}${backdrop_path || poster_path}` ||
-      `${BASE_URL_IMAGE}${poster_path}`;
+      `${BASE_URL_IMAGE.replace("original", "w500")}${
+        backdrop_path || poster_path
+      }` || `${BASE_URL_IMAGE}${poster_path}`;
     const content_name = name || title || original_title;
     return (
       <Link href={`/content/${media_type}/${id}`} passHref>
@@ -34,14 +35,11 @@ const Thumbnail = forwardRef<Ref, Props>(
           className="group transform cursor-pointer p-2 transition duration-200 ease-in hover:z-50 sm:hover:scale-105"
           ref={ref}
         >
-          <Image
-            src={poster}
-            width={1920}
-            height={1080}
-            layout="responsive"
+          <img
+            data-src={poster}
             alt={content_name}
-            className="rounded-md bg-slate-900"
-            // loader={uploadcareLoader}
+            loading="lazy"
+            className="lazyload aspect-video w-full rounded-md bg-slate-900"
           />
           <div className="p-2">
             <p className="max-w-md truncate">{overview}</p>

@@ -4,8 +4,19 @@ import { ReactElement, useEffect, useState } from "react";
 import Header from "../components/global/Header";
 import { APP_NAME } from "../utils/appConfig";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
-import { SearchProvider } from "../context/search";
+import { SearchProvider, useSearch } from "../context/search";
 import dynamic from "next/dynamic";
+import "lazysizes";
+import "lazysizes/plugins/parent-fit/ls.parent-fit";
+
+// import "lazysizes/plugins/native-loading/ls.native-loading";
+
+// lazySizes.cfg.nativeLoading = {
+//   setLoadingAttribute: true,
+//   disableListeners: {
+//     scroll: true,
+//   },
+// };
 
 const loadFeatures = () => import("../utils/domMax").then((mod) => mod.DomMax);
 const DynamicSearch = dynamic(() => import("../components/global/Search"));
@@ -14,6 +25,7 @@ const DynamicTopLoadingBar = dynamic(
 );
 
 function Layout(props: { children: ReactElement }) {
+  const { isOpen } = useSearch();
   const [isAnimating, setIsAnimating] = useState(false);
   const router = useRouter();
   useEffect(() => {

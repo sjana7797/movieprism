@@ -22,14 +22,10 @@ function DicoverMovie({ data }: { data: ContentOverview }) {
         onClick={() => router.push(`/content/movie/${movie?.id}`)}
       >
         <div className="absolute right-0 top-0 h-full w-1/2">
-          <Image
-            src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
+          <img
+            data-src={`${BASE_URL_IMAGE}${movie.backdrop_path}`}
+            className="objec h-full w-full"
             alt={name}
-            layout="fill"
-            objectFit="cover"
-            objectPosition="center"
-            sizes="50%"
-            // loader={uploadcareLoader}
           />
         </div>
 
@@ -52,14 +48,14 @@ function DicoverMovie({ data }: { data: ContentOverview }) {
         animate="onscreen"
         variants={fadeInLeft}
       >
-        <Image
-          src={`${BASE_URL_IMAGE}${movie.poster_path}`}
+        <img
+          data-src={`${BASE_URL_IMAGE.replace("original", "w300")}${
+            movie.poster_path
+          }`}
           width={200}
           height={288}
-          layout="fixed"
-          className="mx-2 rounded-md bg-slate-900 transition-transform duration-300 group-hover:scale-110"
+          className="lazyload mx-2 h-[288] w-[200px] rounded-md bg-slate-900 transition-transform duration-300 group-hover:scale-110"
           alt={name}
-          // loader={uploadcareLoader}
         />
         <div className="prose prose-invert mx-2 my-1">
           <h3 className="">

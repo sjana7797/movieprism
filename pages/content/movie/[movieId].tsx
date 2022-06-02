@@ -1,7 +1,6 @@
 import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import Contents from "../../../components/Home/Contents.server";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
@@ -19,6 +18,8 @@ import { APP_NAME } from "../../../utils/appConfig";
 import { capitaliseString } from "../../../utils/capitaliseString";
 import ContentImage from "../../../components/ui/ContentImage";
 import axios from "axios";
+import "lazysizes";
+import "lazysizes/plugins/blur-up/ls.blur-up";
 
 function Movie(props: {
   movie: MovieInterface;
@@ -114,16 +115,16 @@ function Movie(props: {
                       key={index}
                       className="relative min-h-[400px] min-w-[500px]"
                     >
-                      <Image
-                        src={`${BASE_URL_IMAGE}${backdrop.file_path}`}
-                        layout="responsive"
+                      <img
+                        data-src={`${BASE_URL_IMAGE.replace(
+                          "original",
+                          "w500"
+                        )}${backdrop.file_path}`}
                         width={backdrop.width}
                         height={backdrop.height}
                         alt={name}
-                        className="pointer-events-none rounded-lg"
-                        priority
-                        sizes="500px"
-                        // loader={uploadcareLoader}
+                        loading="lazy"
+                        className="lazyload pointer-events-none rounded-lg"
                       />
                     </m.div>
                   );
@@ -145,16 +146,14 @@ function Movie(props: {
                       key={index}
                       className="relative min-h-[400px] min-w-[200px]"
                     >
-                      <Image
-                        src={`${BASE_URL_IMAGE}${poster.file_path}`}
-                        layout="responsive"
-                        width={poster.width}
-                        height={poster.height}
+                      <img
+                        data-src={`${BASE_URL_IMAGE.replace(
+                          "original",
+                          "w300"
+                        )}${poster.file_path}`}
                         alt={name}
-                        className="pointer-events-none rounded-lg"
-                        priority
-                        sizes="200px"
-                        // loader={uploadcareLoader}
+                        loading="lazy"
+                        className="lazyload pointer-events-none h-full w-full rounded-lg"
                       />
                     </m.div>
                   );
@@ -174,14 +173,10 @@ function Movie(props: {
                 return (
                   <div key={production.id}>
                     <div className="">
-                      <Image
-                        src={imgSrc}
-                        width={1920}
-                        height={1080}
-                        layout="responsive"
+                      <img
+                        data-src={imgSrc}
                         alt={production.name}
-                        className="rounded-md"
-                        // loader={uploadcareLoader}
+                        className="height-[1080px] aspect-video w-[1920px] rounded-md"
                       />
                     </div>
                     <div className="my-2">
@@ -205,8 +200,8 @@ function Movie(props: {
                       <iframe
                         width="640"
                         height="360"
-                        src={`https://www.youtube.com/embed/${video.key}?rel=0&showinfo=0&color=red&modestbranding=1`}
-                        className="rounded-md"
+                        data-src={`https://www.youtube.com/embed/${video.key}?rel=0&showinfo=0&color=red&modestbranding=1`}
+                        className="lazyload lazyload aspect-video rounded-md"
                         allowFullScreen
                       ></iframe>
                       <div className="my-2 flex flex-col space-y-2">
@@ -228,7 +223,10 @@ function Movie(props: {
                       : "/img/female-user-icon.jpg";
                   let imgSrc = blurData;
                   if (people.profile_path)
-                    imgSrc = `${BASE_URL_IMAGE}${people.profile_path.slice(1)}`;
+                    imgSrc = `${BASE_URL_IMAGE.replace(
+                      "original",
+                      "w300"
+                    )}${people.profile_path.slice(1)}`;
                   return (
                     <Link
                       key={people.id}
@@ -237,18 +235,13 @@ function Movie(props: {
                     >
                       <div className="group cursor-pointer">
                         <div className="overflow-hidden rounded-md">
-                          <Image
-                            src={imgSrc}
+                          <img
+                            data-src={imgSrc}
                             width={238}
                             height={357}
-                            layout="fixed"
                             alt={people.name}
-                            className="rounded-md bg-white transition-transform duration-300 hover:scale-105"
-                            blurDataURL={blurData}
-                            placeholder="blur"
-                            objectFit="cover"
-                            objectPosition="center"
-                            // loader={uploadcareLoader}
+                            className="lazyload min-h-[357px] min-w-[238px] rounded-md bg-white object-cover object-center transition-transform duration-300 hover:scale-105"
+                            src={blurData}
                           />
                         </div>
                         <div className="my-2">

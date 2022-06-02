@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import { Anime } from "../../../typing/anime";
 import { animeBaseUrl } from "../../../utils/animeAPIConfig";
 import { APP_NAME } from "../../../utils/appConfig";
+import "lazysizes/plugins/blur-up/ls.blur-up";
 
 function Anime(props: { anime: Anime }) {
   const { anime } = props;
@@ -20,15 +20,11 @@ function Anime(props: { anime: Anime }) {
       <article>
         <section className="relative h-screen w-full">
           {img && (
-            <Image
-              src={img}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              className="sticky top-0 opacity-40"
+            <img
+              data-src={img}
+              className="lazyload sticky top-0 h-full w-full object-cover object-center opacity-40"
               alt={name}
-              priority
-              // loader={uploadcareLoader}
+              loading="lazy"
             />
           )}
           <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-b from-transparent via-slate-900 to-black opacity-[0.85]" />
@@ -68,17 +64,12 @@ function Anime(props: { anime: Anime }) {
                 const imgSrc = people.node.image.large;
                 return (
                   <div key={people.node.id}>
-                    <div className="">
-                      <Image
-                        src={imgSrc}
-                        width={238}
-                        height={357}
-                        layout="fixed"
-                        alt={people.node.name.full}
-                        className="rounded-md"
-                        // loader={uploadcareLoader}
-                      />
-                    </div>
+                    <img
+                      data-src={imgSrc}
+                      alt={people.node.name.full}
+                      loading="lazy"
+                      className="lazyload h-[357px] min-w-[238px] rounded-md"
+                    />
                     <div className="my-2">
                       <h3>{people.node.name.full}</h3>
                     </div>
@@ -104,14 +95,12 @@ function Anime(props: { anime: Anime }) {
               <Link key={anime.id} passHref href={`/content/anime/${anime.id}`}>
                 <div className="group transform cursor-pointer snap-start rounded-md border-2 border-black transition-transform duration-300 hover:scale-105 hover:border-slate-200">
                   <div className="relative h-72 w-52">
-                    <Image
-                      src={poster}
+                    <img
+                      data-srcset={poster}
                       alt={content_name}
-                      layout="fill"
-                      className="rounded-md bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
-                      placeholder="blur"
-                      blurDataURL={poster}
-                      // loader={uploadcareLoader}
+                      className="lazyload h-full w-full rounded-md bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
+                      data-src={poster}
+                      loading="lazy"
                     />
                     <h2 className="absolute top-5 left-5 hidden group-hover:block">
                       {content_name}

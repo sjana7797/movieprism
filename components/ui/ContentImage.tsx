@@ -1,4 +1,4 @@
-import Image from "next/image";
+import "lazysizes/plugins/blur-up/ls.blur-up";
 import { useEffect, useState } from "react";
 
 function ContentImage({ img, name }: { img: string; name: string }) {
@@ -29,17 +29,11 @@ function ContentImage({ img, name }: { img: string; name: string }) {
   }, [num]);
   return (
     <>
-      <Image
-        src={img}
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        className="sticky top-0 opacity-40"
+      <img
+        data-srcset={img}
+        className="lazyload sticky top-0 h-full w-full object-cover object-center opacity-40"
         alt={name}
-        blurDataURL="https://dummyimage.com/1920x1080/fff/aaa"
-        placeholder="blur"
-        priority
-        // loader={uploadcareLoader}
+        data-src="https://dummyimage.com/1920x1080/fff/aaa"
       />
       <div
         className={`absolute top-0 left-0 h-full w-full bg-gradient-to-b ${randomColor[color]} via-slate-900 to-black opacity-[0.85]`}

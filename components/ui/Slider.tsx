@@ -42,14 +42,12 @@ function UpcommingMovie({ movie }: { movie: UpcommingMovie }) {
   return (
     <div className="group transform cursor-pointer rounded-md border-2 border-black bg-slate-900">
       <div className="relative h-72 w-52">
-        <Image
-          src={poster}
+        <img
+          data-src={poster}
           alt={content_name}
-          layout="fill"
-          className="bg-black opacity-100 transition-opacity duration-200 group-hover:opacity-20"
+          className="h-full w-full bg-black object-fill opacity-100 transition-opacity duration-200 group-hover:opacity-20"
           placeholder="blur"
-          blurDataURL={poster}
-          // loader={uploadcareLoader}
+          data-src={poster}
         />
         <h2 className="absolute top-5 left-5 hidden group-hover:block">
           {content_name}

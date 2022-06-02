@@ -29,14 +29,12 @@ function Season(props: {
         <div className="mx-auto flex max-w-xl flex-wrap justify-between">
           <div className="mx-auto">
             <div className="relative h-72 w-52 rounded-md border-2 border-black">
-              <Image
-                src={`${BASE_URL_IMAGE}${season.poster_path}`}
+              <img
+                data-src={`${BASE_URL_IMAGE.replace("original", "w300")}${
+                  season.poster_path
+                }`}
                 alt={name}
-                layout="fill"
-                className="rounded-md bg-black"
-                placeholder="blur"
-                blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
-                // loader={uploadcareLoader}
+                className="lazyload h-full w-full rounded-md bg-black object-cover object-center"
               />
             </div>
             <p className="my-5 text-center">{name}</p>
@@ -53,20 +51,12 @@ function Season(props: {
                 className="group my-5 flex grow flex-wrap items-center justify-between rounded-md border border-slate-300 p-2"
               >
                 <div className="relative mx-auto h-72 w-11/12 overflow-hidden rounded-md border-2 border-black">
-                  <Image
-                    src={`${BASE_URL_IMAGE}${
+                  <img
+                    data-src={`${BASE_URL_IMAGE}${
                       episode.still_path || season.poster_path
                     }`}
                     alt={name}
-                    layout="fill"
-                    objectFit="cover"
-                    objectPosition="center"
-                    className="rounded-md bg-black transition-transform duration-200 group-hover:scale-110"
-                    placeholder="blur"
-                    blurDataURL={`${BASE_URL_IMAGE}${
-                      episode.still_path || season.poster_path
-                    }`}
-                    // loader={uploadcareLoader}
+                    className="lazyload h-full w-full rounded-md bg-black object-cover object-center transition-transform duration-200 group-hover:scale-110"
                   />
                 </div>
                 <div className="prose prose-invert my-5 h-auto">
@@ -101,14 +91,10 @@ function Season(props: {
                   whileTap={{ scale: 0.9 }}
                 >
                   <div className="relative h-72 w-52 overflow-hidden rounded-md border-2 border-black transition-colors duration-300 hover:border-slate-200">
-                    <Image
-                      src={`${BASE_URL_IMAGE}${season.poster_path}`}
+                    <img
+                      data-src={`${BASE_URL_IMAGE}${season.poster_path}`}
                       alt={name}
-                      layout="fill"
-                      className="rounded-md bg-black transition-transform duration-300 group-hover:scale-125"
-                      placeholder="blur"
-                      blurDataURL={`${BASE_URL_IMAGE}${season.poster_path}`}
-                      // loader={uploadcareLoader}
+                      className="lazyload h-full w-full rounded-md bg-black object-fill transition-transform duration-300 group-hover:scale-125"
                     />
                   </div>
                   <p className="my-5">{name}</p>

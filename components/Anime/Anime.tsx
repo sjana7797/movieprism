@@ -1,29 +1,28 @@
-import Image from "next/image";
 import Link from "next/link";
 import { AnimePoster } from "../../typing/anime";
+import "lazysizes";
 
 function Anime({ anime }: { anime: AnimePoster }) {
   return (
     <Link href={`/content/anime/${anime.id}`} passHref>
       <div className="group my-2 flex cursor-pointer flex-col overflow-hidden transition-transform duration-300 sm:hover:scale-105">
-        <div className="relative overflow-hidden rounded-md">
-          <Image
-            src={anime.bannerImage}
+        <div className="relative h-full w-full overflow-hidden rounded-md">
+          <img
+            data-src={anime.bannerImage}
             title={
               anime.title.english ||
               anime.title.native ||
               anime.title.userPreferred
             }
-            className="object-cover"
+            className="lazyload h-60 w-full object-cover"
             alt={
               anime.title.english ||
               anime.title.native ||
               anime.title.userPreferred
             }
+            loading="lazy"
             width={1920}
             height={1080}
-            layout="responsive"
-            // loader={uploadcareLoader}
           />
           <div
             className={`absolute top-0 left-0 h-full w-full p-1 opacity-0 backdrop-blur transition-opacity delay-200 duration-300 group-hover:opacity-100`}
@@ -36,9 +35,8 @@ function Anime({ anime }: { anime: AnimePoster }) {
                 )}${anime.coverImage.color.slice(1)}8c`,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={anime.coverImage.extraLarge}
+              data-src={anime.coverImage.extraLarge}
               alt={
                 anime.title.english ||
                 anime.title.native ||

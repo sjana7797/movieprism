@@ -21,7 +21,6 @@ function Providers() {
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
-                //// loader={uploadcareLoader}
               />
             </m.div>
           </Link>

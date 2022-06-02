@@ -7,7 +7,7 @@ import HeaderItem from "./HeaderItem";
 
 function Header() {
   const router = useRouter();
-  const { setIsOpen } = useSearch();
+  const { setIsOpen, isOpen } = useSearch();
 
   return (
     <>
@@ -19,7 +19,9 @@ function Header() {
           <div
             className="group flex w-12 cursor-pointer flex-col items-center font-bold text-slate-100 transition-colors duration-300 hover:text-emerald-400 sm:w-20"
             onClick={() => {
+              console.log(true, isOpen);
               setIsOpen(true);
+              console.log(false, isOpen);
             }}
           >
             <BiSearchAlt className="mb-1 h-8 w-8 group-hover:animate-bounce" />

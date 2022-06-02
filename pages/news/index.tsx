@@ -21,7 +21,7 @@
 //               <div className="overflow-hidden rounded-md">
 //                 {/* eslint-disable-next-line @next/next/no-img-element */}
 //                 <img
-//                   src={article.image}
+//                   data-src={article.image}
 //                   alt={article.title}
 //                   loading="lazy"
 //                   className="cover h-auto w-full bg-black transition-transform duration-300 group-hover:scale-110"
