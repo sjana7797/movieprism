@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { ContentOverview } from "../../typing/content";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";

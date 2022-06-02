@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { custAxios } from "../../utils/custAxios";
@@ -46,8 +45,6 @@ function UpcommingMovie({ movie }: { movie: UpcommingMovie }) {
           data-src={poster}
           alt={content_name}
           className="h-full w-full bg-black object-fill opacity-100 transition-opacity duration-200 group-hover:opacity-20"
-          placeholder="blur"
-          data-src={poster}
         />
         <h2 className="absolute top-5 left-5 hidden group-hover:block">
           {content_name}

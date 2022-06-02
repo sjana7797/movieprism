@@ -2,7 +2,7 @@ import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Contents from "../../../components/Home/Contents.server";
+import Contents from "../../../components/Home/Contents";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../utils/apiConfig";
 import { custAxios } from "../../../utils/custAxios";
 import { m } from "framer-motion";

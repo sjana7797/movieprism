@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es2016",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,12 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "typing/**/*.d.ts",
-    "image-loader.config.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "typing/**/*.d.ts"],
   "exclude": ["node_modules"]
 }

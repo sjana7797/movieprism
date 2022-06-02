@@ -1,11 +1,11 @@
 import type { GetServerSideProps } from "next";
 import Providers from "../components/Home/Providers";
 import Carousel from "../components/Home/Carousel.server";
-import Contents from "../components/Home/Contents.server";
+import Contents from "../components/Home/Contents";
 import { ContentOverview, Poster } from "../typing/content";
 import { API_OPTION } from "../utils/apiConfig";
 import { custAxios } from "../utils/custAxios";
-import DicoverMovie from "../components/Home/DiscoverMovie.server";
+import DicoverMovie from "../components/Home/DiscoverMovie";
 import axios from "axios";
 import Head from "next/head";
 import { APP_NAME } from "../utils/appConfig";

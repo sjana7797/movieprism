@@ -2,7 +2,7 @@ import { ThumbUpIcon } from "@heroicons/react/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Contents from "../../../../components/Home/Contents.server";
+import Contents from "../../../../components/Home/Contents";
 import { TV, TVCast } from "../../../../typing/tv";
 import { ContentOverview, Poster } from "../../../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../../../utils/apiConfig";

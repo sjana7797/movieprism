@@ -20,9 +20,6 @@ import "lazysizes/plugins/parent-fit/ls.parent-fit";
 
 const loadFeatures = () => import("../utils/domMax").then((mod) => mod.DomMax);
 const DynamicSearch = dynamic(() => import("../components/global/Search"));
-const DynamicTopLoadingBar = dynamic(
-  () => import("../components/global/TopLoadingBar")
-);
 
 function Layout(props: { children: ReactElement }) {
   const { isOpen } = useSearch();
@@ -66,7 +63,6 @@ function Layout(props: { children: ReactElement }) {
           </Head>
           <DynamicSearch />
           <Header />
-          {isAnimating && <DynamicTopLoadingBar isAnimating={isAnimating} />}
           <LazyMotion features={loadFeatures} strict>
             <m.main
               exit={{ opacity: 0 }}

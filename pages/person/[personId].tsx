@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Contents from "../../components/Home/Contents.server";
+import Contents from "../../components/Home/Contents";
 import { Person } from "../../typing";
 import { ContentOverview } from "../../typing/content";
 import { API_OPTION, BASE_URL_IMAGE } from "../../utils/apiConfig";
