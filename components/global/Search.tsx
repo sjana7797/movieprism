@@ -1,4 +1,4 @@
-import { SearchIcon } from "@heroicons/react/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Dialog, Combobox, Transition } from "@headlessui/react";
 import { useSearch } from "../../context/search";
 import { useRouter } from "next/router";
@@ -50,7 +50,7 @@ function Search() {
             className="relative mx-auto max-w-4xl divide-y divide-slate-700 rounded-xl bg-slate-900 shadow-2xl shadow-black ring-1 ring-white/20"
           >
             <div className="flex h-16 items-center px-4">
-              <SearchIcon className="h-8 w-8 text-slate-200" />
+              <MagnifyingGlassIcon className="h-8 w-8 text-slate-200" />
               <Combobox.Input
                 onChange={(event) => {
                   setSearchQuery(event.target.value);

@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Anime from "../../../components/Anime/Anime";
 import { AnimeList } from "../../../typing/anime";
 import { animeBaseUrl } from "../../../utils/animeAPIConfig";

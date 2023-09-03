@@ -2,7 +2,7 @@ import { ContentOverview } from "../../typing/content";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel as CarouselComponent } from "react-responsive-carousel";
 import { CSSProperties } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import dynamic from "next/dynamic";
 
 const DynamicCarouselItem = dynamic(() => import("./CarouselItem"));

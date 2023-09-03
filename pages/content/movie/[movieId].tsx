@@ -1,4 +1,4 @@
-import { ThumbUpIcon } from "@heroicons/react/outline";
+import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -67,7 +67,7 @@ function Movie(props: {
             <p>Status : {movie.status}</p>
             <p className="flex items-center">
               {movie.release_date || movie.first_air_date} &#9679;{" "}
-              <ThumbUpIcon className="mx-2 h-5" />
+              <HandThumbUpIcon className="mx-2 h-5" />
               {movie.vote_count}
             </p>
             <p>Adult : {movie.adult ? "Yes" : "No"}</p>

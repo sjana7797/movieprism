@@ -1,13 +1,14 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { ReactElement, useEffect, useState } from "react";
+import type { ReactElement } from "react";
 import Header from "../components/global/Header";
 import { APP_NAME } from "../utils/appConfig";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
-import { SearchProvider, useSearch } from "../context/search";
+import { SearchProvider,  } from "../context/search";
 import dynamic from "next/dynamic";
 import "lazysizes";
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
+import NextNProgress from 'nextjs-progressbar';
+
 
 // import "lazysizes/plugins/native-loading/ls.native-loading";
 
@@ -22,34 +23,10 @@ const loadFeatures = () => import("../utils/domMax").then((mod) => mod.DomMax);
 const DynamicSearch = dynamic(() => import("../components/global/Search"));
 
 function Layout(props: { children: ReactElement }) {
-  const { isOpen } = useSearch();
-  const [isAnimating, setIsAnimating] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 700);
-  }, []);
-  useEffect(() => {
-    const handleStart = () => {
-      setIsAnimating(true);
-    };
-    const handleStop = () => {
-      setIsAnimating(false);
-    };
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleStop);
-    router.events.on("routeChangeError", handleStop);
-
-    return () => {
-      router.events.off("routeChangeStart", handleStart);
-      router.events.off("routeChangeComplete", handleStop);
-      router.events.off("routeChangeError", handleStop);
-    };
-  }, [router.events]);
   return (
-    <AnimatePresence exitBeforeEnter>
+    <>
+    <NextNProgress color="#10b981" height={4}/>
+    <AnimatePresence mode="wait">
       <SearchProvider>
         <>
           <Head>
@@ -76,6 +53,7 @@ function Layout(props: { children: ReactElement }) {
         </>
       </SearchProvider>
     </AnimatePresence>
+    </>
   );
 }
 

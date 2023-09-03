@@ -1,4 +1,4 @@
-import { ThumbUpIcon } from "@heroicons/react/outline";
+import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
@@ -49,7 +49,7 @@ const Thumbnail = forwardRef<Ref, Props>(
             <p className="flex items-center opacity-0 group-hover:opacity-100">
               {media_type && `${media_type}`} &#9679;{" "}
               {release_date || first_air_date} &#9679;{" "}
-              <ThumbUpIcon className="mx-2 h-5" />
+              <HandThumbUpIcon className="mx-2 h-5" />
               {vote_count}
             </p>
           </div>

@@ -1,4 +1,4 @@
-import { ThumbUpIcon } from "@heroicons/react/outline";
+import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -37,7 +37,7 @@ function TVSeries({
           <p>{tv.overview}</p>
           <p className="flex items-center">
             {tv.release_date || tv.first_air_date} &#9679;{" "}
-            <ThumbUpIcon className="mx-2 h-5" />
+            <HandThumbUpIcon className="mx-2 h-5" />
             {tv.vote_count}
           </p>
           <p>Popularity : {tv.popularity}</p>

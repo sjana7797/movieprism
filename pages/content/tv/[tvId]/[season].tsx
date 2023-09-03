@@ -1,4 +1,4 @@
-import { ThumbUpIcon } from "@heroicons/react/outline";
+import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
@@ -64,7 +64,7 @@ function Season(props: {
                   <p>{episode.overview}</p>
                   <p className="flex items-center">
                     {episode.air_date} &#9679;{" "}
-                    <ThumbUpIcon className="mx-2 h-5" />
+                    <HandThumbUpIcon className="mx-2 h-5" />
                     {episode.vote_count}
                   </p>
                 </div>

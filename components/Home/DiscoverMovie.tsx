@@ -3,7 +3,7 @@ import { ContentOverview } from "../../typing/content";
 import { BASE_URL_IMAGE } from "../../utils/apiConfig";
 import { m } from "framer-motion";
 import { fadeInLeft } from "../../animation/variants";
-import { ChevronDoubleRightIcon } from "@heroicons/react/outline";
+import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 function DicoverMovie({ data }: { data: ContentOverview }) {
   const movie = data;
